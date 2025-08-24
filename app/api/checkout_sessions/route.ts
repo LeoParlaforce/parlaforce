@@ -1,39 +1,30 @@
-import { NextResponse } from "next/server";
 import Stripe from "stripe";
+import { NextRequest, NextResponse } from "next/server";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-// 👆 pas de apiVersion forcée → plus d’erreur de type
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
-    const { priceId } = await req.json();
-
-    if (!priceId) {
-      return NextResponse.json(
-        { error: "Missing priceId" },
-        { status: 400 }
-      );
-    }
+    const body = await req.json();
 
     const session = await stripe.checkout.sessions.create({
-      mode: "payment",
       payment_method_types: ["card"],
-      line_items: [
-        {
-          price: priceId,
-          quantity: 1,
-        },
-      ],
+      mode: "payment",
+      line_items: body.items,
       success_url: `${req.headers.get("origin")}/success`,
       cancel_url: `${req.headers.get("origin")}/cancel`,
     });
 
-    return NextResponse.json({ url: session.url });
+    return NextResponse.json({ id: session.id }, { status: 200 });
   } catch (err: any) {
-    console.error(err);
-    return NextResponse.json(
-      { error: err.message },
-      { status: 500 }
-    );
+    console.error("Stripe error:", err);
+    return NextResponse.json({ error: err.message }, { status: 500 });
   }
+}
+
+export async function GET() {
+  return NextResponse.json(
+    { error: "Method Not Allowed" },
+    { status: 405 }
+  );
 }
