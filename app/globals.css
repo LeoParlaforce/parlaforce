@@ -1,15 +1,10 @@
-@import "tailwindcss";
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -20,7 +15,36 @@
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: sans-serif;
+}
+:root {
+  --font-playfair: "Playfair Display", serif;
+  --font-inter: "Inter", sans-serif;
+}
+
+/* Par défaut, le texte en Inter */
+body {
+  font-family: var(--font-inter);
+}
+
+/* Titres en Playfair */
+h1, h2, h3, h4 {
+  font-family: var(--font-playfair);
+}
+:root {
+  --font-playfair: "Playfair Display", serif;
+  --font-inter: "Inter", sans-serif;
+}
+
+/* Texte global */
+body {
+  font-family: var(--font-inter);
+}
+
+/* Titres élégants */
+h1, h2, h3, h4 {
+  font-family: var(--font-playfair);
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6); /* ombre douce */
 }
