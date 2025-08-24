@@ -1,30 +1,38 @@
 import Stripe from "stripe";
 import { NextRequest, NextResponse } from "next/server";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
+// ⚡ Création du client Stripe avec la clé secrète
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? "");
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
+    // Récupère l'origine dynamiquement (utile pour dev et prod)
+    const origin = req.headers.get("origin") || "http://localhost:3000";
 
+    // Création de la session Checkout
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
+      line_items: [
+        {
+          price_data: {
+            currency: "eur",
+            product_data: {
+              name: "Mon produit test",
+            },
+            unit_amount: 2000, // prix en centimes (20€)
+          },
+          quantity: 1,
+        },
+      ],
       mode: "payment",
-      line_items: body.items,
-      success_url: `${req.headers.get("origin")}/success`,
-      cancel_url: `${req.headers.get("origin")}/cancel`,
+      success_url: `${origin}/success`,
+      cancel_url: `${origin}/cancel`,
     });
 
-    return NextResponse.json({ id: session.id }, { status: 200 });
+    // Retourne l’URL Stripe Checkout au frontend
+    return NextResponse.json({ url: session.url });
   } catch (err: any) {
-    console.error("Stripe error:", err);
-    return NextResponse.json({ error: err.message }, { status: 500 });
+    console.error("Stripe error:", err.message);
+    return NextResponse.json({ error: "Erreur Stripe" }, { status: 500 });
   }
-}
-
-export async function GET() {
-  return NextResponse.json(
-    { error: "Method Not Allowed" },
-    { status: 405 }
-  );
 }
