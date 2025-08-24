@@ -1,13 +1,20 @@
 import Stripe from "stripe";
 import { NextRequest, NextResponse } from "next/server";
+console.log("STRIPE_SECRET_KEY:", process.env.STRIPE_SECRET_KEY);
+console.log("🔑 STRIPE_SECRET_KEY (preview):", process.env.STRIPE_SECRET_KEY ? "✅ définie" : "❌ manquante");
 
-// ⚡ Création du client Stripe avec la clé secrète
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? "");
+// Vérifie que la clé existe
+if (!process.env.STRIPE_SECRET_KEY) {
+  throw new Error("❌ STRIPE_SECRET_KEY n'est pas défini dans Vercel !");
+}
+
+// Création du client Stripe (pas besoin d’apiVersion)
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 export async function POST(req: NextRequest) {
   try {
-    // Récupère l'origine dynamiquement (utile pour dev et prod)
-    const origin = req.headers.get("origin") || "http://localhost:3000";
+    // Récupère l'origine dynamiquement (utile pour dev ET prod)
+    const origin = req.headers.get("origin") || "https://parlaforce.com";
 
     // Création de la session Checkout
     const session = await stripe.checkout.sessions.create({
