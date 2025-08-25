@@ -1,53 +1,53 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import Stripe from "stripe";
+import { Resend } from "resend";
 
-// Assure Node runtime (Stripe a besoin de Node, pas Edge)
 export const runtime = "nodejs";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-// GET = simple test dans le navigateur
-export async function GET() {
-  return NextResponse.json({ status: "✅ Webhook en ligne et prêt" });
-}
-
-// POST = appelé par Stripe
 export async function POST(req: NextRequest) {
   const sig = req.headers.get("stripe-signature");
   if (!sig) return new Response("Missing signature", { status: 400 });
 
   let event: Stripe.Event;
   try {
-    const body = await req.text(); // raw body
+    const body = await req.text();
     event = stripe.webhooks.constructEvent(
       body,
       sig,
       process.env.STRIPE_WEBHOOK_SECRET!
     );
   } catch (err: any) {
-    console.error("Webhook verify error:", err.message);
+    console.error("❌ Erreur vérification webhook:", err.message);
     return new Response(`Webhook Error: ${err.message}`, { status: 400 });
   }
 
-  switch (event.type) {
-    case "checkout.session.completed": {
-      const session = event.data.object as Stripe.Checkout.Session;
-      console.log("💰 checkout.session.completed:", session.id);
-      break;
+  if (event.type === "checkout.session.completed") {
+    const session = event.data.object as Stripe.Checkout.Session;
+    console.log("💰 Paiement confirmé:", session.id);
+
+    try {
+      await resend.emails.send({
+        from: "no-reply@parlaforce.com",
+        to: session.customer_email ?? "tonadresse@gmail.com", // fallback test
+        subject: "Merci pour ton achat 💪",
+        html: `
+          <h2>Bravo et merci !</h2>
+          <p>Ton paiement est confirmé. Voici ton lien de téléchargement :</p>
+          <p><a href="https://parlaforce.com/download/guide.pdf">📥 Télécharger ton guide</a></p>
+        `,
+      });
+      console.log("📧 Email envoyé !");
+    } catch (emailErr: any) {
+      console.error("❌ Erreur envoi email:", emailErr);
     }
-    case "payment_intent.succeeded": {
-      const pi = event.data.object as Stripe.PaymentIntent;
-      console.log("✅ payment_intent.succeeded:", pi.id);
-      break;
-    }
-    case "payment_intent.payment_failed": {
-      const pi = event.data.object as Stripe.PaymentIntent;
-      console.log("❌ payment_intent.payment_failed:", pi.id);
-      break;
-    }
-    default:
-      console.log("ℹ️ event:", event.type);
   }
 
   return new Response("ok", { status: 200 });
+}
+
+export async function GET() {
+  return new Response("✅ Webhook en ligne");
 }
