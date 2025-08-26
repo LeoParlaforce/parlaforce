@@ -5,14 +5,6 @@ import crypto from "crypto";
 
 export const runtime = "nodejs";
 
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
-
-if (!stripeSecretKey) throw new Error("STRIPE_SECRET_KEY manquant !");
-if (!webhookSecret) throw new Error("STRIPE_WEBHOOK_SECRET manquant !");
-
-const stripe = new Stripe(stripeSecretKey, { apiVersion: "2025-07-30.basil" });
-
 // Dossier contenant les PDFs privés
 const PDF_FOLDER = "/protected_pdfs/";
 
@@ -27,11 +19,16 @@ function generateTemporaryLink(filename: string, expiresInSec = 3600) {
   return `${process.env.NEXT_PUBLIC_BASE_URL}${PDF_FOLDER}${filename}?expires=${expires}&token=${token}`;
 }
 
-// Middleware côté page PDF pour vérifier token
-// Ex: app/protected_pdfs/[filename]/route.ts
-// Vérifier token et expiration avant de servir le fichier
-
 export async function POST(req: NextRequest) {
+  // Lecture des variables d'environnement au runtime
+  const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+  if (!stripeSecretKey) throw new Error("STRIPE_SECRET_KEY manquant !");
+  if (!webhookSecret) throw new Error("STRIPE_WEBHOOK_SECRET manquant !");
+
+  const stripe = new Stripe(stripeSecretKey, { apiVersion: "2025-07-30.basil" });
+
   const buf = await req.arrayBuffer();
   const body = Buffer.from(buf);
   const sig = req.headers.get("stripe-signature") || "";
@@ -39,7 +36,7 @@ export async function POST(req: NextRequest) {
   let event: Stripe.Event;
 
   try {
-    event = stripe.webhooks.constructEvent(body, sig, webhookSecret as string);
+    event = stripe.webhooks.constructEvent(body, sig, webhookSecret);
   } catch (err: any) {
     console.log("Erreur signature Stripe:", err.message);
     return new NextResponse(`Webhook Error: ${err.message}`, { status: 400 });
