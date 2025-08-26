@@ -3,6 +3,9 @@ import Stripe from "stripe";
 
 export const runtime = "nodejs";
 
+// Debug : afficher la clé (juste les 10 premiers caractères pour pas tout exposer)
+console.log("Stripe secret key utilisée:", process.env.STRIPE_SECRET_KEY?.slice(0, 10));
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 export async function POST(req: NextRequest) {
@@ -22,13 +25,13 @@ export async function POST(req: NextRequest) {
         },
       ],
       mode: "payment",
-      success_url: `${req.nextUrl.origin}/success`,
+      success_url: `${req.nextUrl.origin}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${req.nextUrl.origin}/cancel`,
     });
 
     return NextResponse.json({ url: session.url });
   } catch (err: any) {
     console.error("Stripe error:", err);
-    return NextResponse.json({ error: err.message }, { status: 500 });
+    return NextResponse.json({ error: err.message || "Erreur inconnue" }, { status: 500 });
   }
 }

@@ -1,38 +1,17 @@
 "use client";
 
 import { useState } from "react";
+import { loadStripe } from "@stripe/stripe-js";
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 const products = [
-  {
-    id: "price_1S01uTGzln310EBq3zDeJ5HH", // Guide psycho
-    name: "Le Guide psychologique des sports de Force",
-    price: "20€",
-  },
-  {
-    id: "price_1S01w0Gzln310EBqOQE5vPij", // Programme
-    name: "Comment créer son propre programme",
-    price: "15€",
-  },
-  {
-    id: "price_1S01y2Gzln310EBq5UnMtkxl", // Diète
-    name: "Diète : transformez votre corps",
-    price: "10€",
-  },
-  {
-    id: "price_1S01x9Gzln310EBq2zrmKT7o", // Mobilité
-    name: "Mobilité - le Guide du mouvement & de la santé du corps massif",
-    price: "10€",
-  },
-  {
-    id: "price_1S01yYGzln310EBqvLgvATcC", // Home gym
-    name: "Guide du home gym",
-    price: "5€",
-  },
-  {
-    id: "price_1S01zCGzln310EBqT1Eicmj9", // Strongman
-    name: "Strongman - 6 semaines d'entraînement",
-    price: "15€",
-  },
+  { id: "price_1S01uTGzln310EBq3zDeJ5HH", name: "Le Guide psychologique des sports de Force", price: "20€" },
+  { id: "price_1S01w0Gzln310EBqOQE5vPij", name: "Comment créer son propre programme", price: "15€" },
+  { id: "price_1S01y2Gzln310EBq5UnMtkxl", name: "Diète : transformez votre corps", price: "10€" },
+  { id: "price_1S01x9Gzln310EBq2zrmKT7o", name: "Mobilité - le Guide du mouvement & de la santé du corps massif", price: "10€" },
+  { id: "price_1S01yYGzln310EBqvLgvATcC", name: "Guide du home gym", price: "5€" },
+  { id: "price_1S01zCGzln310EBqT1Eicmj9", name: "Strongman - 6 semaines d'entraînement", price: "15€" },
 ];
 
 export default function Home() {
@@ -41,19 +20,29 @@ export default function Home() {
   const handleCheckout = async (priceId: string) => {
     setLoading(priceId);
     try {
-      const res = await fetch("/api/checkout_sessions", {
+      const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ priceId }),
       });
 
-      const data = await res.json();
+      const text = await res.text(); // récupère la réponse brute
+      let data;
+      try {
+        data = JSON.parse(text); // tente de parser en JSON
+      } catch {
+        console.error("Réponse brute:", text);
+        alert("Erreur Stripe : réponse invalide du serveur");
+        return;
+      }
+
       if (data.url) {
         window.location.href = data.url;
       } else {
         alert("Erreur Stripe : " + (data.error ?? "inconnue"));
       }
-    } catch {
+    } catch (err) {
+      console.error(err);
       alert("Une erreur est survenue");
     } finally {
       setLoading(null);

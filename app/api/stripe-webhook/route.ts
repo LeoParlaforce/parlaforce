@@ -1,14 +1,13 @@
-// app/api/webhook/route.ts
+// app/api/stripe-webhook/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import crypto from "crypto";
+import nodemailer from "nodemailer";
 
 export const runtime = "nodejs";
 
-// Dossier contenant les PDFs privés
 const PDF_FOLDER = "/protected_pdfs/";
 
-// Génère un lien temporaire signé
 function generateTemporaryLink(filename: string, expiresInSec = 3600) {
   const expires = Math.floor(Date.now() / 1000) + expiresInSec;
   const token = crypto
@@ -19,8 +18,15 @@ function generateTemporaryLink(filename: string, expiresInSec = 3600) {
   return `${process.env.NEXT_PUBLIC_BASE_URL}${PDF_FOLDER}${filename}?expires=${expires}&token=${token}`;
 }
 
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
+
 export async function POST(req: NextRequest) {
-  // Lecture des variables d'environnement au runtime
   const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
@@ -45,40 +51,47 @@ export async function POST(req: NextRequest) {
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
 
-    if (session.mode === "subscription") {
-      const subscriptionId = session.subscription as string;
-      const subscription = await stripe.subscriptions.retrieve(subscriptionId);
-      const items = subscription.items.data;
-      const priceId = items[0].price.id;
+    // Récupérer correctement les line items
+    const lineItems = await stripe.checkout.sessions.listLineItems(session.id, { limit: 1 });
+    const priceId = lineItems.data[0].price?.id;
 
-      let pdfFilename = "";
+    let pdfFilename = "";
 
-      switch (priceId) {
-        case "price_1S01zCGzln310EBqT1Eicmj9":
-          pdfFilename = "strongman_6_semaines.pdf";
-          break;
-        case "price_1S01yYGzln310EBqvLgvATcC":
-          pdfFilename = "guide_home_gym.pdf";
-          break;
-        case "price_1S01y2Gzln310EBq5UnMtkxl":
-          pdfFilename = "diete.pdf";
-          break;
-        case "price_1S01x9Gzln310EBq2zrmKT7o":
-          pdfFilename = "mobilite.pdf";
-          break;
-        case "price_1S01w0Gzln310EBqOQE5vPij":
-          pdfFilename = "creer_son_programme.pdf";
-          break;
-        case "price_1S01uTGzln310EBq3zDeJ5HH":
-          pdfFilename = "guide_psychique.pdf";
-          break;
-      }
+    switch (priceId) {
+      case "price_1S01zCGzln310EBqT1Eicmj9":
+        pdfFilename = "Strongman.pdf";
+        break;
+      case "price_1S01yYGzln310EBqvLgvATcC":
+        pdfFilename = "Guide du home gym.pdf";
+        break;
+      case "price_1S01y2Gzln310EBq5UnMtkxl":
+        pdfFilename = "La diète - Guide pour transformer votre corps selon vos objectifs.pdf";
+        break;
+      case "price_1S01x9Gzln310EBq2zrmKT7o":
+        pdfFilename = "Mobilité - Guide du corps massif en santé & en mouvement.pdf";
+        break;
+      case "price_1S01w0Gzln310EBqOQE5vPij":
+        pdfFilename = "Comment créer son propre programme ou en personnaliser un qui existe déjà.pdf";
+        break;
+      case "price_1S01uTGzln310EBq3zDeJ5HH":
+        pdfFilename = "Guide psychologique pour arrêter d'être une petite sal.pe dans les sports de force.pdf";
+        break;
+    }
 
-      if (pdfFilename && session.customer_email) {
-        const link = generateTemporaryLink(pdfFilename, 3600); // lien valide 1h
-        console.log(`Envoyer lien sécurisé à ${session.customer_email}: ${link}`);
-        // Ici : envoyer l’email via ton service (SendGrid, Nodemailer, etc.)
-      }
+    if (pdfFilename && session.customer_email) {
+      const link = generateTemporaryLink(pdfFilename, 3600);
+
+      await transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: session.customer_email,
+        subject: "Votre PDF après paiement",
+        html: `<p>Bonjour,</p>
+               <p>Merci pour votre achat ! Vous pouvez télécharger votre PDF ici (valable 1h) :</p>
+               <p><a href="${link}">Télécharger le PDF</a></p>
+               <p>Bonne lecture !</p>`,
+      });
+
+      console.log(`Lien PDF envoyé à ${session.customer_email}: ${link}`);
     }
   }
 
