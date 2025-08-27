@@ -14,7 +14,8 @@ function generateTemporaryLink(filename: string, expiresInSec = 3600) {
     .update(filename + expires)
     .digest("hex");
 
-  return `${process.env.NEXT_PUBLIC_BASE_URL}${PDF_FOLDER}${filename}?expires=${expires}&token=${token}`;
+  // Lien corrigé vers serve-pdf
+  return `${process.env.NEXT_PUBLIC_BASE_URL}/api/serve-pdf?file=${encodeURIComponent(filename)}&expires=${expires}&token=${token}`;
 }
 
 export async function GET(req: NextRequest) {
@@ -51,11 +52,12 @@ export async function GET(req: NextRequest) {
         break;
     }
 
-    if (!pdfFilename) {
-      return NextResponse.json({ error: "PDF non trouvé" }, { status: 404 });
+    if (!pdfFilename || !session.customer_email) {
+      return NextResponse.json({ error: "Impossible de générer le lien" }, { status: 400 });
     }
 
-    const link = generateTemporaryLink(pdfFilename);
+    const link = generateTemporaryLink(pdfFilename, 3600);
+
     return NextResponse.json({ url: link });
   } catch (err: any) {
     return NextResponse.json({ error: err.message || "Erreur inconnue" }, { status: 500 });
