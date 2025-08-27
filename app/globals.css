@@ -48,3 +48,81 @@ h1, h2, h3, h4 {
   font-family: var(--font-playfair);
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6); /* ombre douce */
 }
+/* === BG animé (pan + zoom lent) === */
+@keyframes bg-pan-zoom {
+  0% { transform: scale(1) translate3d(0,0,0); }
+  50% { transform: scale(1.08) translate3d(-1.5%, -1.5%, 0); }
+  100% { transform: scale(1) translate3d(0,0,0); }
+}
+.bg-animated {
+  background-image: url("/bg.jpg");
+  background-size: cover;
+  background-position: center;
+  animation: bg-pan-zoom 28s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* === Disques overlay (léger flottement) === */
+@keyframes plate-bob {
+  0%,100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-4px) rotate(-0.5deg); }
+}
+.plates {
+  animation: plate-bob 6s ease-in-out infinite;
+  will-change: transform;
+  image-rendering: -webkit-optimize-contrast;
+}
+
+/* === Vol du livre (utilisé par BookFly) === */
+@keyframes fly-in {
+  0% { transform: translate3d(var(--from-x,0), var(--from-y,0), 0) scale(0.35) rotate(-8deg); opacity: 0; }
+  60% { transform: translate3d(0,0,0) scale(1.05) rotate(0deg); opacity: 1; }
+  100% { transform: translate3d(0,0,0) scale(1) rotate(0deg); opacity: 1; }
+}
+@keyframes book-open {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(170deg); }
+}
+.book-fly {
+  animation: fly-in 600ms cubic-bezier(.22,.74,.27,.99) forwards;
+  transform-style: preserve-3d;
+  perspective: 1200px;
+}
+.book-open {
+  animation: book-open 550ms ease forwards;
+  transform-origin: left center;
+  backface-visibility: hidden;
+}
+
+/* Helper pour masque de page du PDF dans le livre ouvert */
+.book-frame {
+  position: absolute; inset: 10% 8% 12% 18%;
+  overflow: hidden; border-radius: 6px;
+}
+/* Fond animé sur background.jpg */
+@keyframes bg-pan-zoom {
+  0% { transform: scale(1) translate3d(0,0,0); }
+  50% { transform: scale(1.08) translate3d(-1.5%, -1.5%, 0); }
+  100% { transform: scale(1) translate3d(0,0,0); }
+}
+.bg-animated {
+  background-image: url("/background.jpg");
+  background-size: cover;
+  background-position: center;
+  animation: bg-pan-zoom 28s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Anim livre */
+@keyframes fly-in {
+  0% { transform: translate3d(var(--from-x,0), var(--from-y,0), 0) scale(0.35) rotate(-8deg); opacity: 0; }
+  60% { transform: translate3d(0,0,0) scale(1.05) rotate(0deg); opacity: 1; }
+  100% { transform: translate3d(0,0,0) scale(1) rotate(0deg); opacity: 1; }
+}
+@keyframes book-open {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(170deg); }
+}
+.book-fly { animation: fly-in 600ms cubic-bezier(.22,.74,.27,.99) forwards; transform-style: preserve-3d; perspective: 1200px; }
+.book-open { animation: book-open 550ms ease forwards; transform-origin: left center; backface-visibility: hidden; }
+.book-frame { position: absolute; inset: 10% 8% 12% 18%; overflow: hidden; border-radius: 6px; }
