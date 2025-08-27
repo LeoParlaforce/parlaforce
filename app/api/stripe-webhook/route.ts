@@ -26,34 +26,45 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+export async function GET() {
+  return NextResponse.json({
+    hasWebhookSecret: !!process.env.STRIPE_WEBHOOK_SECRET,
+    hasStripeKey: !!process.env.STRIPE_SECRET_KEY,
+  });
+}
+
 export async function POST(req: NextRequest) {
   const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
-  if (!stripeSecretKey) throw new Error("STRIPE_SECRET_KEY manquant !");
-  if (!webhookSecret) throw new Error("STRIPE_WEBHOOK_SECRET manquant !");
+  if (!stripeSecretKey) {
+    console.error("STRIPE_SECRET_KEY manquant !");
+    return NextResponse.json({ error: "STRIPE_SECRET_KEY manquant" }, { status: 500 });
+  }
+  if (!webhookSecret) {
+    console.error("STRIPE_WEBHOOK_SECRET manquant !");
+    return NextResponse.json({ error: "STRIPE_WEBHOOK_SECRET manquant" }, { status: 500 });
+  }
 
-  const stripe = new Stripe(stripeSecretKey, { apiVersion: "2025-07-30.basil" });
+  const stripe = new Stripe(stripeSecretKey);
 
-  const buf = await req.arrayBuffer();
-  const body = Buffer.from(buf);
-  const sig = req.headers.get("stripe-signature") || "";
+  const sig = req.headers.get("stripe-signature");
+  if (!sig) return new NextResponse("Missing signature", { status: 400 });
 
   let event: Stripe.Event;
-
   try {
+    const body = Buffer.from(await req.arrayBuffer());
     event = stripe.webhooks.constructEvent(body, sig, webhookSecret);
   } catch (err: any) {
-    console.log("Erreur signature Stripe:", err.message);
+    console.error("Erreur signature Stripe:", err.message);
     return new NextResponse(`Webhook Error: ${err.message}`, { status: 400 });
   }
 
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
 
-    // Récupérer correctement les line items
-    const lineItems = await stripe.checkout.sessions.listLineItems(session.id, { limit: 1 });
-    const priceId = lineItems.data[0].price?.id;
+    const { data } = await stripe.checkout.sessions.listLineItems(session.id, { limit: 1 });
+    const priceId = data[0]?.price?.id;
 
     let pdfFilename = "";
 
