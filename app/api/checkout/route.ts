@@ -35,3 +35,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: err.message || "Erreur inconnue" }, { status: 500 });
   }
 }
+export async function GET() {
+  const key = process.env.STRIPE_SECRET_KEY || null;
+  return NextResponse.json({
+    stripeKey: key ? key.slice(0, 8) + "..." + key.slice(-6) : null,
+  });
+}
