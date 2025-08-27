@@ -4,7 +4,7 @@ import fs from "fs";
 import path from "path";
 import crypto from "crypto";
 
-const PDF_FOLDER = "protected_pdfs"; // chemin relatif à la racine du projet
+const PDF_FOLDER = path.join(process.cwd(), "protected_pdfs"); // chemin absolu
 
 function verifyTemporaryLink(token: string, filename: string, expires: number) {
   const expectedToken = crypto
@@ -28,7 +28,8 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Lien invalide ou expiré" }, { status: 403 });
   }
 
-  const filePath = path.join(process.cwd(), PDF_FOLDER, filename);
+  const safeFilename = path.basename(filename); // empêche la navigation hors du dossier
+  const filePath = path.join(PDF_FOLDER, safeFilename);
 
   if (!fs.existsSync(filePath)) {
     return NextResponse.json({ error: "Fichier introuvable" }, { status: 404 });
@@ -40,7 +41,7 @@ export async function GET(req: NextRequest) {
     status: 200,
     headers: {
       "Content-Type": "application/pdf",
-      "Content-Disposition": `attachment; filename="${filename}"`,
+      "Content-Disposition": `attachment; filename="${encodeURIComponent(safeFilename)}"`,
     },
   });
 }
