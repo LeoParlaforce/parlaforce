@@ -1,12 +1,27 @@
+// app/api/checkout/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 
 export const runtime = "nodejs";
 
-// Debug : afficher la clé (juste les 10 premiers caractères pour pas tout exposer)
-console.log("Stripe secret key utilisée:", process.env.STRIPE_SECRET_KEY?.slice(0, 10));
+// Debug précis : début + fin de la clé utilisée
+console.log(
+  "Stripe key utilisée:",
+  process.env.STRIPE_SECRET_KEY
+    ? process.env.STRIPE_SECRET_KEY.slice(0, 8) +
+      "..." +
+      process.env.STRIPE_SECRET_KEY.slice(-6)
+    : "absente"
+);
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+
+export async function GET() {
+  const k = process.env.STRIPE_SECRET_KEY || "";
+  return NextResponse.json({
+    stripeKey: k ? k.slice(0, 8) + "..." + k.slice(-6) : null,
+  });
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -34,10 +49,4 @@ export async function POST(req: NextRequest) {
     console.error("Stripe error:", err);
     return NextResponse.json({ error: err.message || "Erreur inconnue" }, { status: 500 });
   }
-}
-export async function GET() {
-  const key = process.env.STRIPE_SECRET_KEY || null;
-  return NextResponse.json({
-    stripeKey: key ? key.slice(0, 8) + "..." + key.slice(-6) : null,
-  });
 }
