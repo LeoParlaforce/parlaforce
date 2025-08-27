@@ -1,10 +1,9 @@
-// app/api/serve-pdf/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 import crypto from "crypto";
 
-const PDF_FOLDER = "protected_pdfs"; // dossier à la racine du projet
+const PDF_FOLDER = path.join(process.cwd(), "protected_pdfs"); // chemin exact à la racine
 
 function verifyTemporaryLink(token: string, filename: string, expires: number) {
   const expectedToken = crypto
@@ -23,14 +22,14 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Paramètres manquants" }, { status: 400 });
   }
 
-  const filename = decodeURIComponent(fileParam); // décodage pour gérer espaces et caractères spéciaux
+  const filename = decodeURIComponent(fileParam);
   const expires = parseInt(expiresStr, 10);
 
   if (!verifyTemporaryLink(token, filename, expires)) {
     return NextResponse.json({ error: "Lien invalide ou expiré" }, { status: 403 });
   }
 
-  const filePath = path.join(process.cwd(), PDF_FOLDER, filename);
+  const filePath = path.join(PDF_FOLDER, filename);
 
   if (!fs.existsSync(filePath)) {
     return NextResponse.json({ error: "Fichier introuvable" }, { status: 404 });

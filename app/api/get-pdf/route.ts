@@ -1,4 +1,3 @@
-// app/api/get-pdf/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import crypto from "crypto";
@@ -14,7 +13,6 @@ function generateTemporaryLink(filename: string, expiresInSec = 3600) {
     .update(filename + expires)
     .digest("hex");
 
-  // Lien vers le endpoint de téléchargement direct
   return `${process.env.NEXT_PUBLIC_BASE_URL}/api/serve-pdf?file=${encodeURIComponent(filename)}&expires=${expires}&token=${token}`;
 }
 
@@ -32,24 +30,12 @@ export async function GET(req: NextRequest) {
     let pdfFilename = "";
 
     switch (priceId) {
-      case "price_1S01zCGzln310EBqT1Eicmj9":
-        pdfFilename = "Strongman.pdf";
-        break;
-      case "price_1S01yYGzln310EBqvLgvATcC":
-        pdfFilename = "Guide du home gym.pdf";
-        break;
-      case "price_1S01y2Gzln310EBq5UnMtkxl":
-        pdfFilename = "La diète - Guide pour transformer votre corps selon vos objectifs.pdf";
-        break;
-      case "price_1S01x9Gzln310EBq2zrmKT7o":
-        pdfFilename = "Mobilité - Guide du corps massif en santé & en mouvement.pdf";
-        break;
-      case "price_1S01w0Gzln310EBqOQE5vPij":
-        pdfFilename = "Comment créer son propre programme ou en personnaliser un qui existe déjà.pdf";
-        break;
-      case "price_1S01uTGzln310EBq3zDeJ5HH":
-        pdfFilename = "Guide psychologique pour arrêter d'être une petite sal.pe dans les sports de force.pdf";
-        break;
+      case "price_1S01zCGzln310EBqT1Eicmj9": pdfFilename = "Strongman.pdf"; break;
+      case "price_1S01yYGzln310EBqvLgvATcC": pdfFilename = "Guide du home gym.pdf"; break;
+      case "price_1S01y2Gzln310EBq5UnMtkxl": pdfFilename = "La diète - Guide pour transformer votre corps selon vos objectifs.pdf"; break;
+      case "price_1S01x9Gzln310EBq2zrmKT7o": pdfFilename = "Mobilité - Guide du corps massif en santé & en mouvement.pdf"; break;
+      case "price_1S01w0Gzln310EBqOQE5vPij": pdfFilename = "Comment créer son propre programme ou en personnaliser un qui existe déjà.pdf"; break;
+      case "price_1S01uTGzln310EBq3zDeJ5HH": pdfFilename = "Guide psychologique pour arrêter d'être une petite sal.pe dans les sports de force.pdf"; break;
     }
 
     console.log("PriceId reçu :", priceId);
@@ -60,6 +46,7 @@ export async function GET(req: NextRequest) {
     }
 
     const link = generateTemporaryLink(pdfFilename, 3600);
+    console.log("Lien généré :", link);
 
     return NextResponse.json({ url: link });
   } catch (err: any) {
