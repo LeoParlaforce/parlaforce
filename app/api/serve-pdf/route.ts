@@ -32,9 +32,11 @@ export async function GET(req: NextRequest) {
 
   const filePath = path.join(PDF_FOLDER, filename);
 
-  console.log("Serve-pdf: recherche du fichier ->", filePath);
+  // Vérification avant lecture du fichier
+  const exists = fs.existsSync(filePath);
+  console.log("Serve-pdf: recherche du fichier ->", filePath, "Existe :", exists);
 
-  if (!fs.existsSync(filePath)) {
+  if (!exists) {
     const filesInFolder = fs.readdirSync(PDF_FOLDER);
     console.error("Fichier introuvable. Contenu du dossier protected_pdfs :", filesInFolder);
     return NextResponse.json({ error: "Fichier introuvable" }, { status: 404 });
