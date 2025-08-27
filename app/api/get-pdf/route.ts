@@ -7,8 +7,9 @@ export const runtime = "nodejs";
 
 function generateTemporaryLink(filename: string, expiresInSec = 3600) {
   const expires = Math.floor(Date.now() / 1000) + expiresInSec;
+  const key = process.env.STRIPE_SECRET_KEY_NEW || process.env.STRIPE_SECRET_KEY!; // <-- utilise NEW en priorité
   const token = crypto
-    .createHmac("sha256", process.env.STRIPE_SECRET_KEY!)
+    .createHmac("sha256", key)
     .update(filename + expires)
     .digest("hex");
 
@@ -21,7 +22,9 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Missing sessionId" }, { status: 400 });
   }
 
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: "2025-07-30.basil" });
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY_NEW || process.env.STRIPE_SECRET_KEY!, {
+    apiVersion: "2025-07-30.basil",
+  });
 
   try {
     const session = await stripe.checkout.sessions.retrieve(sessionId);
