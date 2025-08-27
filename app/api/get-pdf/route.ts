@@ -14,7 +14,7 @@ function generateTemporaryLink(filename: string, expiresInSec = 3600) {
     .update(filename + expires)
     .digest("hex");
 
-  // Lien corrigé vers serve-pdf
+  // Lien vers le endpoint de téléchargement direct
   return `${process.env.NEXT_PUBLIC_BASE_URL}/api/serve-pdf?file=${encodeURIComponent(filename)}&expires=${expires}&token=${token}`;
 }
 
@@ -52,7 +52,10 @@ export async function GET(req: NextRequest) {
         break;
     }
 
-    if (!pdfFilename || !session.customer_email) {
+    console.log("PriceId reçu :", priceId);
+    console.log("PDF correspondant :", pdfFilename);
+
+    if (!pdfFilename) {
       return NextResponse.json({ error: "Impossible de générer le lien" }, { status: 400 });
     }
 
