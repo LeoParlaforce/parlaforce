@@ -10,8 +10,9 @@ const PDF_FOLDER = "/protected_pdfs/";
 
 function generateTemporaryLink(filename: string, expiresInSec = 3600) {
   const expires = Math.floor(Date.now() / 1000) + expiresInSec;
+  const key = process.env.STRIPE_SECRET_KEY_NEW || process.env.STRIPE_SECRET_KEY!; // <-- utilise NEW en priorité
   const token = crypto
-    .createHmac("sha256", process.env.STRIPE_SECRET_KEY!)
+    .createHmac("sha256", key)
     .update(filename + expires)
     .digest("hex");
 
@@ -27,7 +28,7 @@ const transporter = nodemailer.createTransport({
 });
 
 export async function POST(req: NextRequest) {
-  const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+  const stripeSecretKey = process.env.STRIPE_SECRET_KEY_NEW || process.env.STRIPE_SECRET_KEY;
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
   if (!stripeSecretKey) {
