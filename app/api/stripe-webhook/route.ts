@@ -27,9 +27,14 @@ const transporter = nodemailer.createTransport({
 });
 
 export async function GET() {
+  const envKeys = Object.keys(process.env).filter(k =>
+    k.toLowerCase().includes("stripe")
+  );
+
   return NextResponse.json({
-    hasWebhookSecret: !!process.env.STRIPE_WEBHOOK_SECRET,
-    hasStripeKey: !!process.env.STRIPE_SECRET_KEY,
+    webhookSecret: process.env.STRIPE_WEBHOOK_SECRET || null,
+    stripeKey: process.env.STRIPE_SECRET_KEY ? "set" : "missing",
+    envKeys, // liste des clés stripe visibles en prod
   });
 }
 
