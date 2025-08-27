@@ -26,18 +26,6 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export async function GET() {
-  const envKeys = Object.keys(process.env).filter(k =>
-    k.toLowerCase().includes("stripe")
-  );
-
-  return NextResponse.json({
-    webhookSecret: process.env.STRIPE_WEBHOOK_SECRET || null,
-    stripeKey: process.env.STRIPE_SECRET_KEY ? "set" : "missing",
-    envKeys, // liste des clés stripe visibles en prod
-  });
-}
-
 export async function POST(req: NextRequest) {
   const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -72,7 +60,6 @@ export async function POST(req: NextRequest) {
     const priceId = data[0]?.price?.id;
 
     let pdfFilename = "";
-
     switch (priceId) {
       case "price_1S01zCGzln310EBqT1Eicmj9":
         pdfFilename = "Strongman.pdf";
@@ -96,7 +83,6 @@ export async function POST(req: NextRequest) {
 
     if (pdfFilename && session.customer_email) {
       const link = generateTemporaryLink(pdfFilename, 3600);
-
       await transporter.sendMail({
         from: process.env.EMAIL_USER,
         to: session.customer_email,
@@ -106,7 +92,6 @@ export async function POST(req: NextRequest) {
                <p><a href="${link}">Télécharger le PDF</a></p>
                <p>Bonne lecture !</p>`,
       });
-
       console.log(`Lien PDF envoyé à ${session.customer_email}: ${link}`);
     }
   }
