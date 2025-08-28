@@ -1,6 +1,20 @@
-/* Fond FIXE */
+/* ---- Base neutre (important pour voir l'image Next/Image) ---- */
+:root { color-scheme: light; }
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: transparent; /* pas de fond qui masque l'image */
+}
+
+/* ---- Tes classes existantes ---- */
+
+/* Fond FIXE (si tu l’utilises ailleurs ; ne l’applique pas sur <body>) */
 .bg-static{
-  background-image: url("/background.jpg");
+  background-image: url("/background.jpg"); /* ou .webp si c’est le cas */
   background-size: cover;
   background-position: center;
 }
@@ -10,8 +24,8 @@
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: -1;
-  opacity: 0.35; /* douceur */
+  z-index: -1;   /* reste devant l'image (-10) mais derrière le contenu */
+  opacity: 0.35;
 }
 
 /* (On retire tout ce qui était plates / arbres / book-fly pour l’instant) */

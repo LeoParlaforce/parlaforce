@@ -1,7 +1,7 @@
 // app/layout.tsx
-import "./globals.css";
 import type { Metadata } from "next";
-import BackgroundSparkles from "@/components/BackgroundSparkles";
+import "./globals.css";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Par la Force",
@@ -12,13 +12,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="fr">
       <body className="min-h-dvh relative overflow-x-hidden antialiased">
-        {/* Fond fixe (pas de zoom) */}
-        <div className="fixed inset-0 -z-20 bg-static" />
-        {/* Légère couche sombre pour la lisibilité */}
-        <div className="fixed inset-0 -z-10 pointer-events-none bg-black/28" />
-        {/* Étincelles légères */}
-        <BackgroundSparkles />
-        {children}
+        {/* Background plein écran, fixe, derrière tout le reste */}
+        <div aria-hidden className="fixed inset-0 -z-10">
+          <Image
+            src="/background.webp"
+            alt=""
+            fill
+            priority
+            className="object-cover"
+            sizes="100vw"
+          />
+        </div>
+
+        <main className="relative z-0">{children}</main>
       </body>
     </html>
   );
