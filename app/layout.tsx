@@ -15,7 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Background plein écran, fixe, derrière tout le reste */}
         <div aria-hidden className="fixed inset-0 -z-10">
           <Image
-            src="/background.webp"
+            src="/background.jpg"   // 👈 ici c’était .webp par erreur
             alt=""
             fill
             priority
