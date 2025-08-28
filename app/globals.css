@@ -1,19 +1,17 @@
-@keyframes bg-pan-zoom {
-  0% { transform: scale(1) translate3d(0,0,0); }
-  50% { transform: scale(1.08) translate3d(-1.5%, -1.5%, 0); }
-  100% { transform: scale(1) translate3d(0,0,0); }
-}
-.bg-animated {
+/* Fond FIXE */
+.bg-static{
   background-image: url("/background.jpg");
   background-size: cover;
   background-position: center;
-  animation: bg-pan-zoom 28s ease-in-out infinite;
-  will-change: transform;
 }
 
-@keyframes sway { 0%,100% { transform: rotate(-1deg) translateX(0);} 50% { transform: rotate(1.4deg) translateX(-2px);} }
-.tree-sway{ animation:sway 5.8s ease-in-out infinite; transform-origin:50% 100%; }
-.tree-sway-delayed{ animation:sway 6.6s ease-in-out infinite 0.9s; transform-origin:50% 100%; }
+/* Étincelles (canvas) – pilotées par BackgroundSparkles */
+.sparkles-canvas{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.35; /* douceur */
+}
 
-@keyframes plate-bob-heavy { 0%,100% { transform: translateY(0) rotate(0.2deg) } 50% { transform: translateY(-6px) rotate(-0.4deg) } }
-.plates-heavy { animation: plate-bob-heavy 7s ease-in-out infinite; }
+/* (On retire tout ce qui était plates / arbres / book-fly pour l’instant) */
