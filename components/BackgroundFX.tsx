@@ -9,7 +9,6 @@ export default function BackgroundFX() {
   useEffect(() => {
     const c = canvasRef.current;
     if (!c) return;
-
     const ctx = c.getContext("2d");
     if (!ctx) return;
 
@@ -20,7 +19,7 @@ export default function BackgroundFX() {
     resize();
     window.addEventListener("resize", resize);
 
-    type P = { x: number; y: number; vx: number; vy: number; r: number; a: number; tw: number };
+    type P = { x:number;y:number;vx:number;vy:number;r:number;a:number;tw:number };
     const N = Math.min(120, Math.floor((c.width * c.height) / 15000));
     const parts: P[] = Array.from({ length: N }).map(() => ({
       x: Math.random() * c.width,
@@ -33,15 +32,11 @@ export default function BackgroundFX() {
     }));
 
     const render = () => {
-      // voile léger
-      ctx.fillStyle = "rgba(0,0,0,0.08)";
-      ctx.fillRect(0, 0, c.width, c.height);
+      // fond transparent (on ne couvre pas l'image)
+      ctx.clearRect(0, 0, c.width, c.height);
 
       for (const p of parts) {
-        p.x += p.vx;
-        p.y += p.vy;
-        p.a += p.tw;
-
+        p.x += p.vx; p.y += p.vy; p.a += p.tw;
         if (p.x < -10) p.x = c.width + 10;
         if (p.x > c.width + 10) p.x = -10;
         if (p.y < -10) p.y = c.height + 10;
@@ -64,11 +59,10 @@ export default function BackgroundFX() {
 
       rafRef.current = window.requestAnimationFrame(render);
     };
-
     rafRef.current = window.requestAnimationFrame(render);
 
     return () => {
-      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
       window.removeEventListener("resize", resize);
     };
   }, []);
@@ -97,7 +91,7 @@ export default function BackgroundFX() {
         </svg>
       </div>
 
-      {/* disques supplémentaires */}
+      {/* disques supplémentaires (assure-toi d'avoir de VRAIES images PNG) */}
       <img src="/plate-stack-left.png" alt="" className="hidden md:block fixed bottom-8 left-10 w-48 opacity-95 plates-heavy pointer-events-none -z-8" />
       <img src="/plate-stack-right.png" alt="" className="hidden md:block fixed bottom-9 right-12 w-52 opacity-95 plates-heavy pointer-events-none -z-8" />
     </>
