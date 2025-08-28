@@ -18,14 +18,3 @@ body {
   background-size: cover;
   background-position: center;
 }
-
-/* Étincelles (canvas) – pilotées par BackgroundSparkles */
-.sparkles-canvas{
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;   /* reste devant l'image (-10) mais derrière le contenu */
-  opacity: 0.35;
-}
-
-/* (On retire tout ce qui était plates / arbres / book-fly pour l’instant) */

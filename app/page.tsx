@@ -1,9 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { loadStripe } from "@stripe/stripe-js";
-
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 const products = [
   { id: "price_1S01uTGzln310EBq3zDeJ5HH", name: "Le Guide psychologique des sports de Force", price: "20€" },
@@ -37,7 +34,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen text-white">
-      {/* fond fixe + étincelles sont gérés dans layout.tsx */}
+      {/* fond fixe + étincelles gérés dans layout.tsx */}
       <div className="bg-black/60 min-h-screen flex flex-col items-center justify-center px-6">
         <h1 className="text-5xl font-bold mb-4">Par la Force</h1>
         <p className="text-xl mb-12">Découvrez votre vrai potentiel</p>
