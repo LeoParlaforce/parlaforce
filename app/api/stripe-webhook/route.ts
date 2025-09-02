@@ -10,7 +10,7 @@ const PDF_FOLDER = "/protected_pdfs/";
 
 function generateTemporaryLink(filename: string, expiresInSec = 3600) {
   const expires = Math.floor(Date.now() / 1000) + expiresInSec;
-  const key = process.env.STRIPE_SECRET_KEY_NEW || process.env.STRIPE_SECRET_KEY!; // <-- utilise NEW en priorité
+  const key = process.env.STRIPE_SECRET_KEY_NEW || process.env.STRIPE_SECRET_KEY!;
   const token = crypto
     .createHmac("sha256", key)
     .update(filename + expires)
@@ -30,8 +30,7 @@ const transporter = nodemailer.createTransport({
 });
 
 export async function POST(req: NextRequest) {
-  const stripeSecretKey =
-    process.env.STRIPE_SECRET_KEY_NEW || process.env.STRIPE_SECRET_KEY;
+  const stripeSecretKey = process.env.STRIPE_SECRET_KEY_NEW || process.env.STRIPE_SECRET_KEY;
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
   if (!stripeSecretKey) {
@@ -65,12 +64,12 @@ export async function POST(req: NextRequest) {
 
     let pdfFilename = "";
     switch (priceId) {
-      // ➕ Nouveaux produits (placés en haut)
-      case "price_1S2pY2Gzln310EBqtXDba2PK": // Power (programme powerlifting)
-        pdfFilename = "Fake natty - 12 semaines d'entraînement.pdf";
+      // Nouveaux produits
+      case "price_1S2pY2Gzln310EBqtXDba2PK": // Fake natty
+        pdfFilename = "fake-natty-12-semaines-entrainement.pdf";
         break;
       case "price_1S2pXBGzln310EBqWmq3YzF0": // Tié un tigre
-        pdfFilename = "Tié un tigre - 12 semaines powerlifting édition.pdf";
+        pdfFilename = "tie-un-tigre-12-semaines-powerlifting-edition.pdf";
         break;
 
       // Produits existants

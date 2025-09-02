@@ -7,7 +7,7 @@ export const runtime = "nodejs";
 
 function generateTemporaryLink(filename: string, expiresInSec = 3600) {
   const expires = Math.floor(Date.now() / 1000) + expiresInSec;
-  const key = process.env.STRIPE_SECRET_KEY_NEW || process.env.STRIPE_SECRET_KEY!; // <-- utilise NEW en priorité
+  const key = process.env.STRIPE_SECRET_KEY_NEW || process.env.STRIPE_SECRET_KEY!;
   const token = crypto
     .createHmac("sha256", key)
     .update(filename + expires)
@@ -26,16 +26,12 @@ export async function GET(req: NextRequest) {
 
   const stripe = new Stripe(
     process.env.STRIPE_SECRET_KEY_NEW || process.env.STRIPE_SECRET_KEY!,
-    {
-      apiVersion: "2025-07-30.basil",
-    }
+    { apiVersion: "2025-07-30.basil" }
   );
 
   try {
     const session = await stripe.checkout.sessions.retrieve(sessionId);
-    const lineItems = await stripe.checkout.sessions.listLineItems(sessionId, {
-      limit: 1,
-    });
+    const lineItems = await stripe.checkout.sessions.listLineItems(sessionId, { limit: 1 });
     const priceId = lineItems.data[0].price?.id;
 
     console.log("PriceId reçu :", priceId);
@@ -43,12 +39,12 @@ export async function GET(req: NextRequest) {
     let pdfFilename = "";
 
     switch (priceId) {
-      // Nouveaux produits en haut de liste
-      case "price_1S2pY2Gzln310EBqtXDba2PK": // Power (programme powerlifting)
-        pdfFilename = "Fake natty - 12 semaines d'entraînement.pdf";
+      // Nouveaux produits
+      case "price_1S2pY2Gzln310EBqtXDba2PK": // Fake natty
+        pdfFilename = "fake-natty-12-semaines-entrainement.pdf";
         break;
       case "price_1S2pXBGzln310EBqWmq3YzF0": // Tié un tigre
-        pdfFilename = "Tié un tigre - 12 semaines powerlifting édition.pdf";
+        pdfFilename = "tie-un-tigre-12-semaines-powerlifting-edition.pdf";
         break;
 
       // Produits existants
@@ -59,20 +55,16 @@ export async function GET(req: NextRequest) {
         pdfFilename = "Guide du home gym.pdf";
         break;
       case "price_1S01y2Gzln310EBq5UnMtkxl":
-        pdfFilename =
-          "La diète - Guide pour transformer votre corps selon vos objectifs.pdf";
+        pdfFilename = "La diète - Guide pour transformer votre corps selon vos objectifs.pdf";
         break;
       case "price_1S01x9Gzln310EBq2zrmKT7o":
-        pdfFilename =
-          "Mobilité - Guide du corps massif en santé & en mouvement.pdf";
+        pdfFilename = "Mobilité - Guide du corps massif en santé & en mouvement.pdf";
         break;
       case "price_1S01w0Gzln310EBqOQE5vPij":
-        pdfFilename =
-          "Comment créer son propre programme ou en personnaliser un qui existe déjà.pdf";
+        pdfFilename = "Comment créer son propre programme ou en personnaliser un qui existe déjà.pdf";
         break;
       case "price_1S01uTGzln310EBq3zDeJ5HH":
-        pdfFilename =
-          "Guide psychologique pour arrêter d'être une petite sal.pe dans les sports de force.pdf";
+        pdfFilename = "Guide psychologique pour arrêter d'être une petite sal.pe dans les sports de force.pdf";
         break;
     }
 
