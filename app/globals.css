@@ -1,20 +1,20 @@
-/* ---- Base neutre (important pour voir l'image Next/Image) ---- */
-:root { color-scheme: light; }
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-html, body {
-  height: 100%;
+/* Fond image optionnel derrière tout */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url('/background.jpg') center / cover no-repeat;
+  z-index: -2; /* derrière tout */
 }
 
-body {
-  margin: 0;
-  background: transparent; /* pas de fond qui masque l'image */
-}
-
-/* ---- Tes classes existantes ---- */
-
-/* Fond FIXE (si tu l’utilises ailleurs ; ne l’applique pas sur <body>) */
-.bg-static{
-  background-image: url("/background.jpg"); /* ou .webp si c’est le cas */
-  background-size: cover;
-  background-position: center;
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.60); /* voile sombre */
+  z-index: -1; /* derrière le contenu */
 }
