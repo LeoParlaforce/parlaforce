@@ -10,7 +10,7 @@ type Product = {
 };
 
 const products: Product[] = [
-  // ➕ Nouveaux produits en haut
+  // Nouveaux produits en tête
   {
     id: "price_1S2pY2Gzln310EBqtXDba2PK",
     name: "Fake natty - 12 semaines d'entraînement",
@@ -24,37 +24,13 @@ const products: Product[] = [
     isNew: true,
   },
 
-  // Produits existants
-  {
-    id: "price_1S01uTGzln310EBq3zDeJ5HH",
-    name: "Le Guide psychologique des sports de Force",
-    price: "20€",
-  },
-  {
-    id: "price_1S01w0Gzln310EBqOQE5vPij",
-    name: "Comment créer son propre programme",
-    price: "15€",
-  },
-  {
-    id: "price_1S01y2Gzln310EBq5UnMtkxl",
-    name: "Diète : transformez votre corps",
-    price: "10€",
-  },
-  {
-    id: "price_1S01x9Gzln310EBq2zrmKT7o",
-    name: "Mobilité - mouvement & santé du corps massif",
-    price: "10€",
-  },
-  {
-    id: "price_1S01yYGzln310EBqvLgvATcC",
-    name: "Guide du home gym",
-    price: "5€",
-  },
-  {
-    id: "price_1S01zCGzln310EBqT1Eicmj9",
-    name: "Strongman - 6 semaines d'entraînement",
-    price: "15€",
-  },
+  // Anciens produits
+  { id: "price_1S01uTGzln310EBq3zDeJ5HH", name: "Le Guide psychologique des sports de Force", price: "20€" },
+  { id: "price_1S01w0Gzln310EBqOQE5vPij", name: "Comment créer son propre programme", price: "15€" },
+  { id: "price_1S01y2Gzln310EBq5UnMtkxl", name: "Diète : transformez votre corps", price: "10€" },
+  { id: "price_1S01x9Gzln310EBq2zrmKT7o", name: "Mobilité - mouvement & santé du corps massif", price: "10€" },
+  { id: "price_1S01yYGzln310EBqvLgvATcC", name: "Guide du home gym", price: "5€" },
+  { id: "price_1S01zCGzln310EBqT1Eicmj9", name: "Strongman - 6 semaines d'entraînement", price: "15€" },
 ];
 
 export default function Home() {
@@ -69,11 +45,8 @@ export default function Home() {
         body: JSON.stringify({ priceId }),
       });
       const data = await res.json();
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        alert("Erreur Stripe : " + (data.error ?? "inconnue"));
-      }
+      if (data.url) window.location.href = data.url;
+      else alert("Erreur Stripe : " + (data.error ?? "inconnue"));
     } catch {
       alert("Une erreur est survenue");
     } finally {
@@ -82,28 +55,33 @@ export default function Home() {
   };
 
   return (
-    <main className="relative z-0 text-white">
-      {/* voile sombre sur le background */}
-      <div className="absolute inset-0 bg-black/60 -z-10" />
+    <main className="relative min-h-screen text-white">
+      {/* BACKGROUND FIXE (met ton image dans /public/bg.jpg si besoin) */}
+      <div
+        className="pointer-events-none fixed inset-0 -z-20 bg-cover bg-center"
+        style={{
+          backgroundImage: "url('/bg.jpg')", // si ton fond est injecté par CSS global, laisse cette ligne telle quelle ou supprime-la
+        }}
+      />
+      {/* VOILE NOIR PAR-DESSUS LE FOND */}
+      <div className="pointer-events-none fixed inset-0 -z-10 bg-black/60" />
 
-      {/* contenu boutique */}
-      <section className="min-h-screen flex flex-col items-center justify-center px-6">
-        <h1 className="text-5xl font-bold mb-4">Par la Force</h1>
-        <p className="text-xl mb-12">Guides et programmes pour libérer votre potentiel</p>
+      {/* CONTENU */}
+      <section className="relative z-10 min-h-screen flex flex-col items-center justify-center px-6">
+        <h1 className="text-5xl font-bold mb-4 drop-shadow">Par la Force</h1>
+        <p className="text-xl mb-12 opacity-95 drop-shadow">Guides et programmes pour libérer votre potentiel</p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-5xl">
           {products.map((product) => (
             <div
               key={product.id}
-              className="relative bg-black/40 p-6 rounded-2xl shadow-lg transform transition duration-300 hover:scale-105"
+              className="relative bg-black/50 backdrop-blur-sm p-6 rounded-2xl shadow-lg transform transition duration-300 hover:scale-105"
             >
-              {/* Badge "Nouveau" */}
               {product.isNew && (
                 <span className="absolute top-3 right-3 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow">
                   Nouveau
                 </span>
               )}
-
               <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
               <p className="mb-4">{product.price}</p>
               <button
