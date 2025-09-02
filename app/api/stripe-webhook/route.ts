@@ -16,7 +16,9 @@ function generateTemporaryLink(filename: string, expiresInSec = 3600) {
     .update(filename + expires)
     .digest("hex");
 
-  return `${process.env.NEXT_PUBLIC_BASE_URL}${PDF_FOLDER}${filename}?expires=${expires}&token=${token}`;
+  return `${process.env.NEXT_PUBLIC_BASE_URL}${PDF_FOLDER}${encodeURIComponent(
+    filename
+  )}?expires=${expires}&token=${token}`;
 }
 
 const transporter = nodemailer.createTransport({
@@ -28,7 +30,8 @@ const transporter = nodemailer.createTransport({
 });
 
 export async function POST(req: NextRequest) {
-  const stripeSecretKey = process.env.STRIPE_SECRET_KEY_NEW || process.env.STRIPE_SECRET_KEY;
+  const stripeSecretKey =
+    process.env.STRIPE_SECRET_KEY_NEW || process.env.STRIPE_SECRET_KEY;
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
   if (!stripeSecretKey) {
@@ -62,6 +65,15 @@ export async function POST(req: NextRequest) {
 
     let pdfFilename = "";
     switch (priceId) {
+      // ➕ Nouveaux produits (placés en haut)
+      case "price_1S2pY2Gzln310EBqtXDba2PK": // Power (programme powerlifting)
+        pdfFilename = "Fake natty - 12 semaines d'entraînement.pdf";
+        break;
+      case "price_1S2pXBGzln310EBqWmq3YzF0": // Tié un tigre
+        pdfFilename = "Tié un tigre - 12 semaines powerlifting édition.pdf";
+        break;
+
+      // Produits existants
       case "price_1S01zCGzln310EBqT1Eicmj9":
         pdfFilename = "Strongman.pdf";
         break;
@@ -89,9 +101,9 @@ export async function POST(req: NextRequest) {
         to: session.customer_email,
         subject: "Votre PDF après paiement",
         html: `<p>Bonjour,</p>
-               <p>Merci pour votre achat ! Vous pouvez télécharger votre PDF ici (valable 1h) :</p>
+               <p>Merci pour votre achat ! Votre lien de téléchargement (valable 1h) :</p>
                <p><a href="${link}">Télécharger le PDF</a></p>
-               <p>Bonne lecture !</p>`,
+               <p>Sportivement,<br/>Par la Force</p>`,
       });
       console.log(`Lien PDF envoyé à ${session.customer_email}: ${link}`);
     }

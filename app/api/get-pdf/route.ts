@@ -13,7 +13,9 @@ function generateTemporaryLink(filename: string, expiresInSec = 3600) {
     .update(filename + expires)
     .digest("hex");
 
-  return `${process.env.NEXT_PUBLIC_BASE_URL}/api/serve-pdf?file=${encodeURIComponent(filename)}&expires=${expires}&token=${token}`;
+  return `${process.env.NEXT_PUBLIC_BASE_URL}/api/serve-pdf?file=${encodeURIComponent(
+    filename
+  )}&expires=${expires}&token=${token}`;
 }
 
 export async function GET(req: NextRequest) {
@@ -22,13 +24,18 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Missing sessionId" }, { status: 400 });
   }
 
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY_NEW || process.env.STRIPE_SECRET_KEY!, {
-    apiVersion: "2025-07-30.basil",
-  });
+  const stripe = new Stripe(
+    process.env.STRIPE_SECRET_KEY_NEW || process.env.STRIPE_SECRET_KEY!,
+    {
+      apiVersion: "2025-07-30.basil",
+    }
+  );
 
   try {
     const session = await stripe.checkout.sessions.retrieve(sessionId);
-    const lineItems = await stripe.checkout.sessions.listLineItems(sessionId, { limit: 1 });
+    const lineItems = await stripe.checkout.sessions.listLineItems(sessionId, {
+      limit: 1,
+    });
     const priceId = lineItems.data[0].price?.id;
 
     console.log("PriceId reçu :", priceId);
@@ -36,6 +43,15 @@ export async function GET(req: NextRequest) {
     let pdfFilename = "";
 
     switch (priceId) {
+      // Nouveaux produits en haut de liste
+      case "price_1S2pY2Gzln310EBqtXDba2PK": // Power (programme powerlifting)
+        pdfFilename = "Fake natty - 12 semaines d'entraînement.pdf";
+        break;
+      case "price_1S2pXBGzln310EBqWmq3YzF0": // Tié un tigre
+        pdfFilename = "Tié un tigre - 12 semaines powerlifting édition.pdf";
+        break;
+
+      // Produits existants
       case "price_1S01zCGzln310EBqT1Eicmj9":
         pdfFilename = "Strongman.pdf";
         break;
@@ -43,23 +59,30 @@ export async function GET(req: NextRequest) {
         pdfFilename = "Guide du home gym.pdf";
         break;
       case "price_1S01y2Gzln310EBq5UnMtkxl":
-        pdfFilename = "La diète - Guide pour transformer votre corps selon vos objectifs.pdf";
+        pdfFilename =
+          "La diète - Guide pour transformer votre corps selon vos objectifs.pdf";
         break;
       case "price_1S01x9Gzln310EBq2zrmKT7o":
-        pdfFilename = "Mobilité - Guide du corps massif en santé & en mouvement.pdf";
+        pdfFilename =
+          "Mobilité - Guide du corps massif en santé & en mouvement.pdf";
         break;
       case "price_1S01w0Gzln310EBqOQE5vPij":
-        pdfFilename = "Comment créer son propre programme ou en personnaliser un qui existe déjà.pdf";
+        pdfFilename =
+          "Comment créer son propre programme ou en personnaliser un qui existe déjà.pdf";
         break;
       case "price_1S01uTGzln310EBq3zDeJ5HH":
-        pdfFilename = "Guide psychologique pour arrêter d'être une petite sal.pe dans les sports de force.pdf";
+        pdfFilename =
+          "Guide psychologique pour arrêter d'être une petite sal.pe dans les sports de force.pdf";
         break;
     }
 
     console.log("PDF correspondant :", pdfFilename);
 
     if (!pdfFilename) {
-      return NextResponse.json({ error: "Impossible de générer le lien : PDF non trouvé" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Impossible de générer le lien : PDF non trouvé" },
+        { status: 400 }
+      );
     }
 
     const link = generateTemporaryLink(pdfFilename);
@@ -67,6 +90,9 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ url: link });
   } catch (err: any) {
     console.error("Erreur get-pdf :", err);
-    return NextResponse.json({ error: err.message || "Erreur inconnue" }, { status: 500 });
+    return NextResponse.json(
+      { error: err.message || "Erreur inconnue" },
+      { status: 500 }
+    );
   }
 }
