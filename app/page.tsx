@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Footer from "./components/Footer";
 
 type Product = {
   id: string;
@@ -42,45 +43,49 @@ export default function Home() {
   };
 
   return (
-    <main className="relative min-h-screen text-white">
-      <div
-        className="pointer-events-none fixed inset-0 -z-20 bg-cover bg-center"
-        style={{ backgroundImage: "url('/bg.jpg')" }}
-      />
-      <div className="pointer-events-none fixed inset-0 -z-10 bg-black/60" />
+    <>
+      <main className="relative min-h-screen text-white">
+        <div
+          className="pointer-events-none fixed inset-0 -z-20 bg-cover bg-center"
+          style={{ backgroundImage: "url('/bg.jpg')" }}
+        />
+        <div className="pointer-events-none fixed inset-0 -z-10 bg-black/60" />
 
-      <section className="relative z-10 min-h-screen flex flex-col items-center justify-center px-6">
-        <h1 className="text-5xl font-bold mb-4 drop-shadow">Parlaforce</h1>
-        <p className="text-xl mb-12 opacity-95 drop-shadow">
-          Guides and programs to unleash your potential
-        </p>
+        <section className="relative z-10 min-h-screen flex flex-col items-center justify-center px-6">
+          <h1 className="text-5xl font-bold mb-4 drop-shadow">Parlaforce</h1>
+          <p className="text-xl mb-12 opacity-95 drop-shadow">
+            Guides and programs to unleash your potential
+          </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-5xl">
-          {products.map(product => (
-            <div
-              key={product.id}
-              className="relative bg-black/50 backdrop-blur-sm p-6 rounded-2xl shadow-lg transform transition duration-300 hover:scale-105"
-            >
-              {product.label && (
-                <span className="block mb-2 text-xs uppercase tracking-wide text-teal-400">
-                  {product.label}
-                </span>
-              )}
-
-              <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
-              <p className="mb-4">{product.price}</p>
-
-              <button
-                onClick={() => handleCheckout(product.id)}
-                disabled={loading === product.id}
-                className="w-full bg-teal-900 hover:bg-teal-700 text-white font-semibold py-2 px-4 rounded-lg transition"
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-5xl">
+            {products.map(product => (
+              <div
+                key={product.id}
+                className="relative bg-black/50 backdrop-blur-sm p-6 rounded-2xl shadow-lg transform transition duration-300 hover:scale-105"
               >
-                {loading === product.id ? "Redirecting..." : "Buy"}
-              </button>
-            </div>
-          ))}
-        </div>
-      </section>
-    </main>
+                {product.label && (
+                  <span className="block mb-2 text-xs uppercase tracking-wide text-teal-400">
+                    {product.label}
+                  </span>
+                )}
+
+                <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
+                <p className="mb-4">{product.price}</p>
+
+                <button
+                  onClick={() => handleCheckout(product.id)}
+                  disabled={loading === product.id}
+                  className="w-full bg-teal-900 hover:bg-teal-700 text-white font-semibold py-2 px-4 rounded-lg transition"
+                >
+                  {loading === product.id ? "Redirecting..." : "Buy"}
+                </button>
+              </div>
+            ))}
+          </div>
+        </section>
+      </main>
+
+      <Footer />
+    </>
   );
 }
