@@ -1,28 +1,45 @@
-'use client'
-import { useState } from 'react'
+"use client";
+
+import { useState } from "react";
 
 export default function Contact() {
-  const [email, setEmail] = useState('')
-  const [message, setMessage] = useState('')
-  const [sent, setSent] = useState(false)
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    window.location.href = `mailto:leo.gayrard@gmail.com?subject=Contact&body=${encodeURIComponent(message)}`
-    setSent(true)
-  }
-
-  if (sent) return <p className="p-6 text-center">Thank you, your message has been sent!</p>
+  const handleSend = () => {
+    const mailto = `mailto:leo.gayrard@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
+    window.location.href = mailto;
+  };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-xl mx-auto p-6 flex flex-col gap-4">
-      <label>Email</label>
-      <input type="email" value={email} onChange={e => setEmail(e.target.value)} className="border p-2 rounded" required />
+    <main className="min-h-screen flex items-center justify-center text-white">
+      <div className="bg-black/50 p-8 rounded-xl w-full max-w-md">
+        <h1 className="text-2xl mb-4">Contact</h1>
 
-      <label>Message</label>
-      <textarea value={message} onChange={e => setMessage(e.target.value)} className="border p-2 rounded" rows={5} required />
+        <input
+          type="text"
+          placeholder="Subject"
+          value={subject}
+          onChange={(e) => setSubject(e.target.value)}
+          className="w-full mb-4 p-2 rounded bg-black/70"
+        />
 
-      <button type="submit" className="bg-teal-900 text-white py-2 px-4 rounded">Send</button>
-    </form>
-  )
+        <textarea
+          placeholder="Message"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          className="w-full mb-4 p-2 rounded bg-black/70 h-32"
+        />
+
+        <button
+          onClick={handleSend}
+          disabled={loading}
+          className="w-full bg-teal-700 py-2 rounded"
+        >
+          Send
+        </button>
+      </div>
+    </main>
+  );
 }
