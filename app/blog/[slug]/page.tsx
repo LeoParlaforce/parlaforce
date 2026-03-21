@@ -4,9 +4,7 @@ import { notFound } from 'next/navigation';
 import { remark } from 'remark';
 import html from 'remark-html';
 
-type Props = { params: { slug: string } };
-
-export default async function Post({ params }: Props) {
+export default async function Page({ params }: { params: { slug: string } }) {
   const filePath = path.join(process.cwd(), 'posts', `${params.slug}.md`);
   if (!fs.existsSync(filePath)) return notFound();
 

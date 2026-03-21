@@ -13,7 +13,6 @@ export default function Blog() {
     posts = files.map(file => {
       const filePath = path.join(postsDir, file);
       const content = fs.readFileSync(filePath, 'utf-8');
-      // Cherche la première ligne commençant par "# " pour le titre
       const firstLine = content.split('\n').find(line => line.startsWith('# ')) || '';
       const title = firstLine.replace(/^# /, '').trim() || file.replace(/\.md$/, '');
       return { slug: file.replace(/\.md$/, ''), title };
