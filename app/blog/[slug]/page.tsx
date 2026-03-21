@@ -1,18 +1,16 @@
-// app/blog/[slug]/page.tsx
-import fs from 'fs';
-import path from 'path';
-import { notFound } from 'next/navigation';
-import { remark } from 'remark';
-import html from 'remark-html';
+type PageProps = {
+  params: { slug: string };
+};
 
-export default function Page({ params }: any) {
-  const slug = params.slug;
-  const filePath = path.join(process.cwd(), 'posts', `${slug}.md`);
+export default function ArticlePage({ params }: PageProps) {
+  const { slug } = params;
 
-  if (!fs.existsSync(filePath)) return notFound();
-
-  const fileContent = fs.readFileSync(filePath, 'utf-8');
-  const contentHtml = remark().use(html).processSync(fileContent).toString();
-
-  return <main className="p-8" dangerouslySetInnerHTML={{ __html: contentHtml }} />;
+  return (
+    <main className="min-h-screen flex flex-col items-center justify-center px-6 text-white">
+      <h1 className="text-4xl font-bold mb-4">{slug}</h1>
+      <p className="text-xl opacity-90">
+        This page will display the content of the article "{slug}" once it is added.
+      </p>
+    </main>
+  );
 }
