@@ -5,12 +5,10 @@ import { notFound } from 'next/navigation';
 import { remark } from 'remark';
 import html from 'remark-html';
 
-type PageProps = {
-  params: { slug: string }
-};
+export default function Page({ params }: any) {
+  const slug = params.slug;
+  const filePath = path.join(process.cwd(), 'posts', `${slug}.md`);
 
-export default function Page({ params }: PageProps) {
-  const filePath = path.join(process.cwd(), 'posts', `${params.slug}.md`);
   if (!fs.existsSync(filePath)) return notFound();
 
   const fileContent = fs.readFileSync(filePath, 'utf-8');
