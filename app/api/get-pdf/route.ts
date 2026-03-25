@@ -26,7 +26,10 @@ export async function GET(req: NextRequest) {
 
   const stripe = new Stripe(
     process.env.STRIPE_SECRET_KEY_NEW || process.env.STRIPE_SECRET_KEY!,
-    { apiVersion: "2025-07-30.basil" }
+    { 
+      // @ts-ignore : Force la version exigée par vos types Stripe locaux
+      apiVersion: "2025-08-27.basil" 
+    }
   );
 
   try {
