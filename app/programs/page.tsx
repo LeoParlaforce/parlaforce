@@ -20,45 +20,55 @@ const mainApp = {
 
 const guides = [
   {
-    title: "Psychological Guide",
+    title: "Psychological Protocol",
     subtitle: "Stop being a little b!tch in strength sports",
     price: "15€",
-    description: "Elite mindset training to break mental barriers and execute under pressure.",
+    description: "Analysis of performance inhibition. How to manage the subjective limit under heavy mechanical load without the noise of mainstream motivation.",
+    features: ["Failure Confrontation", "Focus Architecture", "Pressure Management"],
+    references: "Ref: Journal of Applied Sport Psychology (2024); Clinical performance standards.",
     link: "https://buy.stripe.com/6oE2bfGzln310EBq3zDeJ5HH",
   },
   {
     title: "Create Your Program",
     subtitle: "Customization & Design",
     price: "12€",
-    description: "Master the variables of strength. Learn to build or adapt any training system.",
+    description: "Master the variables of strength. Learn to build, adapt, and scale any training system with mechanical precision.",
+    features: ["Programming Logic", "Variable Scaling", "System Design"],
+    references: "Ref: Strength & Conditioning Research; Periodization Models.",
     link: "https://buy.stripe.com/6oE2bfGzln310EBqOQE5vPij",
   },
   {
     title: "Mobility",
     subtitle: "Reinforce your body",
     price: "12€",
-    description: "Bulletproof your joints and optimize your movement for heavy lifting.",
+    description: "Bulletproof your joints and optimize your movement patterns for high-intensity heavy lifting.",
+    features: ["Joint Integrity", "Movement Optimization", "Injury Prevention"],
+    references: "Ref: Clinical Biomechanics; Sports Medicine Standards.",
     link: "https://buy.stripe.com/6oE2bfGzln310EBq2zrmKT7o",
   },
   {
-    title: "The Diet",
-    subtitle: "English Version",
+    title: "Architectural Nutrition",
+    subtitle: "Protocol 01: English Version",
     price: "9€",
-    description: "Science-based nutrition strategies to fuel performance and body composition.",
+    description: "A clinical framework for performance. Focus on energy kinetics, structural macronutrient ratios, and biological reset through fasting.",
+    features: ["Metabolic Equations", "Leucine Threshold", "72h Fasting Protocols"],
+    references: "Ref: JISSN (2023); Longo & Mattson (2014); Mifflin-St Jeor (1990).",
     link: "https://buy.stripe.com/6oE2bfGzln310EBq5UnMtkxl",
   },
   {
     title: "Strongman",
     subtitle: "Training Systems",
     price: "9€",
-    description: "Specific programming for unconventional strength and explosive power.",
+    description: "Specific programming for unconventional strength, explosive power, and structural durability.",
+    features: ["Unconventional Force", "Explosive Power", "Specific Loading"],
+    references: "Ref: International Journal of Sports Science; Elite Strength Standards.",
     link: "https://buy.stripe.com/6oE2bfGzln310EBqT1Eicmj9",
   },
 ]
 
 export default function ProgramsPage() {
   return (
-    <div className="min-h-screen bg-black text-white py-24 px-6 font-sans">
+    <div className="min-h-screen bg-black text-white py-24 px-6 font-sans lowercase">
       <div className="max-w-6xl mx-auto">
         
         {/* Header Section */}
@@ -83,30 +93,52 @@ export default function ProgramsPage() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {guides.map((guide, idx) => (
-              <div key={idx} className="group border border-zinc-800 p-8 flex flex-col hover:border-zinc-500 transition-all duration-300">
+              <a 
+                key={idx} 
+                href={guide.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group border border-zinc-800 p-8 flex flex-col hover:border-blue-600 hover:bg-zinc-950 transition-all duration-300"
+              >
                 <div className="flex justify-between items-start mb-6">
-                  <h3 className="text-xl font-black uppercase leading-tight tracking-tight max-w-[70%]">
+                  <h3 className="text-xl font-black uppercase leading-tight tracking-tight max-w-[75%] group-hover:text-blue-500 transition-colors">
                     {guide.title}
-                    <span className="block text-zinc-500 text-[10px] mt-1 uppercase font-bold tracking-widest italic">
+                    <span className="block text-zinc-600 text-[10px] mt-1 uppercase font-bold tracking-widest italic">
                       {guide.subtitle}
                     </span>
                   </h3>
-                  <span className="text-xl font-black italic">{guide.price}</span>
+                  <span className="text-xl font-black italic text-zinc-400 group-hover:text-white">{guide.price}</span>
                 </div>
-                <p className="text-zinc-500 text-sm mb-10 flex-grow leading-relaxed italic">
+                
+                <p className="text-zinc-500 text-sm mb-6 flex-grow leading-relaxed normal-case italic">
                   {guide.description}
                 </p>
-                <a 
-                  href={guide.link}
-                  className="text-[10px] font-black uppercase tracking-[0.3em] border-b border-zinc-800 pb-2 self-start hover:text-blue-600 hover:border-blue-600 transition-all"
-                >
-                  Acquire Knowledge
-                </a>
-              </div>
+
+                <div className="space-y-2 mb-8 text-[9px] uppercase tracking-widest text-zinc-700 font-bold group-hover:text-zinc-500">
+                  {guide.features.map((f, i) => (
+                    <div key={i} className="flex items-center gap-2">
+                      <span className="w-1 h-1 bg-blue-600 rounded-full" /> {f}
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mb-6 p-3 bg-black border border-zinc-900 group-hover:border-blue-900 transition-colors">
+                  <p className="text-[8px] text-zinc-600 font-mono leading-tight italic">
+                    {guide.references}
+                  </p>
+                </div>
+
+                <div className="text-[10px] font-black uppercase tracking-[0.3em] border-b border-zinc-800 pb-2 self-start group-hover:text-blue-600 group-hover:border-blue-600 transition-all">
+                  Acquire Protocol
+                </div>
+              </a>
             ))}
 
-            {/* FREE GUIDE (Home Gym) */}
-            <div className="border border-zinc-800 p-8 flex flex-col bg-zinc-900/20">
+            {/* FREE GUIDE (Home Gym) - Fully Clickable */}
+            <Link 
+              href="/protected_pdfs/home gym - guide.pdf"
+              className="group border border-zinc-800 p-8 flex flex-col bg-zinc-900/20 hover:border-blue-500 hover:bg-zinc-900/40 transition-all duration-300"
+            >
               <div className="flex justify-between items-start mb-6">
                 <h3 className="text-xl font-black uppercase leading-tight tracking-tight">
                   Home Gym
@@ -116,16 +148,13 @@ export default function ProgramsPage() {
                 </h3>
                 <span className="text-xl font-black italic text-blue-500">0€</span>
               </div>
-              <p className="text-zinc-500 text-sm mb-10 flex-grow leading-relaxed">
-                The essential guide to building your own temple of strength.
+              <p className="text-zinc-500 text-sm mb-10 flex-grow leading-relaxed normal-case">
+                The essential guide to building your own temple of strength. Clinical efficiency for home-based performance.
               </p>
-              <Link 
-                href="/protected_pdfs/home gym - guide.pdf"
-                className="text-[10px] font-black uppercase tracking-[0.3em] border-b border-blue-500 pb-2 self-start hover:text-white transition-all text-blue-500"
-              >
+              <div className="text-[10px] font-black uppercase tracking-[0.3em] border-b border-blue-500 pb-2 self-start group-hover:text-white transition-all text-blue-500">
                 Download PDF
-              </Link>
-            </div>
+              </div>
+            </Link>
           </div>
         </section>
 
@@ -134,10 +163,10 @@ export default function ProgramsPage() {
           <div>
             <h2 className="text-xs font-black uppercase tracking-[0.4em] text-blue-600 mb-6">The Architect</h2>
             <h3 className="text-4xl font-black uppercase tracking-tighter mb-6 italic">Clinical Expertise <br/> meets Raw Performance.</h3>
-            <p className="text-zinc-400 leading-relaxed mb-6">
-              Unlike AI-generated templates, every protocol here is built by a licensed Clinical Psychologist specializing in the psycho-pathology of performance. 
+            <p className="text-zinc-400 leading-relaxed mb-6 normal-case">
+              Unlike AI-generated templates, every protocol here is built by a licensed Clinical Psychologist specializing in the pathology of performance. 
             </p>
-            <p className="text-zinc-400 leading-relaxed">
+            <p className="text-zinc-400 leading-relaxed normal-case">
               We don't just optimize your sets and reps; we restructure the cognitive architecture that dictates your physical output.
             </p>
           </div>
@@ -161,9 +190,14 @@ export default function ProgramsPage() {
           </div>
         </section>
 
-        {/* FEATURED: THE APP (The 1:1 Connection) */}
+        {/* FEATURED: THE APP (The 1:1 Connection) - Fully Clickable */}
         <section className="mb-24">
-          <div className="group relative border-2 border-blue-600 bg-zinc-950 p-8 md:p-16 overflow-hidden transition-all">
+          <a 
+            href={mainApp.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative block border-2 border-blue-600 bg-zinc-950 p-8 md:p-16 overflow-hidden transition-all hover:bg-zinc-900"
+          >
             <div className="relative z-10 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-10">
               <div className="max-w-2xl">
                 <div className="flex items-center gap-4 mb-6">
@@ -177,7 +211,7 @@ export default function ProgramsPage() {
                 <h2 className="text-5xl md:text-7xl font-black mb-6 uppercase tracking-tighter italic">
                   {mainApp.title}
                 </h2>
-                <p className="text-zinc-400 text-lg md:text-xl leading-relaxed mb-6">
+                <p className="text-zinc-400 text-lg md:text-xl leading-relaxed mb-6 normal-case">
                   {mainApp.description}
                 </p>
                 <ul className="text-zinc-600 text-xs uppercase font-bold tracking-[0.2em] space-y-3">
@@ -190,15 +224,12 @@ export default function ProgramsPage() {
                 <div className="text-6xl font-black mb-8 italic">
                   {mainApp.price}<span className="text-xl text-zinc-500 font-normal"> {mainApp.period}</span>
                 </div>
-                <a 
-                  href={mainApp.link}
-                  className="inline-block w-full lg:w-auto bg-white text-black hover:bg-blue-600 hover:text-white font-black uppercase py-6 px-14 transition-all text-sm tracking-widest text-center"
-                >
+                <div className="inline-block w-full lg:w-auto bg-white text-black group-hover:bg-blue-600 group-hover:text-white font-black uppercase py-6 px-14 transition-all text-sm tracking-widest text-center">
                   Start The Conversation
-                </a>
+                </div>
               </div>
             </div>
-          </div>
+          </a>
         </section>
 
         {/* Navigation Footer */}
