@@ -109,7 +109,6 @@ export default function ProgramsPage() {
     }
   };
 
-  // Génération du JSON-LD pour le SEO (FAQ Schema)
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -124,16 +123,30 @@ export default function ProgramsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white py-12 px-6 font-sans lowercase">
-      {/* Injection des données structurées SEO */}
+    <div className="min-h-screen bg-black text-white py-12 px-6 font-sans lowercase relative overflow-hidden">
+      
+      {/* GRAIN CINÉMATIQUE SUBTIL */}
+      <div 
+        className="pointer-events-none fixed inset-0 z-[101] opacity-[0.04]" 
+        style={{ 
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='fineGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.90' numOctaves='1' stitchTiles='stitch' seed='7'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23fineGrain)'/%3E%3C/svg%3E")` 
+        }}
+      ></div>
+
+      <div 
+        className="pointer-events-none fixed inset-0 z-[102] opacity-[0.05] mix-blend-overlay" 
+        style={{ 
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='clumpingGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.005' numOctaves='6' stitchTiles='stitch' seed='13'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23clumpingGrain)'/%3E%3C/svg%3E")` 
+        }}
+      ></div>
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto relative z-10">
         
-        {/* Navigation haute */}
         <nav className="mb-16 flex justify-between items-center border-b border-zinc-900 pb-6">
           <Link href="/" className="text-zinc-500 hover:text-blue-600 text-[10px] font-black uppercase tracking-[0.5em] transition-all">
             ← Back to Website
@@ -176,7 +189,7 @@ export default function ProgramsPage() {
                   <span className="text-xl font-black italic text-zinc-400 group-hover:text-white">{guide.price}</span>
                 </div>
                 
-                <p className="text-zinc-500 text-sm mb-6 flex-grow leading-relaxed normal-case italic">
+                <p className="text-zinc-500 text-sm mb-6 flex-grow leading-relaxed italic">
                   {guide.description}
                 </p>
 
@@ -200,7 +213,6 @@ export default function ProgramsPage() {
               </button>
             ))}
 
-            {/* LE PROGRAMME GRATUIT (HOME GYM) */}
             <a 
               href="/pdfs/home-gym - guide.pdf" 
               download
@@ -215,7 +227,7 @@ export default function ProgramsPage() {
                 </h3>
                 <span className="text-xl font-black italic text-blue-500">0€</span>
               </div>
-              <p className="text-zinc-500 text-sm mb-10 flex-grow leading-relaxed normal-case">
+              <p className="text-zinc-500 text-sm mb-10 flex-grow leading-relaxed">
                 The essential guide to building your own temple of strength. Clinical efficiency for home-based performance.
               </p>
               <div className="text-[10px] font-black uppercase tracking-[0.3em] border-b border-blue-500 pb-2 self-start group-hover:text-white transition-all text-blue-500">
@@ -225,15 +237,14 @@ export default function ProgramsPage() {
           </div>
         </section>
 
-        {/* SECTION THE ARCHITECT */}
         <section className="mb-32 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center border-y border-zinc-900 py-20">
           <div>
             <h2 className="text-xs font-black uppercase tracking-[0.4em] text-blue-600 mb-6">The Architect</h2>
             <h3 className="text-4xl font-black uppercase tracking-tighter mb-6 italic">Clinical Expertise <br/> meets Raw Performance.</h3>
-            <p className="text-zinc-400 leading-relaxed mb-6 normal-case">
+            <p className="text-zinc-400 leading-relaxed mb-6">
               Unlike AI-generated templates, every protocol here is built by a licensed Clinical Psychologist specializing in the pathology of performance. 
             </p>
-            <p className="text-zinc-400 leading-relaxed normal-case">
+            <p className="text-zinc-400 leading-relaxed">
               We don't just optimize your sets and reps; we restructure the cognitive architecture that dictates your physical output.
             </p>
           </div>
@@ -257,7 +268,6 @@ export default function ProgramsPage() {
           </div>
         </section>
 
-        {/* SECTION ATHLETIC INTELLIGENCE (CHAT) */}
         <section className="mb-32">
           <a 
             href={mainApp.link}
@@ -275,7 +285,7 @@ export default function ProgramsPage() {
                 <h2 className="text-5xl md:text-7xl font-black mb-6 uppercase tracking-tighter italic">
                   {mainApp.title}
                 </h2>
-                <p className="text-zinc-400 text-lg md:text-xl leading-relaxed mb-6 normal-case">
+                <p className="text-zinc-400 text-lg md:text-xl leading-relaxed mb-6">
                   {mainApp.description}
                 </p>
               </div>
@@ -291,7 +301,6 @@ export default function ProgramsPage() {
           </a>
         </section>
 
-        {/* SECTION FAQ SEO */}
         <section className="mb-24 border-t border-zinc-900 pt-20">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-600 mb-12 text-center">
@@ -307,7 +316,7 @@ export default function ProgramsPage() {
                     onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
                     className="w-full flex justify-between items-center p-6 text-left"
                   >
-                    <span className="text-sm md:text-base font-bold uppercase tracking-wide normal-case">
+                    <span className="text-sm md:text-base font-bold uppercase tracking-wide">
                       {faq.question}
                     </span>
                     <span className="text-blue-600 font-black text-xl ml-4">
@@ -315,7 +324,7 @@ export default function ProgramsPage() {
                     </span>
                   </button>
                   {openFaq === idx && (
-                    <div className="px-6 pb-6 text-zinc-400 text-sm leading-relaxed normal-case italic border-t border-zinc-900 pt-4">
+                    <div className="px-6 pb-6 text-zinc-400 text-sm leading-relaxed italic border-t border-zinc-900 pt-4">
                       {faq.answer}
                     </div>
                   )}

@@ -2,12 +2,10 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 
-const postsDirectory = path.join(process.cwd(), 'content/blog')
+const postsDirectory = path.join(process.cwd(), 'app/posts')
 
 export function getAllPosts() {
-  if (!fs.existsSync(postsDirectory)) {
-    return []
-  }
+  if (!fs.existsSync(postsDirectory)) return []
   
   const fileNames = fs.readdirSync(postsDirectory)
   const allPostsData = fileNames

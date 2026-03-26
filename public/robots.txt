@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+# Lien vers ton plan de site pour faciliter l'indexation
+Sitemap: https://parlaforce.com/sitemap.xml

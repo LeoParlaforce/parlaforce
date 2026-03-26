@@ -16,8 +16,26 @@ export default function Home() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center px-6 bg-black font-sans lowercase relative overflow-hidden text-white">
       
+      {/* SYSTÈME DE GRAIN CINÉMATIQUE MULTI-COUCHES */}
+
+      {/* Couche 1 : Texture fine (Bruit fractal, soft-light) */}
+      <div 
+        className="pointer-events-none fixed inset-0 z-[101] opacity-[0.02]" 
+        style={{ 
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='fineGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='1' stitchTiles='stitch' seed='7'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23fineGrain)'/%3E%3C/svg%3E")` 
+        }}
+      ></div>
+
+      {/* Couche 2 : Clumping & Variations (Turbulence, overlay, opacité très faible) */}
+      <div 
+        className="pointer-events-none fixed inset-0 z-[102] opacity-[0.025] mix-blend-overlay" 
+        style={{ 
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='clumpingGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.005' numOctaves='6' stitchTiles='stitch' seed='13'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23clumpingGrain)'/%3E%3C/svg%3E")` 
+        }}
+      ></div>
+
       {/* Label haut de page */}
-      <div className="absolute top-12 left-1/2 -translate-x-1/2 w-full text-center">
+      <div className="absolute top-12 left-1/2 -translate-x-1/2 w-full text-center z-10">
         <span className="text-blue-600 text-[10px] font-black uppercase tracking-[0.5em] border border-blue-600 px-4 py-2">
           Clinical Strength Architecture
         </span>
@@ -79,7 +97,7 @@ export default function Home() {
       </div>
 
       {/* Footer / Versioning */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-center w-full">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-center w-full z-10">
         <span className="text-zinc-800 text-[10px] font-black uppercase tracking-[0.4em]">
           System v2.0.26 // Built by the Architect
         </span>
