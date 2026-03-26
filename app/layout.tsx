@@ -21,7 +21,7 @@ export const metadata = {
     type: 'website',
     images: [
       {
-        url: '/og-image.png', // Assurez-vous d'avoir cette image dans /public
+        url: '/og-image.png',
         width: 1200,
         height: 630,
         alt: 'ParlaForce - Clinical Strength Architecture',
@@ -97,7 +97,7 @@ export default function RootLayout({
         "name": "Leo Gayrard",
         "jobTitle": "Licensed Psychologist & Strength Athlete",
         "url": "https://parlaforce.com",
-        "image": "https://parlaforce.com/leo-gayrard.jpg", // Image de profil recommandée
+        "image": "https://parlaforce.com/leo-gayrard.jpg",
         "knowsAbout": ["Psychology", "Strength Training", "Human Performance", "Biology"],
         "sameAs": [
           "https://www.instagram.com/par_la_force/"
@@ -109,11 +109,25 @@ export default function RootLayout({
   return (
     <html lang="en" className="overflow-x-hidden">
       <body className="bg-black text-zinc-300 antialiased font-sans flex flex-col min-h-screen overflow-x-hidden w-full relative">
-        <main className="flex-grow">
+        
+        {/* LE GRAIN - FIX MOBILE SUR TOUT LE SITE */}
+        <div 
+          className="pointer-events-none fixed inset-0 z-[9999] opacity-[0.04] md:opacity-[0.03] bg-repeat" 
+          style={{ 
+            backgroundImage: "url('/grain.png')", 
+            backgroundSize: '250px 250px', // Taille fixe pour éviter le flou mobile
+            transform: 'translateZ(0)', // Force l'accélération matérielle
+            WebkitTransform: 'translateZ(0)'
+          }}
+        ></div>
+
+        <main className="flex-grow relative z-10">
           {children}
         </main>
         
-        <Footer />
+        <div className="relative z-10">
+          <Footer />
+        </div>
 
         <script
           type="application/ld+json"

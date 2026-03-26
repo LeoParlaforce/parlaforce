@@ -15,11 +15,7 @@ export default function BlogListing() {
   return (
     <main className="min-h-screen bg-black text-white font-sans lowercase relative overflow-hidden selection:bg-blue-600/30 w-full">
       
-      {/* SYSTÈME DE GRAIN UNIFIÉ (PNG) */}
-      <div 
-        className="pointer-events-none fixed inset-0 z-[1] opacity-[0.03] md:opacity-[0.02] bg-repeat" 
-        style={{ backgroundImage: "url('/grain.png')", backgroundSize: '200px' }}
-      ></div>
+      {/* Le grain est maintenant géré par le layout global */}
 
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-16 md:py-24 relative z-10">
         
@@ -31,7 +27,6 @@ export default function BlogListing() {
         </nav>
 
         <header className="mb-16 md:mb-24 text-center">
-          {/* Correction taille mobile : 7xl -> 5xl */}
           <h1 className="text-5xl md:text-9xl font-black uppercase tracking-tighter leading-none mb-8 italic">
             ARTICLES<span className="text-blue-600">.</span>
           </h1>
@@ -61,7 +56,6 @@ export default function BlogListing() {
                   </>
                 )}
 
-                {/* CONTENU SUR L'IMAGE */}
                 <div className="absolute inset-0 p-6 md:p-10 flex flex-col justify-end text-center z-20">
                   <div className="mb-4 flex justify-center gap-4 text-[8px] md:text-[10px] font-bold tracking-[0.3em] text-zinc-400 uppercase">
                     <span>{post.date}</span>
@@ -77,7 +71,6 @@ export default function BlogListing() {
                   </div>
                 </div>
 
-                {/* RÉFÉRENCE CLINIQUE */}
                 <span className="absolute top-4 right-4 text-zinc-800 text-[8px] md:text-[9px] font-black uppercase tracking-widest group-hover:text-zinc-600 transition-colors z-20">
                   Ref: PF-{post.slug.substring(0,3).toUpperCase()}
                 </span>

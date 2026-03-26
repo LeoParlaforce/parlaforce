@@ -28,16 +28,16 @@ export default function Home() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center px-4 md:px-6 bg-black font-sans lowercase relative overflow-hidden text-white w-full">
       
-      {/* SYSTÈME DE GRAIN CINÉMATIQUE (Version Statique PNG)
-          Nécessite le fichier /public/grain.png 
-      */}
+      {/* SYSTÈME DE GRAIN CINÉMATIQUE BLINDÉ MOBILE */}
 
       {/* Couche 1 : Texture de base */}
       <div 
         className="pointer-events-none fixed inset-0 z-[101] opacity-[0.03] md:opacity-[0.02] bg-repeat" 
         style={{ 
           backgroundImage: "url('/grain.png')",
-          backgroundSize: '200px'
+          backgroundSize: '200px',
+          transform: 'translateZ(0)',
+          WebkitTransform: 'translateZ(0)'
         }}
       ></div>
 
@@ -46,7 +46,9 @@ export default function Home() {
         className="pointer-events-none fixed inset-0 z-[102] opacity-[0.04] md:opacity-[0.025] mix-blend-overlay bg-repeat" 
         style={{ 
           backgroundImage: "url('/grain.png')",
-          backgroundSize: '400px'
+          backgroundSize: '400px',
+          transform: 'translateZ(0)',
+          WebkitTransform: 'translateZ(0)'
         }}
       ></div>
 
@@ -59,7 +61,7 @@ export default function Home() {
 
       <div className="max-w-5xl w-full relative z-10 py-24 text-center mt-16 md:mt-12">
         
-        {/* TITRE PRINCIPAL - Adapté pour ne pas déborder sur mobile */}
+        {/* TITRE PRINCIPAL */}
         <h1 className="text-5xl sm:text-6xl md:text-9xl font-black tracking-tighter uppercase leading-none mb-8 italic">
           PARLA<span className="text-blue-600">FORCE.</span>
         </h1>
