@@ -1,13 +1,7 @@
-import type { Metadata } from "next"
-import Link from "next/link"
+"use client";
 
-export const metadata: Metadata = {
-  title: "Training Systems & Psychological Protocols | No AI",
-  description: "Human-led psychological coaching and training systems for strength athletes. No AI. Direct access to expert clinical psychology and performance protocols.",
-  alternates: {
-    canonical: "https://parlaforce.com/programs",
-  },
-}
+import Link from "next/link";
+import { useState } from "react";
 
 const mainApp = {
   id: "athletic-intelligence",
@@ -16,62 +10,137 @@ const mainApp = {
   period: "/month",
   description: "Direct encrypted chat access to a specialized clinical psychologist. Real-time guidance on training, nutrition, and the unique psychological architecture of high performance.",
   link: "https://chat.troisiemechemin.fr",
-}
+};
 
 const guides = [
   {
     title: "Psychological Protocol",
     subtitle: "Stop being a little b!tch in strength sports",
     price: "15€",
+    priceAmount: 1500,
+    pdfFile: "Psychological guide to stop being a little b!tch in strength sports.pdf",
     description: "Analysis of performance inhibition. How to manage the subjective limit under heavy mechanical load without the noise of mainstream motivation.",
     features: ["Failure Confrontation", "Focus Architecture", "Pressure Management"],
     references: "Ref: Journal of Applied Sport Psychology (2024); Clinical performance standards.",
-    link: "https://buy.stripe.com/6oE2bfGzln310EBq3zDeJ5HH",
   },
   {
     title: "Create Your Program",
     subtitle: "Customization & Design",
     price: "12€",
+    priceAmount: 1200,
+    pdfFile: "Create your own program.pdf",
     description: "Master the variables of strength. Learn to build, adapt, and scale any training system with mechanical precision.",
     features: ["Programming Logic", "Variable Scaling", "System Design"],
     references: "Ref: Strength & Conditioning Research; Periodization Models.",
-    link: "https://buy.stripe.com/6oE2bfGzln310EBqOQE5vPij",
   },
   {
     title: "Mobility",
     subtitle: "Reinforce your body",
     price: "12€",
+    priceAmount: 1200,
+    pdfFile: "Mobility - reinforce your body.pdf",
     description: "Bulletproof your joints and optimize your movement patterns for high-intensity heavy lifting.",
     features: ["Joint Integrity", "Movement Optimization", "Injury Prevention"],
     references: "Ref: Clinical Biomechanics; Sports Medicine Standards.",
-    link: "https://buy.stripe.com/6oE2bfGzln310EBq2zrmKT7o",
   },
   {
     title: "Architectural Nutrition",
     subtitle: "Protocol 01: English Version",
     price: "9€",
+    priceAmount: 900,
+    pdfFile: "Le Diet - english version.pdf",
     description: "A clinical framework for performance. Focus on energy kinetics, structural macronutrient ratios, and biological reset through fasting.",
     features: ["Metabolic Equations", "Leucine Threshold", "72h Fasting Protocols"],
     references: "Ref: JISSN (2023); Longo & Mattson (2014); Mifflin-St Jeor (1990).",
-    link: "https://buy.stripe.com/6oE2bfGzln310EBq5UnMtkxl",
   },
   {
     title: "Strongman",
     subtitle: "Training Systems",
     price: "9€",
+    priceAmount: 900,
+    pdfFile: "Strongman - training.pdf",
     description: "Specific programming for unconventional strength, explosive power, and structural durability.",
     features: ["Unconventional Force", "Explosive Power", "Specific Loading"],
     references: "Ref: International Journal of Sports Science; Elite Strength Standards.",
-    link: "https://buy.stripe.com/6oE2bfGzln310EBqT1Eicmj9",
   },
-]
+];
+
+const faqs = [
+  {
+    question: "Who are these psychological and strength protocols for?",
+    answer: "These systems are engineered for intermediate to elite athletes in strength sports (Powerlifting, Strongman, Weightlifting). They do not rely on mainstream motivation. They are clinical tools designed to restructure cognitive architecture and physical output under heavy mechanical load."
+  },
+  {
+    question: "Are these generic or AI-generated training templates?",
+    answer: "Zero AI content. Zero generic algorithms. Every protocol, equation, and structural design is architected by a licensed Clinical Psychologist specializing in the pathology and psychology of extreme physical performance."
+  },
+  {
+    question: "How is the PDF protocol delivered after purchase?",
+    answer: "You will be redirected to a secure success page immediately after checkout, where a temporary, cryptographically signed download link will be generated for your specific PDF. Ensure you download it immediately."
+  },
+  {
+    question: "What is the difference between the PDF Protocols and Athletic Intelligence?",
+    answer: "The PDF Protocols are static, highly specialized clinical blueprints for self-application. ATHLETIC INTELLIGENCE is a premium, 1:1 encrypted chat interface offering dynamic, real-time psychological and programming adjustments directly with the architect."
+  }
+];
 
 export default function ProgramsPage() {
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  const handleCheckout = async (guide: typeof guides[0]) => {
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          title: guide.title,
+          priceAmount: guide.priceAmount,
+          pdfFile: guide.pdfFile 
+        }),
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        console.error("Erreur Checkout:", data.error);
+      }
+    } catch (err) {
+      console.error("Erreur réseau:", err);
+    }
+  };
+
+  // Génération du JSON-LD pour le SEO (FAQ Schema)
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map((faq) => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer
+      }
+    }))
+  };
+
   return (
-    <div className="min-h-screen bg-black text-white py-24 px-6 font-sans lowercase">
+    <div className="min-h-screen bg-black text-white py-12 px-6 font-sans lowercase">
+      {/* Injection des données structurées SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+
       <div className="max-w-6xl mx-auto">
         
-        {/* Header Section */}
+        {/* Navigation haute */}
+        <nav className="mb-16 flex justify-between items-center border-b border-zinc-900 pb-6">
+          <Link href="/" className="text-zinc-500 hover:text-blue-600 text-[10px] font-black uppercase tracking-[0.5em] transition-all">
+            ← Back to Website
+          </Link>
+          <span className="text-zinc-800 text-[10px] font-black uppercase tracking-[0.3em]">System v2.0.26</span>
+        </nav>
+
         <header className="mb-24">
           <h1 className="text-6xl md:text-8xl font-black tracking-tighter uppercase mb-6 italic">
             SYSTEMS<span className="text-blue-600">.</span>
@@ -86,21 +155,18 @@ export default function ProgramsPage() {
           </div>
         </header>
 
-        {/* GUIDES GRID */}
         <section className="mb-32">
           <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-600 mb-12 border-b border-zinc-900 pb-4">
             Specialized Human Intelligence Guides
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {guides.map((guide, idx) => (
-              <a 
+              <button 
                 key={idx} 
-                href={guide.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group border border-zinc-800 p-8 flex flex-col hover:border-blue-600 hover:bg-zinc-950 transition-all duration-300"
+                onClick={() => handleCheckout(guide)}
+                className="group border border-zinc-800 p-8 flex flex-col hover:border-blue-600 hover:bg-zinc-950 transition-all duration-300 text-left w-full"
               >
-                <div className="flex justify-between items-start mb-6">
+                <div className="flex justify-between items-start mb-6 w-full">
                   <h3 className="text-xl font-black uppercase leading-tight tracking-tight max-w-[75%] group-hover:text-blue-500 transition-colors">
                     {guide.title}
                     <span className="block text-zinc-600 text-[10px] mt-1 uppercase font-bold tracking-widest italic">
@@ -122,7 +188,7 @@ export default function ProgramsPage() {
                   ))}
                 </div>
 
-                <div className="mb-6 p-3 bg-black border border-zinc-900 group-hover:border-blue-900 transition-colors">
+                <div className="mb-6 p-3 bg-black border border-zinc-900 group-hover:border-blue-900 transition-colors w-full">
                   <p className="text-[8px] text-zinc-600 font-mono leading-tight italic">
                     {guide.references}
                   </p>
@@ -131,12 +197,13 @@ export default function ProgramsPage() {
                 <div className="text-[10px] font-black uppercase tracking-[0.3em] border-b border-zinc-800 pb-2 self-start group-hover:text-blue-600 group-hover:border-blue-600 transition-all">
                   Acquire Protocol
                 </div>
-              </a>
+              </button>
             ))}
 
-            {/* FREE GUIDE (Home Gym) - Fully Clickable */}
-            <Link 
-              href="/protected_pdfs/home gym - guide.pdf"
+            {/* LE PROGRAMME GRATUIT (HOME GYM) */}
+            <a 
+              href="/pdfs/home-gym - guide.pdf" 
+              download
               className="group border border-zinc-800 p-8 flex flex-col bg-zinc-900/20 hover:border-blue-500 hover:bg-zinc-900/40 transition-all duration-300"
             >
               <div className="flex justify-between items-start mb-6">
@@ -154,11 +221,11 @@ export default function ProgramsPage() {
               <div className="text-[10px] font-black uppercase tracking-[0.3em] border-b border-blue-500 pb-2 self-start group-hover:text-white transition-all text-blue-500">
                 Download PDF
               </div>
-            </Link>
+            </a>
           </div>
         </section>
 
-        {/* TRUST SECTION: THE EXPERT */}
+        {/* SECTION THE ARCHITECT */}
         <section className="mb-32 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center border-y border-zinc-900 py-20">
           <div>
             <h2 className="text-xs font-black uppercase tracking-[0.4em] text-blue-600 mb-6">The Architect</h2>
@@ -190,8 +257,8 @@ export default function ProgramsPage() {
           </div>
         </section>
 
-        {/* FEATURED: THE APP (The 1:1 Connection) - Fully Clickable */}
-        <section className="mb-24">
+        {/* SECTION ATHLETIC INTELLIGENCE (CHAT) */}
+        <section className="mb-32">
           <a 
             href={mainApp.link}
             target="_blank"
@@ -204,9 +271,6 @@ export default function ProgramsPage() {
                   <span className="bg-blue-600 text-white text-[10px] font-black uppercase px-3 py-1 tracking-widest">
                     DIRECT HUMAN INTERFACE
                   </span>
-                  <span className="text-blue-600 text-[10px] font-black uppercase tracking-widest border border-blue-600 px-2 py-0.5">
-                    ZERO ALGORITHMS
-                  </span>
                 </div>
                 <h2 className="text-5xl md:text-7xl font-black mb-6 uppercase tracking-tighter italic">
                   {mainApp.title}
@@ -214,11 +278,6 @@ export default function ProgramsPage() {
                 <p className="text-zinc-400 text-lg md:text-xl leading-relaxed mb-6 normal-case">
                   {mainApp.description}
                 </p>
-                <ul className="text-zinc-600 text-xs uppercase font-bold tracking-[0.2em] space-y-3">
-                  <li>• Direct 1:1 Dialogue with a Clinical Expert</li>
-                  <li>• Evidence-Based Performance Psychology</li>
-                  <li>• High-Resolution Training & Nutrition Strategy</li>
-                </ul>
               </div>
               <div className="text-left lg:text-right w-full lg:w-auto">
                 <div className="text-6xl font-black mb-8 italic">
@@ -232,13 +291,41 @@ export default function ProgramsPage() {
           </a>
         </section>
 
-        {/* Navigation Footer */}
-        <div className="flex justify-center pt-12">
-          <Link href="/" className="text-zinc-800 hover:text-zinc-400 text-[10px] font-black uppercase tracking-[0.5em] transition-all">
-            ← Back to Intelligence
-          </Link>
-        </div>
+        {/* SECTION FAQ SEO */}
+        <section className="mb-24 border-t border-zinc-900 pt-20">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-600 mb-12 text-center">
+              System Parameters & Inquiries
+            </h2>
+            <div className="space-y-4">
+              {faqs.map((faq, idx) => (
+                <div 
+                  key={idx} 
+                  className="border border-zinc-800 bg-black overflow-hidden transition-colors hover:border-zinc-700"
+                >
+                  <button
+                    onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
+                    className="w-full flex justify-between items-center p-6 text-left"
+                  >
+                    <span className="text-sm md:text-base font-bold uppercase tracking-wide normal-case">
+                      {faq.question}
+                    </span>
+                    <span className="text-blue-600 font-black text-xl ml-4">
+                      {openFaq === idx ? "−" : "+"}
+                    </span>
+                  </button>
+                  {openFaq === idx && (
+                    <div className="px-6 pb-6 text-zinc-400 text-sm leading-relaxed normal-case italic border-t border-zinc-900 pt-4">
+                      {faq.answer}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
       </div>
     </div>
-  )
+  );
 }

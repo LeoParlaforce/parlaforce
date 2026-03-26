@@ -1,44 +1,36 @@
-// app/api/checkout/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 
 export const runtime = "nodejs";
 
-function mask(s?: string | null) {
-  return s ? s.slice(0, 8) + "..." + s.slice(-6) : null;
-}
-
-const ACTIVE_KEY =
-  process.env.STRIPE_SECRET_KEY_NEW || process.env.STRIPE_SECRET_KEY; // <— priorité à la NEW
-
-console.log("Stripe key utilisée:", mask(ACTIVE_KEY));
-
-const stripe = new Stripe(ACTIVE_KEY!);
-
-export async function GET() {
-  return NextResponse.json({
-    stripeKey: mask(ACTIVE_KEY),
-    STRIPE_SECRET_KEY_NEW: mask(process.env.STRIPE_SECRET_KEY_NEW || null),
-    STRIPE_SECRET_KEY: mask(process.env.STRIPE_SECRET_KEY || null),
-  });
-}
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: "2025-08-27.basil" as any,
+});
 
 export async function POST(req: NextRequest) {
   try {
-    const { priceId } = await req.json();
-    if (!priceId) return NextResponse.json({ error: "Missing priceId" }, { status: 400 });
+    const { title, priceAmount, pdfFile } = await req.json();
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
-      line_items: [{ price: priceId, quantity: 1 }],
+      line_items: [
+        {
+          price_data: {
+            currency: "eur",
+            product_data: { name: title },
+            unit_amount: priceAmount,
+          },
+          quantity: 1,
+        },
+      ],
+      metadata: { pdfFile: pdfFile }, // CRUCIAL : On cache le nom du fichier ici
       mode: "payment",
       success_url: `${req.nextUrl.origin}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${req.nextUrl.origin}/cancel`,
+      cancel_url: `${req.nextUrl.origin}/programs`,
     });
 
     return NextResponse.json({ url: session.url });
   } catch (err: any) {
-    console.error("Stripe error:", err);
-    return NextResponse.json({ error: err.message || "Erreur inconnue" }, { status: 500 });
+    return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }

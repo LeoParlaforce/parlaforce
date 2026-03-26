@@ -1,4 +1,3 @@
-// app/api/get-pdf/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import crypto from "crypto";
@@ -7,87 +6,31 @@ export const runtime = "nodejs";
 
 function generateTemporaryLink(filename: string, expiresInSec = 3600) {
   const expires = Math.floor(Date.now() / 1000) + expiresInSec;
-  const key = process.env.STRIPE_SECRET_KEY_NEW || process.env.STRIPE_SECRET_KEY!;
-  const token = crypto
-    .createHmac("sha256", key)
-    .update(filename + expires)
-    .digest("hex");
+  const key = process.env.STRIPE_SECRET_KEY!;
+  const token = crypto.createHmac("sha256", key).update(filename + expires).digest("hex");
 
-  return `${process.env.NEXT_PUBLIC_BASE_URL}/api/serve-pdf?file=${encodeURIComponent(
-    filename
-  )}&expires=${expires}&token=${token}`;
+  return `${process.env.NEXT_PUBLIC_BASE_URL}/api/serve-pdf?file=${encodeURIComponent(filename)}&expires=${expires}&token=${token}`;
 }
 
 export async function GET(req: NextRequest) {
   const sessionId = req.nextUrl.searchParams.get("sessionId");
-  if (!sessionId) {
-    return NextResponse.json({ error: "Missing sessionId" }, { status: 400 });
-  }
+  if (!sessionId) return NextResponse.json({ error: "Missing session" }, { status: 400 });
 
-  const stripe = new Stripe(
-    process.env.STRIPE_SECRET_KEY_NEW || process.env.STRIPE_SECRET_KEY!,
-    { 
-      // @ts-ignore : Force la version exigée par vos types Stripe locaux
-      apiVersion: "2025-08-27.basil" 
-    }
-  );
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: "2025-08-27.basil" as any });
 
   try {
     const session = await stripe.checkout.sessions.retrieve(sessionId);
-    const lineItems = await stripe.checkout.sessions.listLineItems(sessionId, { limit: 1 });
-    const priceId = lineItems.data[0].price?.id;
-
-    console.log("PriceId reçu :", priceId);
-
-    let pdfFilename = "";
-
-    switch (priceId) {
-      // Nouveaux produits
-      case "price_1S2pY2Gzln310EBqtXDba2PK": // Fake natty
-        pdfFilename = "fake-natty-12-semaines-entrainement.pdf";
-        break;
-      case "price_1S2pXBGzln310EBqWmq3YzF0": // Tié un tigre
-        pdfFilename = "tie-un-tigre-12-semaines-powerlifting-edition.pdf";
-        break;
-
-      // Produits existants
-      case "price_1S01zCGzln310EBqT1Eicmj9":
-        pdfFilename = "Strongman.pdf";
-        break;
-      case "price_1S01yYGzln310EBqvLgvATcC":
-        pdfFilename = "Guide du home gym.pdf";
-        break;
-      case "price_1S01y2Gzln310EBq5UnMtkxl":
-        pdfFilename = "La diète - Guide pour transformer votre corps selon vos objectifs.pdf";
-        break;
-      case "price_1S01x9Gzln310EBq2zrmKT7o":
-        pdfFilename = "Mobilité - Guide du corps massif en santé & en mouvement.pdf";
-        break;
-      case "price_1S01w0Gzln310EBqOQE5vPij":
-        pdfFilename = "Comment créer son propre programme ou en personnaliser un qui existe déjà.pdf";
-        break;
-      case "price_1S01uTGzln310EBq3zDeJ5HH":
-        pdfFilename = "Guide psychologique pour arrêter d'être une petite sal.pe dans les sports de force.pdf";
-        break;
-    }
-
-    console.log("PDF correspondant :", pdfFilename);
+    
+    // On récupère le nom du fichier via les metadata qu'on a envoyé au checkout
+    const pdfFilename = session.metadata?.pdfFile;
 
     if (!pdfFilename) {
-      return NextResponse.json(
-        { error: "Impossible de générer le lien : PDF non trouvé" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Fichier non trouvé dans la session" }, { status: 404 });
     }
 
     const link = generateTemporaryLink(pdfFilename);
-
     return NextResponse.json({ url: link });
   } catch (err: any) {
-    console.error("Erreur get-pdf :", err);
-    return NextResponse.json(
-      { error: err.message || "Erreur inconnue" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
   }
 }
