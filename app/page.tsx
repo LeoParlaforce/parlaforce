@@ -17,18 +17,10 @@ export default function Home() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center px-4 md:px-6 bg-black font-sans lowercase relative overflow-hidden text-white w-full">
       
-      {/* LE GRAIN - VERSION UNIQUE ET STABILISÉE */}
-      <div 
-        className="pointer-events-none fixed inset-0 z-[1] bg-repeat" 
-        style={{ 
-          backgroundImage: "url('/grain.png')",
-          backgroundSize: '150px 150px', 
-          opacity: '0.04', 
-          transform: 'translateZ(0)', 
-          WebkitTransform: 'translateZ(0)',
-          imageRendering: 'pixelated'
-        }}
-      ></div>
+      {/* NOTE: LE GRAIN PNG A ÉTÉ SUPPRIMÉ ICI. 
+          IL EST MAINTENANT GÉRÉ PAR LE LAYOUT (VERSION SVG) 
+          POUR UN RENDU NET SUR MOBILE ET PC.
+      */}
 
       {/* LABEL HAUT DE PAGE */}
       <div className="absolute top-12 left-1/2 -translate-x-1/2 w-full px-4 text-center z-10">
