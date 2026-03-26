@@ -1,50 +1,70 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 
+// MÉTADONNÉES OPTIMISÉES POUR LA PAGE D'ACCUEIL
 export const metadata: Metadata = {
   title: 'ParlaForce | Clinical Strength Architecture',
   description: 'Human-led protocols for physical and psychological dominance. Restructuring the internal framework of high-performance output. No AI content.',
+  alternates: {
+    canonical: 'https://parlaforce.com',
+  },
   openGraph: {
     title: 'ParlaForce | Clinical Strength Architecture',
     description: 'Structural reorganization of human performance. Beyond mechanics, we target the internal logic of physical capacity.',
+    url: 'https://parlaforce.com',
     type: 'website',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'ParlaForce - Clinical Strength Architecture',
+      },
+    ],
   },
 }
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center px-4 md:px-6 bg-black font-sans lowercase relative overflow-hidden text-white">
+    <main className="min-h-screen flex flex-col items-center justify-center px-4 md:px-6 bg-black font-sans lowercase relative overflow-hidden text-white w-full">
       
-      {/* SYSTÈME DE GRAIN CINÉMATIQUE MULTI-COUCHES */}
+      {/* SYSTÈME DE GRAIN CINÉMATIQUE (Version Statique PNG)
+          Nécessite le fichier /public/grain.png 
+      */}
+
+      {/* Couche 1 : Texture de base */}
       <div 
-        className="pointer-events-none fixed inset-0 z-[101] opacity-[0.02]" 
+        className="pointer-events-none fixed inset-0 z-[101] opacity-[0.03] md:opacity-[0.02] bg-repeat" 
         style={{ 
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='fineGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='1' stitchTiles='stitch' seed='7'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23fineGrain)'/%3E%3C/svg%3E")` 
+          backgroundImage: "url('/grain.png')",
+          backgroundSize: '200px'
         }}
       ></div>
 
+      {/* Couche 2 : Profondeur et Overlay */}
       <div 
-        className="pointer-events-none fixed inset-0 z-[102] opacity-[0.025] mix-blend-overlay" 
+        className="pointer-events-none fixed inset-0 z-[102] opacity-[0.04] md:opacity-[0.025] mix-blend-overlay bg-repeat" 
         style={{ 
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='clumpingGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.005' numOctaves='6' stitchTiles='stitch' seed='13'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23clumpingGrain)'/%3E%3C/svg%3E")` 
+          backgroundImage: "url('/grain.png')",
+          backgroundSize: '400px'
         }}
       ></div>
 
-      {/* Label haut de page */}
-      <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[90%] md:w-full text-center z-10">
-        <span className="text-blue-600 text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.5em] border border-blue-600 px-3 md:px-4 py-2 block md:inline-block">
+      {/* LABEL HAUT DE PAGE */}
+      <div className="absolute top-12 left-1/2 -translate-x-1/2 w-full px-4 text-center z-10">
+        <span className="text-blue-600 text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] border border-blue-600 px-3 md:px-4 py-2 inline-block">
           Clinical Strength Architecture
         </span>
       </div>
 
       <div className="max-w-5xl w-full relative z-10 py-24 text-center mt-16 md:mt-12">
         
-        {/* Titre Principal */}
+        {/* TITRE PRINCIPAL - Adapté pour ne pas déborder sur mobile */}
         <h1 className="text-5xl sm:text-6xl md:text-9xl font-black tracking-tighter uppercase leading-none mb-8 italic">
           PARLA<span className="text-blue-600">FORCE.</span>
         </h1>
         
-        {/* Sous-titre */}
+        {/* SOUS-TITRE ET DESCRIPTION */}
         <div className="mb-16 max-w-2xl mx-auto space-y-6 px-2 md:px-0">
           <p className="text-zinc-500 text-xs md:text-base font-bold uppercase tracking-widest md:tracking-[0.3em] leading-relaxed">
             Human-led protocols for psychological <br className="hidden md:block" /> and physical dominance.
@@ -58,17 +78,18 @@ export default function Home() {
           </div>
 
           <div className="pt-4">
-            <span className="bg-blue-600/10 text-blue-600 text-[8px] md:text-[10px] font-black uppercase tracking-widest md:tracking-[0.4em] px-3 md:px-4 py-2 border border-blue-600/20 block md:inline-block">
+            <span className="bg-blue-600/10 text-blue-600 text-[8px] md:text-[10px] font-black uppercase tracking-widest md:tracking-[0.4em] px-3 md:px-4 py-2 border border-blue-600/20 inline-block">
               NO AI USED — 100% HUMAN INTELLIGENCE
             </span>
           </div>
         </div>
 
-        {/* Boutons d'action */}
-        <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
+        {/* BOUTONS D'ACTION (DESIGN BRUTALISTE) */}
+        <div className="flex flex-col md:flex-row gap-6 justify-center items-center w-full max-w-sm mx-auto md:max-w-full">
+          
           <Link 
             href="/programs" 
-            className="group relative border border-zinc-800 bg-black px-8 md:px-12 py-6 md:py-8 text-center hover:border-blue-600 hover:bg-zinc-950 transition-all duration-300 no-underline w-full max-w-[280px]"
+            className="group relative border border-zinc-800 bg-black px-8 md:px-12 py-6 md:py-8 text-center hover:border-blue-600 hover:bg-zinc-950 transition-all duration-300 no-underline w-full max-w-[280px] md:min-w-[280px]"
           >
             <span className="block text-[9px] font-black uppercase tracking-widest md:tracking-[0.4em] text-zinc-600 group-hover:text-blue-600 mb-2 transition-colors">
               Acquire Protocols
@@ -80,7 +101,7 @@ export default function Home() {
           
           <Link 
             href="/articles" 
-            className="group relative border border-zinc-800 bg-zinc-900/20 px-8 md:px-12 py-6 md:py-8 text-center hover:border-zinc-500 hover:bg-zinc-900/40 transition-all duration-300 no-underline w-full max-w-[280px]"
+            className="group relative border border-zinc-800 bg-zinc-900/20 px-8 md:px-12 py-6 md:py-8 text-center hover:border-zinc-500 hover:bg-zinc-900/40 transition-all duration-300 no-underline w-full max-w-[280px] md:min-w-[280px]"
           >
             <span className="block text-[9px] font-black uppercase tracking-widest md:tracking-[0.4em] text-zinc-600 group-hover:text-zinc-400 mb-2 transition-colors">
               Read Theory
@@ -92,8 +113,8 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Footer / Versioning */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-center w-[90%] md:w-full z-10">
+      {/* VERSIONING FOOTER (ABSOLUTE) */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-center w-full px-4 z-10">
         <span className="text-zinc-800 text-[8px] md:text-[10px] font-black uppercase tracking-widest md:tracking-[0.4em]">
           System v2.0.26 // Built by the Architect
         </span>
