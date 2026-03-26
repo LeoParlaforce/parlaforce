@@ -21,7 +21,6 @@ export const metadata = {
     index: true,
     follow: true,
   },
-  // La balise canonique empêche le contenu dupliqué
   alternates: {
     canonical: '/',
   },
@@ -33,15 +32,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="bg-black text-zinc-300 antialiased font-sans flex flex-col min-h-screen">
+    <html lang="en" className="overflow-x-hidden">
+      <body className="bg-black text-zinc-300 antialiased font-sans flex flex-col min-h-screen overflow-x-hidden w-full relative">
         <main className="flex-grow">
           {children}
         </main>
         
         <Footer />
 
-        {/* Google Structured Data (JSON-LD) */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

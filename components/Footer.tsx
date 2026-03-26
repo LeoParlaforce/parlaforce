@@ -4,9 +4,9 @@ export default function Footer() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="bg-black border-t border-zinc-900 pt-20 pb-10 text-white font-sans">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
+    <footer className="bg-black border-t border-zinc-900 pt-20 pb-10 text-white font-sans w-full overflow-hidden">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-16 mb-16 md:mb-20">
           
           <div className="md:col-span-2">
             <Link href="/" className="text-xl font-bold tracking-tight uppercase">
@@ -21,7 +21,7 @@ export default function Footer() {
                 href="https://thirdpath.cloud" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-xs uppercase tracking-[0.2em] text-zinc-400 hover:text-blue-500 transition-colors border-b border-zinc-800 pb-1"
+                className="text-xs uppercase tracking-[0.2em] text-zinc-400 hover:text-blue-500 transition-colors border-b border-zinc-800 pb-1 block w-max"
               >
                 Interested in psychology?
               </a>
@@ -46,9 +46,9 @@ export default function Footer() {
 
         </div>
 
-        <div className="pt-8 border-t border-zinc-900 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] tracking-[0.15em] font-medium text-zinc-600 uppercase">
+        <div className="pt-8 border-t border-zinc-900 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] tracking-[0.15em] font-medium text-zinc-600 uppercase text-center md:text-left">
           <p>© {year} Par la force. All rights reserved.</p>
-          <div className="flex flex-wrap justify-center gap-x-8 gap-y-2">
+          <div className="flex flex-wrap justify-center md:justify-end gap-x-4 md:gap-x-8 gap-y-4">
             <Link href="/about-us" className="hover:text-white transition-colors">About Us</Link>
             <Link href="/editorial-standards" className="hover:text-white transition-colors">Editorial Standards</Link>
             <Link href="/legal-notice" className="hover:text-white transition-colors">Legal Notice</Link>
