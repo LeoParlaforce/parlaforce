@@ -110,16 +110,20 @@ export default function RootLayout({
     <html lang="en" className="overflow-x-hidden">
       <body className="bg-black text-zinc-300 antialiased font-sans flex flex-col min-h-screen overflow-x-hidden w-full relative">
         
-        {/* LE GRAIN - FIX MOBILE SUR TOUT LE SITE */}
-        <div 
-          className="pointer-events-none fixed inset-0 z-[9999] opacity-[0.04] md:opacity-[0.03] bg-repeat" 
-          style={{ 
-            backgroundImage: "url('/grain.png')", 
-            backgroundSize: '250px 250px', // Taille fixe pour éviter le flou mobile
-            transform: 'translateZ(0)', // Force l'accélération matérielle
-            WebkitTransform: 'translateZ(0)'
-          }}
-        ></div>
+        {/* LE GRAIN NUMÉRIQUE (SVG) - REMPLACE L'IMAGE PNG */}
+        <div className="pointer-events-none fixed inset-0 z-[9999] opacity-[0.18] mix-blend-soft-light" aria-hidden="true">
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+            <filter id="noiseFilter">
+              <feTurbulence 
+                type="fractalNoise" 
+                baseFrequency="0.60" 
+                numOctaves="3" 
+                stitchTiles="stitch" 
+              />
+            </filter>
+            <rect width="100%" height="100%" filter="url(#noiseFilter)" />
+          </svg>
+        </div>
 
         <main className="flex-grow relative z-10">
           {children}

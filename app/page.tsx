@@ -1,26 +1,15 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 
-// MÉTADONNÉES OPTIMISÉES POUR LA PAGE D'ACCUEIL
 export const metadata: Metadata = {
   title: 'ParlaForce | Clinical Strength Architecture',
-  description: 'Human-led protocols for physical and psychological dominance. Restructuring the internal framework of high-performance output. No AI content.',
-  alternates: {
-    canonical: 'https://parlaforce.com',
-  },
+  description: 'Human-led protocols for physical and psychological dominance. No AI content.',
+  alternates: { canonical: 'https://parlaforce.com' },
   openGraph: {
     title: 'ParlaForce | Clinical Strength Architecture',
-    description: 'Structural reorganization of human performance. Beyond mechanics, we target the internal logic of physical capacity.',
     url: 'https://parlaforce.com',
     type: 'website',
-    images: [
-      {
-        url: '/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'ParlaForce - Clinical Strength Architecture',
-      },
-    ],
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
 }
 
@@ -28,27 +17,16 @@ export default function Home() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center px-4 md:px-6 bg-black font-sans lowercase relative overflow-hidden text-white w-full">
       
-      {/* SYSTÈME DE GRAIN CINÉMATIQUE BLINDÉ MOBILE */}
-
-      {/* Couche 1 : Texture de base */}
+      {/* LE GRAIN - VERSION UNIQUE ET STABILISÉE */}
       <div 
-        className="pointer-events-none fixed inset-0 z-[101] opacity-[0.03] md:opacity-[0.02] bg-repeat" 
+        className="pointer-events-none fixed inset-0 z-[1] bg-repeat" 
         style={{ 
           backgroundImage: "url('/grain.png')",
-          backgroundSize: '200px',
-          transform: 'translateZ(0)',
-          WebkitTransform: 'translateZ(0)'
-        }}
-      ></div>
-
-      {/* Couche 2 : Profondeur et Overlay */}
-      <div 
-        className="pointer-events-none fixed inset-0 z-[102] opacity-[0.04] md:opacity-[0.025] mix-blend-overlay bg-repeat" 
-        style={{ 
-          backgroundImage: "url('/grain.png')",
-          backgroundSize: '400px',
-          transform: 'translateZ(0)',
-          WebkitTransform: 'translateZ(0)'
+          backgroundSize: '150px 150px', 
+          opacity: '0.04', 
+          transform: 'translateZ(0)', 
+          WebkitTransform: 'translateZ(0)',
+          imageRendering: 'pixelated'
         }}
       ></div>
 
@@ -61,12 +39,10 @@ export default function Home() {
 
       <div className="max-w-5xl w-full relative z-10 py-24 text-center mt-16 md:mt-12">
         
-        {/* TITRE PRINCIPAL */}
         <h1 className="text-5xl sm:text-6xl md:text-9xl font-black tracking-tighter uppercase leading-none mb-8 italic">
           PARLA<span className="text-blue-600">FORCE.</span>
         </h1>
         
-        {/* SOUS-TITRE ET DESCRIPTION */}
         <div className="mb-16 max-w-2xl mx-auto space-y-6 px-2 md:px-0">
           <p className="text-zinc-500 text-xs md:text-base font-bold uppercase tracking-widest md:tracking-[0.3em] leading-relaxed">
             Human-led protocols for psychological <br className="hidden md:block" /> and physical dominance.
@@ -86,9 +62,8 @@ export default function Home() {
           </div>
         </div>
 
-        {/* BOUTONS D'ACTION (DESIGN BRUTALISTE) */}
+        {/* BOUTONS D'ACTION */}
         <div className="flex flex-col md:flex-row gap-6 justify-center items-center w-full max-w-sm mx-auto md:max-w-full">
-          
           <Link 
             href="/programs" 
             className="group relative border border-zinc-800 bg-black px-8 md:px-12 py-6 md:py-8 text-center hover:border-blue-600 hover:bg-zinc-950 transition-all duration-300 no-underline w-full max-w-[280px] md:min-w-[280px]"
@@ -115,7 +90,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* VERSIONING FOOTER (ABSOLUTE) */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-center w-full px-4 z-10">
         <span className="text-zinc-800 text-[8px] md:text-[10px] font-black uppercase tracking-widest md:tracking-[0.4em]">
           System v2.0.26 // Built by the Architect
