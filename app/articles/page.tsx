@@ -2,8 +2,8 @@ import { getAllPosts } from "@/lib/posts"
 import Link from "next/link"
 
 export const metadata = {
-  title: 'Protocol Archives | Parla Force',
-  description: 'Technical documentation and theoretical frameworks for human performance and psychological dominance.',
+  title: 'Protocol Archives | Theory & Research',
+  description: 'Technical documentation and theoretical frameworks for human performance, sports science, and psychological dominance.',
   alternates: {
     canonical: 'https://parlaforce.com/articles',
   },
@@ -12,11 +12,25 @@ export const metadata = {
 export default function BlogListing() {
   const posts = getAllPosts()
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Protocol Archives",
+    "description": "Technical documentation on human performance and psychological dominance.",
+    "url": "https://parlaforce.com/articles",
+    "mainEntity": {
+      "@type": "ItemList",
+      "itemListElement": posts.map((post, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "url": `https://parlaforce.com/articles/${post.slug}`
+      }))
+    }
+  };
+
   return (
     <main className="min-h-screen bg-black text-white font-sans lowercase relative overflow-hidden selection:bg-blue-600/30 w-full">
       
-      {/* Le grain est maintenant géré par le layout global */}
-
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-16 md:py-24 relative z-10">
         
         <nav className="mb-12 md:mb-16 flex justify-between items-center border-b border-zinc-900 pb-6">
@@ -44,7 +58,6 @@ export default function BlogListing() {
                 href={`/articles/${post.slug}`} 
                 className="group relative block aspect-[16/10] overflow-hidden border border-zinc-900 bg-zinc-950 w-full"
               >
-                
                 {post.image && (
                   <>
                     <img 
@@ -85,6 +98,11 @@ export default function BlogListing() {
           </div>
         )}
       </div>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     </main>
   )
 }

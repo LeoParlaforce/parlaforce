@@ -1,20 +1,28 @@
 import "./globals.css";
 import Footer from "../components/Footer";
 import { GoogleAnalytics } from '@next/third-parties/google';
+import { Viewport } from 'next'
+
+export const viewport: Viewport = {
+  themeColor: '#000000',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5, // Important pour l'accessibilité tout en restant contrôlé
+}
 
 export const metadata = {
   metadataBase: new URL('https://parlaforce.com'),
   title: {
-    default: "Par la force | Athletic Intelligence",
+    default: "Par la force | Athletic Intelligence & Performance Architecture",
     template: "%s | Par la force"
   },
-  description: "Evidence-based training systems, sports science, and psychological insights for elite performance.",
-  keywords: ["performance", "sports science", "psychology", "strength training", "protocols"],
+  description: "Evidence-based training systems, sports science, and psychological insights for elite performance. Designed for the structural reorganization of human potential.",
+  keywords: ["performance architecture", "sports science", "clinical strength", "psychological dominance", "athletic intelligence", "elite training protocols"],
   authors: [{ name: "Leo Gayrard" }],
   creator: "Leo Gayrard",
   openGraph: {
-    title: "Par la force | Athletic Intelligence",
-    description: "Evidence-based training systems for elite performance.",
+    title: "Par la force | Clinical Strength Architecture",
+    description: "Human-led protocols for physical and psychological dominance. No AI content.",
     url: 'https://parlaforce.com',
     siteName: 'Par la force',
     locale: 'en_US',
@@ -31,7 +39,7 @@ export const metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Par la force | Athletic Intelligence',
-    description: 'Evidence-based training systems.',
+    description: 'Evidence-based training systems for elite performance.',
     creator: '@par_la_force',
     images: ['/og-image.png'],
   },
@@ -45,9 +53,6 @@ export const metadata = {
       'max-image-preview': 'large',
       'max-snippet': -1,
     },
-  },
-  verification: {
-    google: "votre-code-de-verification", // Remplace par ton code Search Console si tu l'as
   },
   alternates: {
     canonical: 'https://parlaforce.com',
@@ -77,14 +82,7 @@ export default function RootLayout({
           "https://www.instagram.com/par_la_force/",
           "https://www.youtube.com/@ParLaForce",
           "https://thirdpath.cloud"
-        ],
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "1184 route de la Maurette",
-          "addressLocality": "Roquebrune-sur-Argens",
-          "postalCode": "83520",
-          "addressCountry": "FR"
-        }
+        ]
       },
       {
         "@type": "WebSite",
@@ -100,11 +98,17 @@ export default function RootLayout({
         "name": "Leo Gayrard",
         "jobTitle": "Licensed Psychologist & Strength Athlete",
         "url": "https://parlaforce.com",
-        "image": "https://parlaforce.com/leo-gayrard.jpg",
-        "knowsAbout": ["Psychology", "Strength Training", "Human Performance", "Biology"],
-        "sameAs": [
-          "https://www.instagram.com/par_la_force/"
-        ]
+        "knowsAbout": ["Psychology", "Strength Training", "Human Performance", "Biomechanics"]
+      },
+      {
+        "@type": "Service",
+        "name": "Clinical Strength Architecture",
+        "provider": { "@id": "https://parlaforce.com/#organization" },
+        "description": "Evidence-based training systems and psychological protocols for elite athletes.",
+        "offers": {
+          "@type": "Offer",
+          "category": "Performance Protocols"
+        }
       }
     ]
   };
@@ -113,7 +117,7 @@ export default function RootLayout({
     <html lang="en" className="overflow-x-hidden">
       <body className="bg-black text-zinc-300 antialiased font-sans flex flex-col min-h-screen overflow-x-hidden w-full relative">
         
-        {/* LE GRAIN NUMÉRIQUE (SVG) */}
+        {/* LE GRAIN NUMÉRIQUE (SVG) - OPTIMISÉ */}
         <div className="pointer-events-none fixed inset-0 z-[9999] opacity-[0.18] mix-blend-soft-light" aria-hidden="true">
           <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
             <filter id="noiseFilter">
@@ -136,13 +140,11 @@ export default function RootLayout({
           <Footer />
         </div>
 
-        {/* JSON-LD pour le SEO */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
 
-        {/* Google Analytics - ID mis à jour */}
         <GoogleAnalytics gaId="G-YR024XZRG5" />
       </body>
     </html>

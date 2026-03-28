@@ -2,25 +2,19 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'ParlaForce | Clinical Strength Architecture',
-  description: 'Human-led protocols for physical and psychological dominance. No AI content.',
+  title: 'ParlaForce | Systems for Physical & Psychological Dominance',
+  description: 'Human-led protocols for elite performance. Clinical strength architecture, sports science, and cognitive restructuring without AI interference.',
   alternates: { canonical: 'https://parlaforce.com' },
-  openGraph: {
-    title: 'ParlaForce | Clinical Strength Architecture',
-    url: 'https://parlaforce.com',
-    type: 'website',
-    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
-  },
 }
 
 export default function Home() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center px-4 md:px-6 bg-black font-sans lowercase relative overflow-hidden text-white w-full">
       
-      {/* NOTE: LE GRAIN PNG A ÉTÉ SUPPRIMÉ ICI. 
-          IL EST MAINTENANT GÉRÉ PAR LE LAYOUT (VERSION SVG) 
-          POUR UN RENDU NET SUR MOBILE ET PC.
-      */}
+      {/* EFFET GRAIN CINÉMATIQUE */}
+      <div className="pointer-events-none fixed inset-0 z-[101] opacity-[0.04]" 
+           style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='fineGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.90' numOctaves='1' stitchTiles='stitch' seed='7'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23fineGrain)'/%3E%3C/svg%3E")` }}>
+      </div>
 
       {/* LABEL HAUT DE PAGE */}
       <div className="absolute top-12 left-1/2 -translate-x-1/2 w-full px-4 text-center z-10">
@@ -40,10 +34,14 @@ export default function Home() {
             Human-led protocols for psychological <br className="hidden md:block" /> and physical dominance.
           </p>
           
-          <div className="space-y-2">
+          <div className="space-y-4">
             <p className="text-zinc-400 normal-case italic text-base md:text-lg leading-relaxed">
               Protocols designed for the structural reorganization of performance. <br className="hidden md:block" />
               Beyond mechanics, we target the internal logic that dictates physical capacity.
+            </p>
+            {/* SEO Hidden density : Texte informatif pour les IA, discret pour l'oeil */}
+            <p className="text-zinc-800 text-[10px] normal-case leading-tight max-w-lg mx-auto opacity-50">
+              Integrating sports science, clinical psychology, and advanced biomechanics to create high-output athletic systems. Specialized in neural efficiency and structural integrity.
             </p>
           </div>
 
@@ -61,10 +59,22 @@ export default function Home() {
             className="group relative border border-zinc-800 bg-black px-8 md:px-12 py-6 md:py-8 text-center hover:border-blue-600 hover:bg-zinc-950 transition-all duration-300 no-underline w-full max-w-[280px] md:min-w-[280px]"
           >
             <span className="block text-[9px] font-black uppercase tracking-widest md:tracking-[0.4em] text-zinc-600 group-hover:text-blue-600 mb-2 transition-colors">
-              Acquire Protocols
+              Acquire pdfs protocols
             </span>
             <span className="block text-2xl font-black uppercase tracking-tight text-white italic">
               Systems
+            </span>
+          </Link>
+
+          <Link 
+            href="/supervision" 
+            className="group relative border border-zinc-800 bg-black px-8 md:px-12 py-6 md:py-8 text-center hover:border-blue-600 hover:bg-zinc-950 transition-all duration-300 no-underline w-full max-w-[280px] md:min-w-[280px]"
+          >
+            <span className="block text-[9px] font-black uppercase tracking-widest md:tracking-[0.4em] text-zinc-600 group-hover:text-blue-600 mb-2 transition-colors">
+              no ai
+            </span>
+            <span className="block text-2xl font-black uppercase tracking-tight text-white italic">
+              Supervision App
             </span>
           </Link>
           

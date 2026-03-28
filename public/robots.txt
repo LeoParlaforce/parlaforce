@@ -2,6 +2,7 @@ User-agent: *
 Allow: /
 Allow: /programs/
 Allow: /articles/
+Allow: /supervision/
 Disallow: /api/
 Disallow: /_next/
 Disallow: /static/
