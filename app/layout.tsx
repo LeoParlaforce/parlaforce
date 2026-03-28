@@ -46,6 +46,9 @@ export const metadata = {
       'max-snippet': -1,
     },
   },
+  verification: {
+    google: "votre-code-de-verification", // Remplace par ton code Search Console si tu l'as
+  },
   alternates: {
     canonical: 'https://parlaforce.com',
   },
@@ -110,7 +113,7 @@ export default function RootLayout({
     <html lang="en" className="overflow-x-hidden">
       <body className="bg-black text-zinc-300 antialiased font-sans flex flex-col min-h-screen overflow-x-hidden w-full relative">
         
-        {/* LE GRAIN NUMÉRIQUE (SVG) - REMPLACE L'IMAGE PNG */}
+        {/* LE GRAIN NUMÉRIQUE (SVG) */}
         <div className="pointer-events-none fixed inset-0 z-[9999] opacity-[0.18] mix-blend-soft-light" aria-hidden="true">
           <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
             <filter id="noiseFilter">
@@ -133,12 +136,14 @@ export default function RootLayout({
           <Footer />
         </div>
 
+        {/* JSON-LD pour le SEO */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
 
-        <GoogleAnalytics gaId="G-XXXXXXXXXX" />
+        {/* Google Analytics - ID mis à jour */}
+        <GoogleAnalytics gaId="G-YR024XZRG5" />
       </body>
     </html>
   );
