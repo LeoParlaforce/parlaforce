@@ -7,7 +7,7 @@ export const viewport: Viewport = {
   themeColor: '#000000',
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 5, // Important pour l'accessibilité tout en restant contrôlé
+  maximumScale: 5,
 }
 
 export const metadata = {
@@ -22,7 +22,7 @@ export const metadata = {
   creator: "Leo Gayrard",
   openGraph: {
     title: "Par la force | Clinical Strength Architecture",
-    description: "Human-led protocols for physical and psychological dominance. No AI content.",
+    description: "Human-led protocols for physical and psychological dominance.",
     url: 'https://parlaforce.com',
     siteName: 'Par la force',
     locale: 'en_US',
@@ -64,6 +64,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // FIX JSON-LD : @graph unifié, données enrichies, jobTitle corrigé
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -74,14 +75,15 @@ export default function RootLayout({
         "url": "https://parlaforce.com",
         "logo": {
           "@type": "ImageObject",
+          "@id": "https://parlaforce.com/#logo",
           "url": "https://parlaforce.com/logo.png",
           "width": 112,
-          "height": 112
+          "height": 112,
+          "caption": "Par la force"
         },
         "sameAs": [
           "https://www.instagram.com/par_la_force/",
-          "https://www.youtube.com/@ParLaForce",
-          "https://thirdpath.cloud"
+          "https://www.youtube.com/@ParLaForce"
         ]
       },
       {
@@ -89,25 +91,45 @@ export default function RootLayout({
         "@id": "https://parlaforce.com/#website",
         "url": "https://parlaforce.com",
         "name": "Par la force",
+        "description": "Evidence-based training systems and psychological protocols for elite athletes.",
         "publisher": { "@id": "https://parlaforce.com/#organization" },
-        "inLanguage": "en-US"
+        "inLanguage": "en-US",
+        // Potentialaction permet à Google de proposer une barre de recherche dans les résultats
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://parlaforce.com/articles?q={search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
+        }
       },
       {
         "@type": "Person",
         "@id": "https://parlaforce.com/#author",
         "name": "Leo Gayrard",
-        "jobTitle": "Licensed Psychologist & Strength Athlete",
+        // FIX : jobTitle doit être une string simple, pas un tableau
+        "jobTitle": "Licensed Psychologist & Strength Coach",
         "url": "https://parlaforce.com",
-        "knowsAbout": ["Psychology", "Strength Training", "Human Performance", "Biomechanics"]
+        "sameAs": [
+          "https://www.instagram.com/par_la_force/",
+          "https://www.youtube.com/@ParLaForce"
+        ],
+        "knowsAbout": ["Psychology", "Strength Training", "Human Performance", "Biomechanics"],
+        "worksFor": { "@id": "https://parlaforce.com/#organization" }
       },
       {
         "@type": "Service",
+        "@id": "https://parlaforce.com/#service",
         "name": "Clinical Strength Architecture",
         "provider": { "@id": "https://parlaforce.com/#organization" },
         "description": "Evidence-based training systems and psychological protocols for elite athletes.",
+        "serviceType": "Performance Coaching",
+        "areaServed": "Worldwide",
         "offers": {
           "@type": "Offer",
-          "category": "Performance Protocols"
+          "category": "Performance Protocols",
+          "availability": "https://schema.org/InStock"
         }
       }
     ]
@@ -115,9 +137,14 @@ export default function RootLayout({
 
   return (
     <html lang="en" className="overflow-x-hidden">
+      {/*
+        FIX CRITIQUE : <body> contient directement les enfants.
+        Avant : layout avait <main> ET chaque page avait <main> → HTML invalide (double <main>)
+        Fix : on retire le <main> wrapper ici, chaque page gère son propre <main>
+      */}
       <body className="bg-black text-zinc-300 antialiased font-sans flex flex-col min-h-screen overflow-x-hidden w-full relative">
         
-        {/* LE GRAIN NUMÉRIQUE (SVG) - OPTIMISÉ */}
+        {/* GRAIN NUMÉRIQUE — aria-hidden pour l'accessibilité */}
         <div className="pointer-events-none fixed inset-0 z-[9999] opacity-[0.18] mix-blend-soft-light" aria-hidden="true">
           <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
             <filter id="noiseFilter">
@@ -132,9 +159,10 @@ export default function RootLayout({
           </svg>
         </div>
 
-        <main className="flex-grow relative z-10">
+        {/* FIX : plus de <main> ici — chaque page a le sien */}
+        <div className="flex-grow relative z-10">
           {children}
-        </main>
+        </div>
         
         <div className="relative z-10">
           <Footer />

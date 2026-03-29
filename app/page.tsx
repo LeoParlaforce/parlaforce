@@ -9,12 +9,15 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
+    // FIX : <main> unique ici (retiré du layout), rôle main pour l'accessibilité
     <main className="min-h-screen flex flex-col items-center justify-center px-4 md:px-6 bg-black font-sans lowercase relative overflow-hidden text-white w-full">
       
-      {/* EFFET GRAIN CINÉMATIQUE */}
-      <div className="pointer-events-none fixed inset-0 z-[101] opacity-[0.04]" 
-           style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='fineGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.90' numOctaves='1' stitchTiles='stitch' seed='7'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23fineGrain)'/%3E%3C/svg%3E")` }}>
-      </div>
+      {/* GRAIN CINÉMATIQUE */}
+      <div 
+        className="pointer-events-none fixed inset-0 z-[101] opacity-[0.04]" 
+        aria-hidden="true"
+        style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='fineGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.90' numOctaves='1' stitchTiles='stitch' seed='7'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23fineGrain)'/%3E%3C/svg%3E")` }}
+      />
 
       {/* LABEL HAUT DE PAGE */}
       <div className="absolute top-12 left-1/2 -translate-x-1/2 w-full px-4 text-center z-10">
@@ -39,10 +42,12 @@ export default function Home() {
               Protocols designed for the structural reorganization of performance. <br className="hidden md:block" />
               Beyond mechanics, we target the internal logic that dictates physical capacity.
             </p>
-            {/* SEO Hidden density : Texte informatif pour les IA, discret pour l'oeil */}
-            <p className="text-zinc-800 text-[10px] normal-case leading-tight max-w-lg mx-auto opacity-50">
-              Integrating sports science, clinical psychology, and advanced biomechanics to create high-output athletic systems. Specialized in neural efficiency and structural integrity.
-            </p>
+            {/*
+              FIX CRITIQUE : texte caché supprimé.
+              Avant : text-zinc-800 + opacity-50 sur fond noir = texte invisible = pénalité Google.
+              Fix : ce contenu est maintenant intégré dans la description meta et le JSON-LD du layout,
+              qui sont les bons endroits pour ce type d'information dense.
+            */}
           </div>
 
           <div className="pt-4">
@@ -59,7 +64,7 @@ export default function Home() {
             className="group relative border border-zinc-800 bg-black px-8 md:px-12 py-6 md:py-8 text-center hover:border-blue-600 hover:bg-zinc-950 transition-all duration-300 no-underline w-full max-w-[280px] md:min-w-[280px]"
           >
             <span className="block text-[9px] font-black uppercase tracking-widest md:tracking-[0.4em] text-zinc-600 group-hover:text-blue-600 mb-2 transition-colors">
-              Acquire pdfs protocols
+              Acquire PDF Protocols
             </span>
             <span className="block text-2xl font-black uppercase tracking-tight text-white italic">
               Systems
@@ -71,7 +76,7 @@ export default function Home() {
             className="group relative border border-zinc-800 bg-black px-8 md:px-12 py-6 md:py-8 text-center hover:border-blue-600 hover:bg-zinc-950 transition-all duration-300 no-underline w-full max-w-[280px] md:min-w-[280px]"
           >
             <span className="block text-[9px] font-black uppercase tracking-widest md:tracking-[0.4em] text-zinc-600 group-hover:text-blue-600 mb-2 transition-colors">
-              no ai
+              1:1 Human Interface
             </span>
             <span className="block text-2xl font-black uppercase tracking-tight text-white italic">
               Supervision App

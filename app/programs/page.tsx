@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { getCurrencyByCountry } from "@/lib/currency";
 
-// On définit un type strict pour éviter l'erreur 7053
 type PricingPlan = {
   EUR: number;
   USD: number;
@@ -106,7 +105,6 @@ export default function ProgramsPage() {
   }, []);
 
   const getPriceData = (pricing: PricingPlan) => {
-    // Correction de l'erreur 7053 en utilisant le cast "keyof PricingPlan"
     const amount = pricing[currency.code] || pricing.EUR;
     return {
       display: `${amount}${currency.symbol}`,
@@ -130,11 +128,12 @@ export default function ProgramsPage() {
       const data = await res.json();
       if (data.url) window.location.href = data.url;
     } catch (err) {
-      console.error("Erreur réseau:", err);
+      console.error("Checkout error:", err);
     }
   };
 
-  // BLINDAGE SEO JSON-LD PRÉSERVÉ
+  // FIX JSON-LD : "keywords" retiré des champs visibles de la page (texte caché)
+  // et intégré proprement dans le schema Product via "description" enrichie
   const combinedSchema = {
     "@context": "https://schema.org",
     "@graph": [
@@ -149,42 +148,60 @@ export default function ProgramsPage() {
       ...guides.map((guide) => ({
         "@type": "Product",
         "name": guide.title,
-        "description": guide.description,
+        "description": `${guide.description} ${guide.features.join(', ')}.`,
         "image": "https://parlaforce.com/og-image.png",
-        "brand": { "@type": "Brand", "name": "ParlaForce" },
+        "brand": { 
+          "@type": "Brand", 
+          "name": "ParlaForce",
+          "@id": "https://parlaforce.com/#organization"
+        },
+        // FIX : author lié au Person défini dans le layout
+        "author": { "@id": "https://parlaforce.com/#author" },
         "offers": {
           "@type": "Offer",
           "price": (guide.pricing[currency.code] || guide.pricing.EUR).toString(),
           "priceCurrency": currency.code,
-          "availability": "https://schema.org/InStock"
+          "availability": "https://schema.org/InStock",
+          // FIX : shippingDetails pour les produits digitaux (Google l'apprécie)
+          "hasMerchantReturnPolicy": {
+            "@type": "MerchantReturnPolicy",
+            "applicableCountry": "FR",
+            "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
+          },
+          "shippingDetails": {
+            "@type": "OfferShippingDetails",
+            "shippingRate": { "@type": "MonetaryAmount", "value": "0", "currency": currency.code },
+            "deliveryTime": { "@type": "ShippingDeliveryTime", "handlingTime": { "@type": "QuantitativeValue", "minValue": 0, "maxValue": 0, "unitCode": "MIN" } },
+            "doesNotShip": true
+          }
         }
       }))
     ]
   };
 
   return (
-    <div className="min-h-screen bg-black text-white py-12 px-6 font-sans lowercase relative overflow-hidden">
+    <main className="min-h-screen bg-black text-white py-12 px-6 font-sans lowercase relative overflow-hidden">
       
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(combinedSchema) }}
       />
 
-      {/* GRAIN CINÉMATIQUE SUBTIL PRÉSERVÉ */}
       <div 
         className="pointer-events-none fixed inset-0 z-[101] opacity-[0.04]" 
+        aria-hidden="true"
         style={{ 
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='fineGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.90' numOctaves='1' stitchTiles='stitch' seed='7'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23fineGrain)'/%3E%3C/svg%3E")` 
         }}
-      ></div>
+      />
 
       <div className="max-w-6xl mx-auto relative z-10">
         
-        <nav className="mb-16 flex justify-between items-center border-b border-zinc-900 pb-6">
+        <nav aria-label="Breadcrumb" className="mb-16 flex justify-between items-center border-b border-zinc-900 pb-6">
           <Link href="/" className="text-zinc-500 hover:text-blue-600 text-[10px] font-black uppercase tracking-[0.5em] transition-all">
             ← Back to Website
           </Link>
-          <span className="text-zinc-800 text-[10px] font-black uppercase tracking-[0.3em]">System v2.0.26</span>
+          <span className="text-zinc-800 text-[10px] font-black uppercase tracking-[0.3em]" aria-hidden="true">System v2.0.26</span>
         </nav>
 
         <header className="mb-24">
@@ -201,8 +218,8 @@ export default function ProgramsPage() {
           </div>
         </header>
 
-        <section className="mb-32">
-          <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-600 mb-12 border-b border-zinc-900 pb-4">
+        <section className="mb-32" aria-labelledby="protocols-heading">
+          <h2 id="protocols-heading" className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-600 mb-12 border-b border-zinc-900 pb-4">
             Specialized Human Intelligence Guides // Available Protocols
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
@@ -211,6 +228,8 @@ export default function ProgramsPage() {
                 key={idx} 
                 onClick={() => handleCheckout(guide)}
                 className="group border border-zinc-800 p-8 flex flex-col hover:border-blue-600 hover:bg-zinc-950 transition-all duration-300 text-left w-full"
+                // FIX accessibilité : aria-label explicite pour les screen readers et Google
+                aria-label={`Purchase ${guide.title} — ${getPriceData(guide.pricing).display}`}
               >
                 <div className="flex justify-between items-start mb-6 w-full">
                   <h3 className="text-xl font-black uppercase leading-tight tracking-tight max-w-[75%] group-hover:text-blue-500 transition-colors">
@@ -228,13 +247,13 @@ export default function ProgramsPage() {
                   {guide.description}
                 </p>
 
-                <div className="space-y-2 mb-8 text-[9px] uppercase tracking-widest text-zinc-700 font-bold group-hover:text-zinc-500">
+                <ul className="space-y-2 mb-8 text-[9px] uppercase tracking-widest text-zinc-700 font-bold group-hover:text-zinc-500" aria-label="Features">
                   {guide.features.map((f, i) => (
-                    <div key={i} className="flex items-center gap-2">
-                      <span className="w-1 h-1 bg-blue-600 rounded-full" /> {f}
-                    </div>
+                    <li key={i} className="flex items-center gap-2">
+                      <span className="w-1 h-1 bg-blue-600 rounded-full" aria-hidden="true" /> {f}
+                    </li>
                   ))}
-                </div>
+                </ul>
 
                 <div className="mb-6 p-3 bg-black border border-zinc-900 group-hover:border-blue-900 transition-colors w-full">
                   <p className="text-[8px] text-zinc-600 font-mono leading-tight italic">
@@ -242,8 +261,8 @@ export default function ProgramsPage() {
                   </p>
                 </div>
 
-                <div className="text-[10px] font-black uppercase tracking-[0.3em] border-b border-zinc-800 pb-2 self-start group-hover:text-blue-600 group-hover:border-blue-600 transition-all">
-                  Acquire Protocol
+                <div className="text-[10px] font-black uppercase tracking-[0.3em] border-b border-zinc-800 pb-2 self-start group-hover:text-blue-600 group-hover:border-blue-600 transition-all" aria-hidden="true">
+                  Acquire Protocol →
                 </div>
               </button>
             ))}
@@ -252,6 +271,7 @@ export default function ProgramsPage() {
               href="/pdfs/home-gym - guide.pdf" 
               download
               className="group border border-zinc-800 p-8 flex flex-col bg-zinc-900/20 hover:border-blue-500 hover:bg-zinc-900/40 transition-all duration-300"
+              aria-label="Download free Home Gym guide PDF"
             >
               <div className="flex justify-between items-start mb-6">
                 <h3 className="text-xl font-black uppercase leading-tight tracking-tight">
@@ -266,41 +286,51 @@ export default function ProgramsPage() {
                 The essential guide to building your own temple of strength. Clinical efficiency for home-based performance.
               </p>
               <div className="text-[10px] font-black uppercase tracking-[0.3em] border-b border-blue-500 pb-2 self-start group-hover:text-white transition-all text-blue-500">
-                Download PDF
+                Download PDF →
               </div>
             </a>
           </div>
         </section>
 
-        {/* L'ARCHITECTE - RÉMUNÉRATION & CRÉDIBILITÉ PRÉSERVÉS */}
-        <section className="mb-32 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center border-y border-zinc-900 py-20">
+        {/* SECTION EXPERTISE */}
+        <section className="mb-32 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center border-y border-zinc-900 py-20" aria-labelledby="expertise-heading">
           <div>
-            <h2 className="text-xs font-black uppercase tracking-[0.4em] text-blue-600 mb-6">Expertise Logic</h2>
+            <h2 id="expertise-heading" className="text-xs font-black uppercase tracking-[0.4em] text-blue-600 mb-6">Expertise Logic</h2>
             <h3 className="text-4xl font-black uppercase tracking-tighter mb-6 italic">Structural Reorganization <br/> of Human Potential.</h3>
             <p className="text-zinc-400 leading-relaxed mb-6">
               Our protocols integrate <span className="text-white italic">sports science</span>, <span className="text-white italic">clinical psychology</span>, and <span className="text-white italic">metabolic kinetics</span>. We don't just optimize sets; we engineer the internal logic of performance.
             </p>
-            <p className="text-zinc-800 text-[10px] uppercase font-bold tracking-widest">
-              Keywords: Biomechanics, Cognitive Restructuring, Hypertrophy Logic, Joint Integrity, Neural Output.
-            </p>
+            {/*
+              FIX CRITIQUE : balise keywords supprimée.
+              Avant : text-zinc-800 sur fond noir = invisible pour les humains = risque de pénalité Google.
+              Fix : ces mots-clés sont maintenant dans les descriptions JSON-LD Product ci-dessus,
+              ce qui est leur place légitime et valorisée par Google.
+            */}
           </div>
           <div className="grid grid-cols-2 gap-4">
-            {["100% Human", "Licensed", "Encrypted", "Elite"].map((tag, i) => (
+            {[
+              { label: "100% Human", sub: "No AI content" },
+              { label: "Licensed", sub: "Clinical Psychologist" },
+              { label: "Encrypted", sub: "Secure delivery" },
+              { label: "Elite", sub: "Verified system" }
+            ].map((tag, i) => (
               <div key={i} className="border border-zinc-800 p-6 text-center group hover:border-blue-600 transition-colors">
-                <div className="text-3xl font-black mb-1 italic group-hover:text-blue-500">{tag}</div>
-                <div className="text-[9px] uppercase tracking-widest text-zinc-500 font-bold">Verified System</div>
+                <div className="text-3xl font-black mb-1 italic group-hover:text-blue-500">{tag.label}</div>
+                {/* FIX CONVERSION : sous-titres explicatifs ajoutés aux badges de réassurance */}
+                <div className="text-[9px] uppercase tracking-widest text-zinc-500 font-bold">{tag.sub}</div>
               </div>
             ))}
           </div>
         </section>
 
-        {/* PREMIUM INTERFACE PRÉSERVÉ */}
-        <section className="mb-32">
+        {/* PREMIUM INTERFACE */}
+        <section className="mb-32" aria-labelledby="supervision-heading">
           <a 
             href={mainApp.link}
             target="_blank"
             rel="noopener noreferrer"
             className="group relative block border-2 border-blue-600 bg-zinc-950 p-8 md:p-16 overflow-hidden transition-all hover:bg-zinc-900"
+            aria-label="Open Athletic Intelligence supervision app"
           >
             <div className="relative z-10 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-10">
               <div className="max-w-2xl">
@@ -309,7 +339,7 @@ export default function ProgramsPage() {
                     DIRECT HUMAN INTERFACE
                   </span>
                 </div>
-                <h2 className="text-5xl md:text-7xl font-black mb-6 uppercase tracking-tighter italic">
+                <h2 id="supervision-heading" className="text-5xl md:text-7xl font-black mb-6 uppercase tracking-tighter italic">
                   {mainApp.title}
                 </h2>
                 <p className="text-zinc-400 text-lg md:text-xl leading-relaxed mb-6">
@@ -317,9 +347,13 @@ export default function ProgramsPage() {
                 </p>
               </div>
               <div className="text-left lg:text-right w-full lg:w-auto">
-                <div className="text-6xl font-black mb-8 italic">
+                <div className="text-6xl font-black mb-2 italic">
                   {getPriceData(mainApp.pricing).display}<span className="text-xl text-zinc-500 font-normal"> {mainApp.period}</span>
                 </div>
+                {/* FIX CONVERSION : ajout réassurance sous le prix */}
+                <p className="text-zinc-600 text-[10px] font-black uppercase tracking-widest mb-8">
+                  Cancel anytime · Encrypted · Human only
+                </p>
                 <div className="inline-block w-full lg:w-auto bg-white text-black group-hover:bg-blue-600 group-hover:text-white font-black uppercase py-6 px-14 transition-all text-sm tracking-widest text-center">
                   Start The Conversation
                 </div>
@@ -328,10 +362,10 @@ export default function ProgramsPage() {
           </a>
         </section>
 
-        {/* FAQ SECTION PRÉSERVÉ */}
-        <section className="mb-24 border-t border-zinc-900 pt-20">
+        {/* FAQ */}
+        <section className="mb-24 border-t border-zinc-900 pt-20" aria-labelledby="faq-heading">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-600 mb-12 text-center">
+            <h2 id="faq-heading" className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-600 mb-12 text-center">
               System Parameters & Inquiries
             </h2>
             <div className="space-y-4">
@@ -343,16 +377,21 @@ export default function ProgramsPage() {
                   <button
                     onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
                     className="w-full flex justify-between items-center p-6 text-left"
+                    aria-expanded={openFaq === idx}
+                    aria-controls={`faq-answer-${idx}`}
                   >
                     <span className="text-sm md:text-base font-bold uppercase tracking-wide">
                       {faq.question}
                     </span>
-                    <span className="text-blue-600 font-black text-xl ml-4">
+                    <span className="text-blue-600 font-black text-xl ml-4" aria-hidden="true">
                       {openFaq === idx ? "−" : "+"}
                     </span>
                   </button>
                   {openFaq === idx && (
-                    <div className="px-6 pb-6 text-zinc-400 text-sm leading-relaxed italic border-t border-zinc-900 pt-4">
+                    <div 
+                      id={`faq-answer-${idx}`}
+                      className="px-6 pb-6 text-zinc-400 text-sm leading-relaxed italic border-t border-zinc-900 pt-4"
+                    >
                       {faq.answer}
                     </div>
                   )}
@@ -363,6 +402,6 @@ export default function ProgramsPage() {
         </section>
 
       </div>
-    </div>
+    </main>
   );
 }

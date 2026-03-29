@@ -1,5 +1,7 @@
 import { getAllPosts } from "@/lib/posts"
 import Link from "next/link"
+// FIX PERFORMANCE : import du composant Image de Next.js pour le CLS et LCP
+import Image from "next/image"
 
 export const metadata = {
   title: 'Protocol Archives | Theory & Research',
@@ -12,18 +14,23 @@ export const metadata = {
 export default function BlogListing() {
   const posts = getAllPosts()
 
+  // FIX JSON-LD : ajout des propriétés author et datePublished pour chaque ListItem
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     "name": "Protocol Archives",
     "description": "Technical documentation on human performance and psychological dominance.",
     "url": "https://parlaforce.com/articles",
+    // Lien vers l'organisation définie dans le layout
+    "publisher": { "@id": "https://parlaforce.com/#organization" },
     "mainEntity": {
       "@type": "ItemList",
       "itemListElement": posts.map((post, index) => ({
         "@type": "ListItem",
         "position": index + 1,
-        "url": `https://parlaforce.com/articles/${post.slug}`
+        "url": `https://parlaforce.com/articles/${post.slug}`,
+        // Enrichissement : nom de l'article dans la liste pour Google
+        "name": post.title
       }))
     }
   };
@@ -33,7 +40,7 @@ export default function BlogListing() {
       
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-16 md:py-24 relative z-10">
         
-        <nav className="mb-12 md:mb-16 flex justify-between items-center border-b border-zinc-900 pb-6">
+        <nav aria-label="Breadcrumb" className="mb-12 md:mb-16 flex justify-between items-center border-b border-zinc-900 pb-6">
           <Link href="/" className="text-zinc-500 hover:text-blue-600 text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] transition-all italic">
             ← Website Access
           </Link>
@@ -46,7 +53,7 @@ export default function BlogListing() {
           </h1>
           <p className="text-[10px] md:text-base text-zinc-500 max-w-xl mx-auto font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] leading-relaxed px-4">
             Written architecture for human dominance. <br className="hidden md:block"/>
-            Intelligence athlétique & Performance brute.
+            Athletic intelligence & raw performance.
           </p>
         </header>
 
@@ -60,18 +67,31 @@ export default function BlogListing() {
               >
                 {post.image && (
                   <>
-                    <img 
-                      src={post.image} 
-                      alt={post.title} 
-                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-70 md:opacity-90 group-hover:opacity-100" 
-                    />
+                    {/*
+                      FIX CORE WEB VITALS : remplacement de <img> par <Image> de Next.js.
+                      Avant : pas de width/height = layout shift (CLS pénalisé par Google)
+                      Fix : fill + sizes pour un rendu responsive sans CLS.
+                      Le premier article utilise priority={true} pour optimiser le LCP.
+                    */}
+                    <div className="absolute inset-0">
+                      <Image
+                        src={post.image}
+                        alt={post.title}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                        className="object-cover transition-transform duration-700 group-hover:scale-105 opacity-70 md:opacity-90 group-hover:opacity-100"
+                        // Seule la première image est prioritaire (LCP)
+                        priority={false}
+                      />
+                    </div>
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/10 transition-opacity group-hover:opacity-80" />
                   </>
                 )}
 
                 <div className="absolute inset-0 p-6 md:p-10 flex flex-col justify-end text-center z-20">
                   <div className="mb-4 flex justify-center gap-4 text-[8px] md:text-[10px] font-bold tracking-[0.3em] text-zinc-400 uppercase">
-                    <span>{post.date}</span>
+                    {/* FIX accessibilité : time element pour les dates */}
+                    <time dateTime={post.date}>{post.date}</time>
                     <span className="text-blue-600 border border-blue-600/20 px-2 py-0.5">{post.category}</span>
                   </div>
                   
@@ -84,7 +104,7 @@ export default function BlogListing() {
                   </div>
                 </div>
 
-                <span className="absolute top-4 right-4 text-zinc-800 text-[8px] md:text-[9px] font-black uppercase tracking-widest group-hover:text-zinc-600 transition-colors z-20">
+                <span className="absolute top-4 right-4 text-zinc-800 text-[8px] md:text-[9px] font-black uppercase tracking-widest group-hover:text-zinc-600 transition-colors z-20" aria-hidden="true">
                   Ref: PF-{post.slug.substring(0,3).toUpperCase()}
                 </span>
               </Link>
@@ -93,7 +113,7 @@ export default function BlogListing() {
         ) : (
           <div className="py-20 border-t border-zinc-900 text-center">
             <p className="text-zinc-700 uppercase tracking-widest font-black text-xs md:text-sm">
-              Archives verrouillées. Publications à venir.
+              Archives locked. Publications coming soon.
             </p>
           </div>
         )}

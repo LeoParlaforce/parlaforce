@@ -5,7 +5,7 @@ category: "Physiology"
 summary: "A clinical breakdown of macronutrient architecture and metabolic kinetics. Why data-driven tracking is non-negotiable for human performance and biological longevity."
 image: "/nutrition.jpg"
 slug: "bio-structural-logistics"
-author: "Parla Force"
+author: "Léo Gayrard"
 ---
 
 Many operate under the delusion that nutrition rules differ for athletes and civilians. 
