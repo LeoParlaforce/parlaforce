@@ -1,7 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { FaXTwitter, FaLinkedinIn, FaFacebookF, FaInstagram, FaLink } from "react-icons/fa6"
+import { FaXTwitter, FaLinkedinIn, FaFacebookF, FaLink } from "react-icons/fa6"
+import { FiShare2 } from "react-icons/fi"
 
 interface SocialShareProps {
   slug: string
@@ -10,6 +11,7 @@ interface SocialShareProps {
 
 export default function SocialShare({ slug, title }: SocialShareProps) {
   const url = `https://parlaforce.com/articles/${slug}`
+  const encodedUrl = encodeURIComponent(url)
   const encodedTitle = encodeURIComponent(title)
   const [copied, setCopied] = useState(false)
 
@@ -20,11 +22,22 @@ export default function SocialShare({ slug, title }: SocialShareProps) {
     })
   }
 
+  const handleNativeShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, url })
+      } catch (error) {
+        console.error("Share error:", error)
+      }
+    } else {
+      handleCopy()
+    }
+  }
+
   const shareLinks = [
-    { name: 'X', icon: <FaXTwitter />, href: `https://twitter.com/intent/tweet?url=${url}&text=${encodedTitle}` },
-    { name: 'LinkedIn', icon: <FaLinkedinIn />, href: `https://www.linkedin.com/sharing/share-offsite/?url=${url}` },
-    { name: 'Facebook', icon: <FaFacebookF />, href: `https://www.facebook.com/sharer/sharer.php?u=${url}` },
-    { name: 'Instagram', icon: <FaInstagram />, href: `https://www.instagram.com/parlaforce/` },
+    { name: 'X', icon: <FaXTwitter />, href: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}` },
+    { name: 'LinkedIn', icon: <FaLinkedinIn />, href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}` },
+    { name: 'Facebook', icon: <FaFacebookF />, href: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}` },
   ]
 
   return (
@@ -45,6 +58,17 @@ export default function SocialShare({ slug, title }: SocialShareProps) {
             {link.icon}
           </a>
         ))}
+
+        {/* Share natif mobile — ouvre le menu de partage du téléphone (Instagram, WhatsApp, etc.)
+            Fallback sur copy link si navigator.share non disponible (desktop) */}
+        <button
+          onClick={handleNativeShare}
+          aria-label="Share"
+          className="text-xl text-zinc-500 hover:text-blue-600 transition-all hover:scale-110"
+        >
+          <FiShare2 />
+        </button>
+
         <button
           onClick={handleCopy}
           aria-label="Copy link"
