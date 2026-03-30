@@ -1,10 +1,9 @@
 import { getAllPosts } from "@/lib/posts"
 import Link from "next/link"
-// FIX PERFORMANCE : import du composant Image de Next.js pour le CLS et LCP
 import Image from "next/image"
 
 export const metadata = {
-  title: 'Protocol Archives | Theory & Research',
+  title: 'Articles | Theory & Research',
   description: 'Technical documentation and theoretical frameworks for human performance, sports science, and psychological dominance.',
   alternates: {
     canonical: 'https://parlaforce.com/articles',
@@ -14,14 +13,12 @@ export const metadata = {
 export default function BlogListing() {
   const posts = getAllPosts()
 
-  // FIX JSON-LD : ajout des propriétés author et datePublished pour chaque ListItem
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    "name": "Protocol Archives",
+    "name": "Articles",
     "description": "Technical documentation on human performance and psychological dominance.",
     "url": "https://parlaforce.com/articles",
-    // Lien vers l'organisation définie dans le layout
     "publisher": { "@id": "https://parlaforce.com/#organization" },
     "mainEntity": {
       "@type": "ItemList",
@@ -29,11 +26,10 @@ export default function BlogListing() {
         "@type": "ListItem",
         "position": index + 1,
         "url": `https://parlaforce.com/articles/${post.slug}`,
-        // Enrichissement : nom de l'article dans la liste pour Google
         "name": post.title
       }))
     }
-  };
+  }
 
   return (
     <main className="min-h-screen bg-black text-white font-sans lowercase relative overflow-hidden selection:bg-blue-600/30 w-full">
@@ -67,12 +63,6 @@ export default function BlogListing() {
               >
                 {post.image && (
                   <>
-                    {/*
-                      FIX CORE WEB VITALS : remplacement de <img> par <Image> de Next.js.
-                      Avant : pas de width/height = layout shift (CLS pénalisé par Google)
-                      Fix : fill + sizes pour un rendu responsive sans CLS.
-                      Le premier article utilise priority={true} pour optimiser le LCP.
-                    */}
                     <div className="absolute inset-0">
                       <Image
                         src={post.image}
@@ -80,7 +70,6 @@ export default function BlogListing() {
                         fill
                         sizes="(max-width: 1024px) 100vw, 50vw"
                         className="object-cover transition-transform duration-700 group-hover:scale-105 opacity-70 md:opacity-90 group-hover:opacity-100"
-                        // Seule la première image est prioritaire (LCP)
                         priority={false}
                       />
                     </div>
@@ -90,7 +79,6 @@ export default function BlogListing() {
 
                 <div className="absolute inset-0 p-6 md:p-10 flex flex-col justify-end text-center z-20">
                   <div className="mb-4 flex justify-center gap-4 text-[8px] md:text-[10px] font-bold tracking-[0.3em] text-zinc-400 uppercase">
-                    {/* FIX accessibilité : time element pour les dates */}
                     <time dateTime={post.date}>{post.date}</time>
                     <span className="text-blue-600 border border-blue-600/20 px-2 py-0.5">{post.category}</span>
                   </div>
@@ -103,10 +91,6 @@ export default function BlogListing() {
                     Read Article →
                   </div>
                 </div>
-
-                <span className="absolute top-4 right-4 text-zinc-800 text-[8px] md:text-[9px] font-black uppercase tracking-widest group-hover:text-zinc-600 transition-colors z-20" aria-hidden="true">
-                  Ref: PF-{post.slug.substring(0,3).toUpperCase()}
-                </span>
               </Link>
             ))}
           </div>
