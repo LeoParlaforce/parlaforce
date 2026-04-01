@@ -4,7 +4,6 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   compress: true,
   poweredByHeader: false,
-
   images: {
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
@@ -16,7 +15,16 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.parlaforce.com' }],
+        destination: 'https://parlaforce.com/:path*',
+        permanent: true,
+      },
+    ]
+  },
   async headers() {
     return [
       {
