@@ -15,16 +15,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  async redirects() {
-    return [
-      {
-        source: '/:path*',
-        has: [{ type: 'host', value: 'www.parlaforce.com' }],
-        destination: 'https://parlaforce.com/:path*',
-        permanent: true,
-      },
-    ]
-  },
   async headers() {
     return [
       {
