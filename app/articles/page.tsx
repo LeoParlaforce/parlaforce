@@ -83,7 +83,7 @@ export default function BlogListing() {
                     <span className="text-blue-600 border border-blue-600/20 px-2 py-0.5">{post.category}</span>
                   </div>
                   
-                  <h2 className="text-2xl md:text-5xl font-black uppercase italic text-white group-hover:text-blue-500 transition-colors leading-none tracking-tighter mb-6">
+                  <h2 className="text-2xl md:text-5xl font-black uppercase italic text-white group-hover:text-blue-500 transition-colors leading-none tracking-tighter mb-6 line-clamp-3">
                     {post.title}<span className="text-blue-600">.</span>
                   </h2>
                   
