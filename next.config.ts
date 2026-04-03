@@ -1,5 +1,4 @@
 import type { NextConfig } from "next";
-
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   compress: true,
@@ -14,6 +13,15 @@ const nextConfig: NextConfig = {
         hostname: 'images.unsplash.com',
       },
     ],
+  },
+  async redirects() {
+    return [
+      {
+        source: '/articles/bio-structural-logistics',
+        destination: '/articles/how-much-protein-per-day',
+        permanent: true,
+      },
+    ]
   },
   async headers() {
     return [
@@ -36,5 +44,4 @@ const nextConfig: NextConfig = {
     ];
   },
 };
-
 export default nextConfig;
