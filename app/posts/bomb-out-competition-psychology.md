@@ -70,8 +70,6 @@ An athlete who has been handed a diagnosis has been given a prison with an offic
 
 This is not psychology. It is the refusal of psychology.
 
-[CTA-APP]
-
 ## What Is Actually Happening on the Platform
 
 Here is what these frameworks consistently miss.
