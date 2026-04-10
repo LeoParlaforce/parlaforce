@@ -98,6 +98,19 @@ export default async function PostPage({ params }: { params: any }) {
     "isPartOf": { "@id": "https://parlaforce.com/#website" }
   }
 
+  const faqJsonLd = post.faqs && post.faqs.length > 0 ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": post.faqs.map((faq: { question: string; answer: string }) => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer
+      }
+    }))
+  } : null
+
   const contentLength = post.content?.length || 0
   const isLongArticle = contentLength > 3000
   const contentParts = isLongArticle ? splitContentAtMiddle(post.content) : [post.content, '']
@@ -115,6 +128,9 @@ export default async function PostPage({ params }: { params: any }) {
   return (
     <main className="min-h-screen bg-black text-white pb-24 font-sans lowercase relative overflow-hidden selection:bg-blue-600/30 w-full">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      {faqJsonLd && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+      )}
 
       <div 
         className="pointer-events-none fixed inset-0 z-[1] opacity-[0.03] md:opacity-[0.02] bg-repeat" 

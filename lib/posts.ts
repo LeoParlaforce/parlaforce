@@ -4,7 +4,6 @@ import matter from 'gray-matter'
 
 const postsDirectory = path.join(process.cwd(), 'app/posts')
 
-// Utilitaire pour calculer le temps de lecture
 function getReadingTime(content: string) {
   const wordsPerMinute = 200;
   const numberOfWords = content.split(/\s/g).length;
@@ -22,7 +21,6 @@ export function getAllPosts() {
       const fullPath = path.join(postsDirectory, fileName)
       const fileContents = fs.readFileSync(fullPath, 'utf8')
       const { data, content } = matter(fileContents)
-
       return {
         slug,
         title: data.title || "Untitled Protocol",
@@ -35,8 +33,6 @@ export function getAllPosts() {
         wordCount: content.split(/\s/g).length
       }
     })
-
-  // Tri par date décroissante (plus récent en premier)
   return allPostsData.sort((a, b) => (new Date(b.date).getTime() - new Date(a.date).getTime()))
 }
 
@@ -57,7 +53,8 @@ export function getPostBySlug(slug: string) {
       image: data.image || "/og-image.png",
       category: data.category || "General",
       readingTime: getReadingTime(content),
-      author: data.author || "Leo Gayrard"
+      author: data.author || "Leo Gayrard",
+      faqs: data.faqs || null,
     }
   } catch (e) {
     console.error(`Error loading post ${slug}:`, e)
