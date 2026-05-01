@@ -1,10 +1,15 @@
-import { getPostBySlug } from "@/lib/posts"
+import { getPostBySlug, getAllPosts } from "@/lib/posts"
 import { notFound } from "next/navigation"
 import ReactMarkdown from "react-markdown"
 import rehypeRaw from "rehype-raw"
 import Link from "next/link"
 import Image from "next/image"
 import SocialShare from "@/components/SocialShare"
+
+interface FAQItem {
+  question: string;
+  answer: string;
+}
 
 export async function generateMetadata({ params }: { params: any }) {
   const { slug } = await params
@@ -72,6 +77,11 @@ export default async function PostPage({ params }: { params: any }) {
   if (!post) return notFound()
 
   const imageUrl = post.image.startsWith('http') ? post.image : post.image.startsWith('/') ? post.image : `/${post.image}`
+  const faqs: FAQItem[] = post.faqs || []
+
+  // Get up to 3 other articles for the related section
+  const allPosts = getAllPosts()
+  const relatedPosts = allPosts.filter((p: any) => p.slug !== slug).slice(0, 3)
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -98,10 +108,10 @@ export default async function PostPage({ params }: { params: any }) {
     "isPartOf": { "@id": "https://parlaforce.com/#website" }
   }
 
-  const faqJsonLd = post.faqs && post.faqs.length > 0 ? {
+  const faqJsonLd = faqs.length > 0 ? {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    "mainEntity": post.faqs.map((faq: { question: string; answer: string }) => ({
+    "mainEntity": faqs.map((faq: FAQItem) => ({
       "@type": "Question",
       "name": faq.question,
       "acceptedAnswer": {
@@ -191,8 +201,99 @@ export default async function PostPage({ params }: { params: any }) {
               </ReactMarkdown>
             )}
           </div>
+
+          {/* FAQ Section */}
+          {faqs.length > 0 && (
+            <section className="mt-24 border-t border-zinc-900 pt-16">
+              <div className="mb-10">
+                <p className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-600 mb-3">
+                  Q&A
+                </p>
+                <h2 className="text-3xl md:text-4xl font-black uppercase italic tracking-tighter text-white">
+                  Common Questions<span className="text-blue-600">.</span>
+                </h2>
+              </div>
+              <div className="space-y-3">
+                {faqs.map((faq: FAQItem, i: number) => (
+                  <details 
+                    key={i} 
+                    className="group border border-zinc-900 bg-zinc-950/30 hover:border-zinc-800 transition-all"
+                  >
+                    <summary className="flex items-center justify-between p-5 md:p-6 cursor-pointer list-none">
+                      <span className="text-white font-black italic text-sm md:text-base tracking-tight pr-6 normal-case">
+                        {faq.question}
+                      </span>
+                      <span className="shrink-0 transition-transform group-open:rotate-180 text-blue-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="m6 9 6 6 6-6"/>
+                        </svg>
+                      </span>
+                    </summary>
+                    <div className="px-5 md:px-6 pb-5 md:pb-6 pt-2 text-zinc-400 italic normal-case text-base leading-relaxed border-t border-zinc-900/50">
+                      {faq.answer}
+                    </div>
+                  </details>
+                ))}
+              </div>
+            </section>
+          )}
           
           <SocialShare slug={slug} title={post.title} />
+
+          {/* Related Articles */}
+          {relatedPosts.length > 0 && (
+            <section className="mt-32 border-t border-zinc-900 pt-16">
+              <div className="mb-10 text-center">
+                <p className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-600 mb-3">
+                  Keep Reading
+                </p>
+                <h2 className="text-3xl md:text-4xl font-black uppercase italic tracking-tighter text-white">
+                  More Articles<span className="text-blue-600">.</span>
+                </h2>
+                <p className="text-zinc-500 italic max-w-xl mx-auto normal-case text-sm md:text-base mt-4">
+                  If this resonated, the rest of the work is here.
+                </p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {relatedPosts.map((related: any) => (
+                  <Link 
+                    key={related.slug}
+                    href={`/articles/${related.slug}`}
+                    className="group border border-zinc-900 bg-zinc-950/30 hover:border-blue-600/50 transition-all p-6 flex flex-col"
+                  >
+                    {related.image && (
+                      <div className="relative w-full h-40 mb-5 overflow-hidden bg-zinc-900">
+                        <Image
+                          src={related.image}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                          className="object-cover opacity-70 group-hover:opacity-100 transition-opacity"
+                          alt={related.title}
+                        />
+                      </div>
+                    )}
+                    <p className="text-[9px] font-black uppercase tracking-[0.3em] text-blue-600 mb-3">
+                      {related.category}
+                    </p>
+                    <h3 className="text-white font-black italic text-base md:text-lg tracking-tight mb-3 leading-tight group-hover:text-blue-500 transition-colors normal-case">
+                      {related.title}
+                    </h3>
+                    <p className="text-zinc-500 italic text-sm normal-case mt-auto line-clamp-3">
+                      {related.summary}
+                    </p>
+                  </Link>
+                ))}
+              </div>
+              <div className="text-center mt-10">
+                <Link 
+                  href="/articles" 
+                  className="inline-block border border-zinc-800 text-zinc-400 font-black uppercase py-4 px-8 text-[10px] tracking-[0.4em] hover:border-blue-600 hover:text-blue-600 transition-all"
+                >
+                  View All Articles →
+                </Link>
+              </div>
+            </section>
+          )}
 
           <div className="mt-32 border border-zinc-900 bg-zinc-950/30 p-8 md:p-20 text-center relative overflow-hidden">
             <p className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-600 mb-4">
