@@ -9,30 +9,91 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 export async function POST(req: NextRequest) {
   try {
-    const { title, priceAmount, currency, pdfFile } = await req.json();
+    const { 
+      title, 
+      priceAmount, 
+      currency, 
+      pdfFile, 
+      paymentMode,
+      language 
+    } = await req.json();
 
+    // paymentMode: "once" or "installments"
+    // language: "en" or "fr"
+
+    const baseUrl = req.nextUrl.origin;
+
+    if (paymentMode === "installments") {
+      // 3 monthly payments via subscription
+      const installmentAmount = Math.ceil(priceAmount / 3);
+
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ["card"],
+        mode: "subscription",
+        line_items: [
+          {
+            price_data: {
+              currency: currency || "eur",
+              product_data: {
+                name: `${title} - 3 monthly installments`,
+                description: "Elite Protocol - Digital Delivery",
+              },
+              unit_amount: installmentAmount,
+              recurring: {
+                interval: "month",
+              },
+            },
+            quantity: 1,
+          },
+        ],
+        subscription_data: {
+          // Cancel automatically after 3 payments (3 months)
+          // Trick: use cancel_at to set hard end date
+          metadata: {
+            pdfFile: pdfFile,
+            language: language || "en",
+            totalPayments: "3",
+            client_currency: currency || "eur",
+          },
+        },
+        metadata: {
+          pdfFile: pdfFile,
+          language: language || "en",
+          paymentMode: "installments",
+          client_currency: currency || "eur",
+        },
+        success_url: `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${baseUrl}/programs`,
+      });
+
+      return NextResponse.json({ url: session.url });
+    }
+
+    // Single payment (default)
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: [
         {
           price_data: {
-            currency: currency || "eur", // Utilise la devise détectée (usd, eur, cad)
-            product_data: { 
+            currency: currency || "eur",
+            product_data: {
               name: title,
-              description: "Clinical Protocol - Digital Delivery"
+              description: "Elite Protocol - Digital Delivery",
             },
-            unit_amount: priceAmount, // Le montant est déjà en centimes
+            unit_amount: priceAmount,
           },
           quantity: 1,
         },
       ],
-      metadata: { 
+      metadata: {
         pdfFile: pdfFile,
-        client_currency: currency || "eur" 
+        language: language || "en",
+        paymentMode: "once",
+        client_currency: currency || "eur",
       },
       mode: "payment",
-      success_url: `${req.nextUrl.origin}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${req.nextUrl.origin}/programs`,
+      success_url: `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${baseUrl}/programs`,
     });
 
     return NextResponse.json({ url: session.url });

@@ -1,131 +1,137 @@
-"use client";
-import { useEffect, useState, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import Stripe from "stripe";
 
-function SuccessContent() {
-  const searchParams = useSearchParams();
-  const [downloadLink, setDownloadLink] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+export const runtime = "nodejs";
 
-  useEffect(() => {
-    const sessionId = searchParams.get("session_id");
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: "2025-08-27.basil" as any,
+});
 
-    if (!sessionId) {
-      setLoading(false);
-      setError(true);
-      return;
+interface PageProps {
+  searchParams: Promise<{ session_id?: string }>;
+}
+
+export default async function SuccessPage({ searchParams }: PageProps) {
+  const { session_id } = await searchParams;
+
+  let isValid = false;
+  let session: Stripe.Checkout.Session | null = null;
+
+  if (session_id) {
+    try {
+      session = await stripe.checkout.sessions.retrieve(session_id);
+      const isOnce = session.metadata?.paymentMode === "once";
+      const isInstallments = session.metadata?.paymentMode === "installments";
+
+      if (isOnce && session.payment_status === "paid") {
+        isValid = true;
+      } else if (isInstallments && session.status === "complete") {
+        isValid = true;
+      }
+    } catch (err) {
+      console.error("Stripe session retrieval error:", err);
     }
+  }
 
-    fetch(`/api/get-pdf?sessionId=${sessionId}`)
-      .then((res) => {
-        if (!res.ok) throw new Error();
-        return res.json();
-      })
-      .then((data) => {
-        if (data.url) {
-          setDownloadLink(data.url);
-        } else {
-          setError(true);
-        }
-      })
-      .catch(() => setError(true))
-      .finally(() => setLoading(false));
-  }, [searchParams]);
-
-  return (
-    <main className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-6 font-sans lowercase text-center">
-      <div className="max-w-md w-full border border-zinc-900 p-12 bg-zinc-950 shadow-2xl">
-
-        {/* ÉTAT : CHARGEMENT */}
-        {loading && (
-          <>
-            <h1 className="text-4xl font-black uppercase tracking-tighter italic mb-8">
-              VERIFYING<span className="text-blue-600">.</span>
-            </h1>
-            <p className="text-zinc-500 animate-pulse tracking-widest uppercase text-xs font-bold">
-              Securing your download link...
-            </p>
-          </>
-        )}
-
-        {/* ÉTAT : SUCCÈS */}
-        {!loading && downloadLink && (
-          <>
-            <div className="mb-8">
-              {/* Icône visuelle de succès */}
-              <div className="w-12 h-12 border-2 border-blue-600 flex items-center justify-center mx-auto mb-6" aria-hidden="true">
-                <span className="text-blue-600 font-black text-xl">✓</span>
-              </div>
-              <h1 className="text-4xl font-black uppercase tracking-tighter italic">
-                PROTOCOL <span className="text-blue-600">ACQUIRED.</span>
-              </h1>
-            </div>
-            <p className="text-zinc-400 leading-relaxed italic mb-8">
-              Your protocol is ready. Download it now — the link expires in 1 hour.
-            </p>
-            <a
-              href={downloadLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block w-full bg-white text-black font-black uppercase py-4 px-8 hover:bg-blue-600 hover:text-white transition-all text-sm tracking-widest mb-4"
-            >
-              Download PDF Protocol
-            </a>
-            {/* Réassurance post-achat */}
-            <p className="text-zinc-700 text-[9px] font-black uppercase tracking-widest">
-              Check your spam if you don't receive confirmation
-            </p>
-          </>
-        )}
-
-        {/* ÉTAT : ERREUR */}
-        {!loading && (error || !downloadLink) && (
-          <>
-            <h1 className="text-4xl font-black uppercase tracking-tighter italic mb-8">
-              ERROR<span className="text-blue-600">.</span>
-            </h1>
-            <div className="space-y-6">
-              <p className="text-red-900 uppercase text-xs font-black tracking-widest bg-red-950/30 py-3 px-4">
-                Session not found or expired
-              </p>
-              <p className="text-zinc-500 text-sm italic normal-case leading-relaxed">
-                If you were charged, contact us immediately with your payment confirmation.
-              </p>
-              {/* FIX CONVERSION : lien direct vers le mail avec sujet pré-rempli */}
-              <a
-                href="mailto:leo.gayrard@gmail.com?subject=Download issue — Par la force&body=My Stripe session ID is: "
-                className="block w-full border border-zinc-800 text-zinc-400 font-black uppercase py-3 px-6 text-[10px] tracking-[0.3em] hover:border-blue-600 hover:text-blue-600 transition-all"
-              >
-                Contact Support →
-              </a>
-            </div>
-          </>
-        )}
-
-        <div className="mt-12 pt-8 border-t border-zinc-900">
+  if (!isValid || !session_id) {
+    return (
+      <main className="min-h-screen bg-black text-white pb-24 font-sans lowercase relative overflow-hidden flex items-center justify-center px-6">
+        <div className="max-w-2xl text-center">
+          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-600 mb-4">
+            Issue
+          </p>
+          <h1 className="text-4xl md:text-6xl font-black uppercase italic tracking-tighter mb-6">
+            Payment Not Verified<span className="text-blue-600">.</span>
+          </h1>
+          <p className="text-zinc-400 italic normal-case mb-12">
+            We could not validate your transaction. If you just completed a payment, wait a few seconds and refresh. Otherwise, return to the shop.
+          </p>
           <Link
             href="/programs"
-            className="text-zinc-700 hover:text-blue-600 text-[10px] font-black uppercase tracking-[0.4em] transition-all"
+            className="inline-block bg-blue-600 text-white font-black uppercase py-5 px-10 text-[10px] tracking-[0.4em] hover:bg-white hover:text-black transition-all"
           >
-            ← Return to Systems
+            Return to Shop
+          </Link>
+        </div>
+      </main>
+    );
+  }
+
+  return (
+    <main className="min-h-screen bg-black text-white pb-24 font-sans lowercase relative overflow-hidden">
+      <div
+        className="pointer-events-none fixed inset-0 z-[1] opacity-[0.03] md:opacity-[0.02] bg-repeat"
+        aria-hidden="true"
+        style={{ backgroundImage: "url('/grain.png')", backgroundSize: "200px" }}
+      />
+
+      <div className="relative z-10 max-w-3xl mx-auto px-6 py-24">
+        <div className="text-center mb-16">
+          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-600 mb-4">
+            Confirmed
+          </p>
+          <h1 className="text-5xl md:text-8xl font-black uppercase italic tracking-tighter mb-6 leading-none">
+            Welcome to Elite<span className="text-blue-600">.</span>
+          </h1>
+          <p className="text-zinc-400 italic normal-case text-lg md:text-xl max-w-2xl mx-auto">
+            Your payment is confirmed. Choose your language and download your guide below. The same files are available via your Stripe receipt if you need to access them again later.
+          </p>
+        </div>
+
+        <div className="border border-zinc-900 bg-zinc-950/30 p-8 md:p-12">
+          <p className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-600 mb-6 text-center">
+            Download
+          </p>
+          <h2 className="text-2xl md:text-3xl font-black uppercase italic tracking-tighter mb-10 text-center">
+            Choose Your Version<span className="text-blue-600">.</span>
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <a
+              href={`/api/download?session_id=${session_id}&lang=en`}
+              className="group border border-zinc-800 hover:border-blue-600 bg-black p-8 text-center transition-all"
+            >
+              <p className="text-[9px] font-black uppercase tracking-[0.4em] text-zinc-500 group-hover:text-blue-600 mb-3 transition-colors">
+                English
+              </p>
+              <p className="text-white font-black uppercase italic text-2xl tracking-tight mb-6">
+                Elite — EN
+              </p>
+              <span className="inline-block bg-blue-600 text-white font-black uppercase py-3 px-8 text-[10px] tracking-[0.3em] group-hover:bg-white group-hover:text-black transition-all">
+                Download PDF
+              </span>
+            </a>
+
+            <a
+              href={`/api/download?session_id=${session_id}&lang=fr`}
+              className="group border border-zinc-800 hover:border-blue-600 bg-black p-8 text-center transition-all"
+            >
+              <p className="text-[9px] font-black uppercase tracking-[0.4em] text-zinc-500 group-hover:text-blue-600 mb-3 transition-colors">
+                Français
+              </p>
+              <p className="text-white font-black uppercase italic text-2xl tracking-tight mb-6">
+                Elite — FR
+              </p>
+              <span className="inline-block bg-blue-600 text-white font-black uppercase py-3 px-8 text-[10px] tracking-[0.3em] group-hover:bg-white group-hover:text-black transition-all">
+                Télécharger PDF
+              </span>
+            </a>
+          </div>
+
+          <p className="text-zinc-600 italic normal-case text-xs text-center mt-10">
+            Both versions are included with your purchase. Download both if you wish.
+          </p>
+        </div>
+
+        <div className="text-center mt-16">
+          <Link
+            href="/articles"
+            className="inline-block border border-zinc-800 text-zinc-400 font-black uppercase py-4 px-8 text-[10px] tracking-[0.4em] hover:border-blue-600 hover:text-blue-600 transition-all"
+          >
+            Read More Articles →
           </Link>
         </div>
       </div>
     </main>
-  );
-}
-
-export default function SuccessPage() {
-  return (
-    // FIX : Suspense obligatoire pour useSearchParams() dans Next.js App Router
-    <Suspense fallback={
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <p className="text-zinc-700 text-xs uppercase tracking-widest font-black animate-pulse">Loading...</p>
-      </div>
-    }>
-      <SuccessContent />
-    </Suspense>
   );
 }
