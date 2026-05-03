@@ -48,7 +48,7 @@ export default function ProgramsPage() {
     transition: { duration: 1, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
   };
 
-  // Parallax refs for each textured section
+  // Parallax refs
   const trapRef = useRef<HTMLDivElement>(null);
   const unifiedRef = useRef<HTMLDivElement>(null);
   const aiRef = useRef<HTMLDivElement>(null);
@@ -58,29 +58,28 @@ export default function ProgramsPage() {
     target: trapRef,
     offset: ["start end", "end start"],
   });
-  const trapY = useTransform(trapProgress, [0, 1], ["-15%", "15%"]);
+  const trapY = useTransform(trapProgress, [0, 1], ["-12%", "12%"]);
 
   const { scrollYProgress: unifiedProgress } = useScroll({
     target: unifiedRef,
     offset: ["start end", "end start"],
   });
-  const unifiedY = useTransform(unifiedProgress, [0, 1], ["-15%", "15%"]);
+  const unifiedY = useTransform(unifiedProgress, [0, 1], ["-12%", "12%"]);
 
   const { scrollYProgress: aiProgress } = useScroll({
     target: aiRef,
     offset: ["start end", "end start"],
   });
-  const aiY = useTransform(aiProgress, [0, 1], ["-15%", "15%"]);
+  const aiY = useTransform(aiProgress, [0, 1], ["-12%", "12%"]);
 
   const { scrollYProgress: lifelongProgress } = useScroll({
     target: lifelongRef,
     offset: ["start end", "end start"],
   });
-  const lifelongY = useTransform(lifelongProgress, [0, 1], ["-15%", "15%"]);
+  const lifelongY = useTransform(lifelongProgress, [0, 1], ["-12%", "12%"]);
 
   return (
     <main className="min-h-screen bg-black text-white pb-24 font-sans lowercase relative selection:bg-blue-600/30 w-full">
-      {/* Subtle global grain on top of everything */}
       <div
         className="pointer-events-none fixed inset-0 z-[101] opacity-[0.05]"
         aria-hidden="true"
@@ -106,7 +105,6 @@ export default function ProgramsPage() {
           </Link>
         </nav>
 
-        {/* Launch banner */}
         {IS_LAUNCH_WEEK && (
           <div className="bg-blue-600 py-3 relative z-30">
             <p className="text-center text-white font-black uppercase tracking-[0.3em] text-[10px] md:text-xs italic">
@@ -115,7 +113,7 @@ export default function ProgramsPage() {
           </div>
         )}
 
-        {/* HERO - text only, no banner image */}
+        {/* HERO */}
         <section className="relative bg-black pt-24 md:pt-32 pb-16 md:pb-20">
           <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
             <motion.div {...fadeUp}>
@@ -223,38 +221,31 @@ export default function ProgramsPage() {
           </div>
         </section>
 
-        {/* SECTION: THE TRAP - texture idea_3 (terracotta with edge burn) */}
+        {/* THE TRAP - idea_3 cropped on the LEFT edge burn (yellow/orange flare) */}
         <section ref={trapRef} className="relative overflow-hidden">
-          {/* Texture background with parallax scroll */}
           <motion.div
             className="absolute inset-0 w-full h-[130%] -top-[15%]"
             style={{
               y: trapY,
               backgroundImage: "url('/textures/idea_3_clean.jpg')",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
+              backgroundSize: "150% auto",
+              backgroundPosition: "left center",
+              backgroundRepeat: "no-repeat",
             }}
           />
-          {/* Soft black overlay for text readability */}
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
-              background: "linear-gradient(to right, rgba(0,0,0,0.55), rgba(0,0,0,0.35) 60%, rgba(0,0,0,0.5))",
+              background: "linear-gradient(to right, rgba(0,0,0,0.2), rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.5))",
             }}
           />
-          {/* Top fade-in from previous black section */}
           <div
             className="absolute top-0 left-0 right-0 h-48 pointer-events-none"
-            style={{
-              background: "linear-gradient(to bottom, #000000, transparent)",
-            }}
+            style={{ background: "linear-gradient(to bottom, #000000, transparent)" }}
           />
-          {/* Bottom fade-out into next section's color */}
           <div
             className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none"
-            style={{
-              background: "linear-gradient(to bottom, transparent, #0a0a18)",
-            }}
+            style={{ background: "linear-gradient(to bottom, transparent, #0a0a18)" }}
           />
 
           <div className="relative max-w-5xl mx-auto px-6 md:px-12 py-40 md:py-56">
@@ -286,34 +277,31 @@ export default function ProgramsPage() {
           </div>
         </section>
 
-        {/* SECTION: UNIFIED APPROACH - texture idea_2 (deep dark with red & blue) */}
+        {/* UNIFIED APPROACH - idea_2 cropped on the RIGHT (red dot top-right + blue right edge) */}
         <section ref={unifiedRef} className="relative overflow-hidden">
           <motion.div
             className="absolute inset-0 w-full h-[130%] -top-[15%]"
             style={{
               y: unifiedY,
               backgroundImage: "url('/textures/idea_2_clean.jpg')",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
+              backgroundSize: "150% auto",
+              backgroundPosition: "right center",
+              backgroundRepeat: "no-repeat",
             }}
           />
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
-              background: "linear-gradient(to right, rgba(0,0,0,0.4), rgba(0,0,0,0.2) 60%, rgba(0,0,0,0.5))",
+              background: "linear-gradient(to left, rgba(0,0,0,0.15), rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.55))",
             }}
           />
           <div
             className="absolute top-0 left-0 right-0 h-48 pointer-events-none"
-            style={{
-              background: "linear-gradient(to bottom, #0a0a18, transparent)",
-            }}
+            style={{ background: "linear-gradient(to bottom, #0a0a18, transparent)" }}
           />
           <div
             className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none"
-            style={{
-              background: "linear-gradient(to bottom, transparent, #0a0418)",
-            }}
+            style={{ background: "linear-gradient(to bottom, transparent, #0a0418)" }}
           />
 
           <div className="relative max-w-5xl mx-auto px-6 md:px-12 py-40 md:py-56">
@@ -362,34 +350,31 @@ export default function ProgramsPage() {
           </div>
         </section>
 
-        {/* SECTION: ANTI-AI - texture idea_5 (dark with violet edge burn) */}
+        {/* ANTI-AI - idea_5 cropped on the LEFT (violet edge burn) */}
         <section ref={aiRef} className="relative overflow-hidden">
           <motion.div
             className="absolute inset-0 w-full h-[130%] -top-[15%]"
             style={{
               y: aiY,
               backgroundImage: "url('/textures/idea_5_clean.jpg')",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
+              backgroundSize: "150% auto",
+              backgroundPosition: "left center",
+              backgroundRepeat: "no-repeat",
             }}
           />
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
-              background: "linear-gradient(to right, rgba(0,0,0,0.3), rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.4))",
+              background: "linear-gradient(to right, rgba(0,0,0,0.15), rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.5))",
             }}
           />
           <div
             className="absolute top-0 left-0 right-0 h-48 pointer-events-none"
-            style={{
-              background: "linear-gradient(to bottom, #0a0418, transparent)",
-            }}
+            style={{ background: "linear-gradient(to bottom, #0a0418, transparent)" }}
           />
           <div
             className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none"
-            style={{
-              background: "linear-gradient(to bottom, transparent, #100806)",
-            }}
+            style={{ background: "linear-gradient(to bottom, transparent, #100806)" }}
           />
 
           <div className="relative max-w-5xl mx-auto px-6 md:px-12 py-40 md:py-56">
@@ -441,34 +426,31 @@ export default function ProgramsPage() {
           </div>
         </section>
 
-        {/* SECTION: LIFELONG - texture idea_4 (cream/violet horizon) */}
+        {/* LIFELONG - idea_4 cropped on the TOP (violet/cream horizon) */}
         <section ref={lifelongRef} className="relative overflow-hidden">
           <motion.div
             className="absolute inset-0 w-full h-[130%] -top-[15%]"
             style={{
               y: lifelongY,
               backgroundImage: "url('/textures/idea_4_clean.jpg')",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
+              backgroundSize: "120% auto",
+              backgroundPosition: "center top",
+              backgroundRepeat: "no-repeat",
             }}
           />
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
-              background: "linear-gradient(to right, rgba(0,0,0,0.4), rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4))",
+              background: "linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.35) 60%, rgba(0,0,0,0.55))",
             }}
           />
           <div
             className="absolute top-0 left-0 right-0 h-48 pointer-events-none"
-            style={{
-              background: "linear-gradient(to bottom, #100806, transparent)",
-            }}
+            style={{ background: "linear-gradient(to bottom, #100806, transparent)" }}
           />
           <div
             className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none"
-            style={{
-              background: "linear-gradient(to bottom, transparent, #000000)",
-            }}
+            style={{ background: "linear-gradient(to bottom, transparent, #000000)" }}
           />
 
           <div className="relative max-w-5xl mx-auto px-6 md:px-12 py-40 md:py-56">
@@ -496,7 +478,7 @@ export default function ProgramsPage() {
           </div>
         </section>
 
-        {/* SECTION: WHAT'S IN THE GUIDE - back to clean black */}
+        {/* WHAT'S IN THE GUIDE */}
         <section className="relative py-32 md:py-40 bg-black">
           <div className="max-w-6xl mx-auto px-6 md:px-12">
             <motion.div {...fadeUp} className="text-center mb-20">
@@ -574,7 +556,7 @@ export default function ProgramsPage() {
           </div>
         </section>
 
-        {/* SECTION: GRIP - THE INVISIBLE LIMIT */}
+        {/* GRIP - INVISIBLE LIMIT */}
         <section className="relative py-32 md:py-40 bg-black overflow-hidden">
           <div
             className="absolute inset-0 opacity-50 pointer-events-none"
@@ -661,7 +643,7 @@ export default function ProgramsPage() {
           </div>
         </section>
 
-        {/* SECTION: FOR WHOM */}
+        {/* FOR WHOM */}
         <section className="relative py-32 md:py-40 bg-black">
           <div className="max-w-5xl mx-auto px-6 md:px-12">
             <motion.div {...fadeUp} className="text-center mb-16">
@@ -708,7 +690,7 @@ export default function ProgramsPage() {
           </div>
         </section>
 
-        {/* SECTION: WHO WROTE IT */}
+        {/* WHO WROTE IT */}
         <section className="relative py-32 md:py-40 bg-black">
           <div className="max-w-5xl mx-auto px-6 md:px-12">
             <motion.div {...fadeUp} className="text-center mb-16">
@@ -779,14 +761,10 @@ export default function ProgramsPage() {
               <div className="border border-zinc-900 bg-zinc-950/30 p-8 md:p-20 text-center relative overflow-hidden">
                 <div
                   className="absolute inset-0 opacity-20 pointer-events-none"
-                  style={{
-                    background: "radial-gradient(circle 400px at 50% 50%, rgba(37, 99, 235, 0.4), transparent 70%)",
-                  }}
+                  style={{ background: "radial-gradient(circle 400px at 50% 50%, rgba(37, 99, 235, 0.4), transparent 70%)" }}
                 />
                 <div className="relative">
-                  <p className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-600 mb-4">
-                    Ready
-                  </p>
+                  <p className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-600 mb-4">Ready</p>
                   <h3 className="text-4xl md:text-7xl font-black uppercase italic tracking-tighter mb-6 text-white leading-none">
                     Stop Guessing<span className="text-blue-600">.</span>
                   </h3>
