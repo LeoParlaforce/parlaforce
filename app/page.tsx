@@ -96,12 +96,12 @@ export default function Home() {
               <div className="text-right shrink-0">
                 {IS_LAUNCH_WEEK ? (
                   <>
-                    <p className="text-zinc-600 line-through text-sm md:text-base font-black italic leading-none">€199</p>
-                    <p className="text-white text-2xl md:text-3xl font-black italic leading-none mt-1">€150</p>
+                    <p className="text-zinc-600 line-through text-sm md:text-base font-black italic leading-none"></p>
+                    <p className="text-white text-2xl md:text-3xl font-black italic leading-none mt-1"></p>
                     <p className="text-blue-600 text-[8px] md:text-[9px] font-black uppercase tracking-[0.2em] italic mt-1">Launch</p>
                   </>
                 ) : (
-                  <p className="text-white text-2xl md:text-3xl font-black italic">€199</p>
+                  <p className="text-white text-2xl md:text-3xl font-black italic"></p>
                 )}
               </div>
             </div>
