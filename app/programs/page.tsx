@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
+import { useState, useRef } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function ProgramsPage() {
   const [language, setLanguage] = useState<"en" | "fr">("en");
@@ -49,11 +48,41 @@ export default function ProgramsPage() {
     transition: { duration: 1, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
   };
 
+  // Parallax refs for each textured section
+  const trapRef = useRef<HTMLDivElement>(null);
+  const unifiedRef = useRef<HTMLDivElement>(null);
+  const aiRef = useRef<HTMLDivElement>(null);
+  const lifelongRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress: trapProgress } = useScroll({
+    target: trapRef,
+    offset: ["start end", "end start"],
+  });
+  const trapY = useTransform(trapProgress, [0, 1], ["-15%", "15%"]);
+
+  const { scrollYProgress: unifiedProgress } = useScroll({
+    target: unifiedRef,
+    offset: ["start end", "end start"],
+  });
+  const unifiedY = useTransform(unifiedProgress, [0, 1], ["-15%", "15%"]);
+
+  const { scrollYProgress: aiProgress } = useScroll({
+    target: aiRef,
+    offset: ["start end", "end start"],
+  });
+  const aiY = useTransform(aiProgress, [0, 1], ["-15%", "15%"]);
+
+  const { scrollYProgress: lifelongProgress } = useScroll({
+    target: lifelongRef,
+    offset: ["start end", "end start"],
+  });
+  const lifelongY = useTransform(lifelongProgress, [0, 1], ["-15%", "15%"]);
+
   return (
     <main className="min-h-screen bg-black text-white pb-24 font-sans lowercase relative selection:bg-blue-600/30 w-full">
-      {/* Global static grain - subtle texture */}
+      {/* Subtle global grain on top of everything */}
       <div
-        className="pointer-events-none fixed inset-0 z-[101] opacity-[0.06]"
+        className="pointer-events-none fixed inset-0 z-[101] opacity-[0.05]"
         aria-hidden="true"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='heavyGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='3' stitchTiles='stitch' seed='13'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23heavyGrain)'/%3E%3C/svg%3E")`,
@@ -86,34 +115,9 @@ export default function ProgramsPage() {
           </div>
         )}
 
-        {/* HERO with banner image at native resolution, centered */}
-        <section className="relative bg-black pt-12 md:pt-16">
-          {/* Banner image - max-width 866 to keep native quality, centered, harmonious black margins */}
-          <div className="w-full flex items-center justify-center px-6">
-            <div
-              className="relative w-full"
-              style={{ maxWidth: "866px", aspectRatio: "866 / 338" }}
-            >
-              <Image
-                src="/elite-cover.jpg"
-                fill
-                priority
-                sizes="866px"
-                className="object-cover"
-                alt="Elite — Become an Elite Athlete"
-              />
-              {/* Soft vignette to blend image edges */}
-              <div
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  background: "radial-gradient(ellipse 90% 80% at 50% 50%, transparent 60%, rgba(0,0,0,0.5) 100%)",
-                }}
-              />
-            </div>
-          </div>
-
-          {/* Hero text + buy block below image */}
-          <div className="max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-20 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+        {/* HERO - text only, no banner image */}
+        <section className="relative bg-black pt-24 md:pt-32 pb-16 md:pb-20">
+          <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
             <motion.div {...fadeUp}>
               <p className="text-[10px] md:text-xs font-black uppercase tracking-[0.4em] text-blue-400 mb-6">
                 The Elite Protocol · 66 Pages · Lifelong
@@ -219,68 +223,48 @@ export default function ProgramsPage() {
           </div>
         </section>
 
-        {/* PAGE 1 PREVIEW - simple, clean, big image with shadow */}
-        <section className="relative bg-black py-24 md:py-32">
-          <div className="max-w-3xl mx-auto px-6 flex justify-center">
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-              className="relative w-full"
-              style={{ maxWidth: "440px", aspectRatio: "1 / 1.414" }}
-            >
-              <Image
-                src="/elite-cover.jpg"
-                fill
-                sizes="440px"
-                className="object-cover shadow-[0_40px_120px_rgba(0,0,0,0.9)]"
-                alt="Elite — Page 1"
-              />
-            </motion.div>
-          </div>
-        </section>
-
-        {/* SMOOTH TRANSITION zone: black → warm */}
-        <div
-          className="relative h-48 md:h-64 -mb-px"
-          style={{
-            background: "linear-gradient(to bottom, #000000 0%, #1a0808 50%, #2a0f08 100%)",
-          }}
-        />
-
-        {/* SECTION: THE TRAP — warm tones, no animated elements */}
-        <section className="relative py-32 md:py-40 overflow-hidden">
-          <div
-            className="absolute inset-0"
+        {/* SECTION: THE TRAP - texture idea_3 (terracotta with edge burn) */}
+        <section ref={trapRef} className="relative overflow-hidden">
+          {/* Texture background with parallax scroll */}
+          <motion.div
+            className="absolute inset-0 w-full h-[130%] -top-[15%]"
             style={{
-              background: "radial-gradient(ellipse 1400px 1000px at 50% 50%, #4a1f15 0%, #2a0f08 50%, #1a0606 100%)",
+              y: trapY,
+              backgroundImage: "url('/textures/idea_3_clean.jpg')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
             }}
           />
-          {/* Static light leaks - no animation */}
+          {/* Soft black overlay for text readability */}
           <div
-            className="absolute inset-0 mix-blend-screen pointer-events-none"
+            className="absolute inset-0 pointer-events-none"
             style={{
-              background:
-                "radial-gradient(ellipse 700px 500px at 25% 35%, rgba(220, 100, 60, 0.45), transparent 65%), radial-gradient(ellipse 500px 400px at 80% 70%, rgba(180, 60, 40, 0.35), transparent 60%)",
+              background: "linear-gradient(to right, rgba(0,0,0,0.55), rgba(0,0,0,0.35) 60%, rgba(0,0,0,0.5))",
             }}
           />
-          {/* Heavy textured grain - static */}
+          {/* Top fade-in from previous black section */}
           <div
-            className="absolute inset-0 opacity-30 mix-blend-overlay pointer-events-none"
+            className="absolute top-0 left-0 right-0 h-48 pointer-events-none"
             style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='hg'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23hg)'/%3E%3C/svg%3E")`,
+              background: "linear-gradient(to bottom, #000000, transparent)",
+            }}
+          />
+          {/* Bottom fade-out into next section's color */}
+          <div
+            className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none"
+            style={{
+              background: "linear-gradient(to bottom, transparent, #0a0a18)",
             }}
           />
 
-          <div className="relative max-w-5xl mx-auto px-6 md:px-12">
+          <div className="relative max-w-5xl mx-auto px-6 md:px-12 py-40 md:py-56">
             <motion.div {...fadeUp}>
-              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-orange-300/80 mb-6">
+              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-orange-200/90 mb-6">
                 Why This Guide Exists
               </p>
-              <h2 className="text-5xl md:text-7xl font-black uppercase italic tracking-tighter mb-12 leading-[0.9] text-white">
+              <h2 className="text-5xl md:text-7xl font-black uppercase italic tracking-tighter mb-12 leading-[0.9] text-white drop-shadow-2xl">
                 An Engine Works To Its <br />
-                <span className="text-orange-200">Fullest Potential When All<br />
+                <span className="text-orange-100">Fullest Potential When All<br />
                 The Pieces Are From The Same Machine.</span>
               </h2>
             </motion.div>
@@ -295,50 +279,49 @@ export default function ProgramsPage() {
               <p className="text-white/85 italic normal-case text-lg md:text-xl leading-relaxed mb-8 max-w-3xl">
                 Each piece may be valid in its original system. Bolted together, they cancel each other out. The engine does not run.
               </p>
-              <p className="text-white italic normal-case text-xl md:text-2xl leading-relaxed font-medium max-w-3xl border-l-2 border-orange-300 pl-6">
+              <p className="text-white italic normal-case text-xl md:text-2xl leading-relaxed font-medium max-w-3xl border-l-2 border-orange-200 pl-6">
                 Elite is one engine. Every part — training, diet, recovery, sleep, supplementation, mental work, programming — built from the same internal logic.
               </p>
             </motion.div>
           </div>
         </section>
 
-        {/* SMOOTH TRANSITION: warm → cool blue */}
-        <div
-          className="relative h-48 md:h-64 -mt-px"
-          style={{
-            background:
-              "linear-gradient(to bottom, #1a0606 0%, #15101f 50%, #1a1a2e 100%)",
-          }}
-        />
+        {/* SECTION: UNIFIED APPROACH - texture idea_2 (deep dark with red & blue) */}
+        <section ref={unifiedRef} className="relative overflow-hidden">
+          <motion.div
+            className="absolute inset-0 w-full h-[130%] -top-[15%]"
+            style={{
+              y: unifiedY,
+              backgroundImage: "url('/textures/idea_2_clean.jpg')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          />
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: "linear-gradient(to right, rgba(0,0,0,0.4), rgba(0,0,0,0.2) 60%, rgba(0,0,0,0.5))",
+            }}
+          />
+          <div
+            className="absolute top-0 left-0 right-0 h-48 pointer-events-none"
+            style={{
+              background: "linear-gradient(to bottom, #0a0a18, transparent)",
+            }}
+          />
+          <div
+            className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none"
+            style={{
+              background: "linear-gradient(to bottom, transparent, #0a0418)",
+            }}
+          />
 
-        {/* SECTION: UNIFIED APPROACH — cool blue tones */}
-        <section className="relative py-32 md:py-40 overflow-hidden">
-          <div
-            className="absolute inset-0"
-            style={{
-              background: "radial-gradient(ellipse 1500px 1000px at 50% 50%, #1a1a2e 0%, #0f0f1c 50%, #0a0a18 100%)",
-            }}
-          />
-          <div
-            className="absolute inset-0 mix-blend-screen pointer-events-none"
-            style={{
-              background:
-                "radial-gradient(ellipse 600px 400px at 75% 25%, rgba(120, 90, 220, 0.4), transparent 65%), radial-gradient(ellipse 700px 500px at 20% 80%, rgba(60, 100, 200, 0.3), transparent 60%)",
-            }}
-          />
-          <div
-            className="absolute inset-0 opacity-25 mix-blend-overlay pointer-events-none"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='hg'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23hg)'/%3E%3C/svg%3E")`,
-            }}
-          />
-
-          <div className="relative max-w-5xl mx-auto px-6 md:px-12">
+          <div className="relative max-w-5xl mx-auto px-6 md:px-12 py-40 md:py-56">
             <motion.div {...fadeUp}>
-              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-300/80 mb-6">
+              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-300/90 mb-6">
                 Everything In One Place
               </p>
-              <h2 className="text-5xl md:text-7xl font-black uppercase italic tracking-tighter mb-12 leading-[0.9] text-white">
+              <h2 className="text-5xl md:text-7xl font-black uppercase italic tracking-tighter mb-12 leading-[0.9] text-white drop-shadow-2xl">
                 Nine Components.<br />
                 <span className="text-blue-300">One Coherent System.</span>
               </h2>
@@ -367,9 +350,9 @@ export default function ProgramsPage() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.7, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
-                    className="border border-blue-400/30 bg-blue-500/5 backdrop-blur-sm py-4 px-3 md:py-5 md:px-4 text-center"
+                    className="border border-white/15 bg-black/30 backdrop-blur-sm py-4 px-3 md:py-5 md:px-4 text-center"
                   >
-                    <p className="text-white/90 font-black uppercase italic text-xs md:text-sm tracking-tight">
+                    <p className="text-white/95 font-black uppercase italic text-xs md:text-sm tracking-tight">
                       {item}
                     </p>
                   </motion.div>
@@ -379,45 +362,44 @@ export default function ProgramsPage() {
           </div>
         </section>
 
-        {/* SMOOTH TRANSITION: blue → purple */}
-        <div
-          className="relative h-48 md:h-64 -mt-px"
-          style={{
-            background:
-              "linear-gradient(to bottom, #0a0a18 0%, #1a0e2a 50%, #2a1545 100%)",
-          }}
-        />
+        {/* SECTION: ANTI-AI - texture idea_5 (dark with violet edge burn) */}
+        <section ref={aiRef} className="relative overflow-hidden">
+          <motion.div
+            className="absolute inset-0 w-full h-[130%] -top-[15%]"
+            style={{
+              y: aiY,
+              backgroundImage: "url('/textures/idea_5_clean.jpg')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          />
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: "linear-gradient(to right, rgba(0,0,0,0.3), rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.4))",
+            }}
+          />
+          <div
+            className="absolute top-0 left-0 right-0 h-48 pointer-events-none"
+            style={{
+              background: "linear-gradient(to bottom, #0a0418, transparent)",
+            }}
+          />
+          <div
+            className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none"
+            style={{
+              background: "linear-gradient(to bottom, transparent, #100806)",
+            }}
+          />
 
-        {/* SECTION: ANTI-AI POSITIONING — deep purple */}
-        <section className="relative py-32 md:py-40 overflow-hidden">
-          <div
-            className="absolute inset-0"
-            style={{
-              background: "radial-gradient(ellipse 1400px 1000px at 30% 50%, #2a1545 0%, #15082a 50%, #0a0418 100%)",
-            }}
-          />
-          <div
-            className="absolute inset-0 mix-blend-screen pointer-events-none"
-            style={{
-              background:
-                "radial-gradient(ellipse 500px 400px at 80% 30%, rgba(180, 100, 220, 0.4), transparent 65%), radial-gradient(ellipse 600px 500px at 15% 75%, rgba(140, 80, 200, 0.3), transparent 60%)",
-            }}
-          />
-          <div
-            className="absolute inset-0 opacity-25 mix-blend-overlay pointer-events-none"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='hg'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23hg)'/%3E%3C/svg%3E")`,
-            }}
-          />
-
-          <div className="relative max-w-5xl mx-auto px-6 md:px-12">
+          <div className="relative max-w-5xl mx-auto px-6 md:px-12 py-40 md:py-56">
             <motion.div {...fadeUp}>
-              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-purple-300/80 mb-6">
+              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-purple-200/90 mb-6">
                 Why €199 In 2026
               </p>
-              <h2 className="text-5xl md:text-7xl font-black uppercase italic tracking-tighter mb-12 leading-[0.9] text-white">
+              <h2 className="text-5xl md:text-7xl font-black uppercase italic tracking-tighter mb-12 leading-[0.9] text-white drop-shadow-2xl">
                 The Generic Programs<br />
-                <span className="text-purple-300">Are Free Now.</span>
+                <span className="text-purple-200">Are Free Now.</span>
               </h2>
             </motion.div>
 
@@ -427,7 +409,7 @@ export default function ProgramsPage() {
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
-                <div className="border border-white/10 bg-black/40 backdrop-blur-sm p-8">
+                <div className="border border-white/10 bg-black/50 backdrop-blur-sm p-8">
                   <p className="text-[9px] font-black uppercase tracking-[0.4em] text-zinc-500 mb-4">
                     What AI Does
                   </p>
@@ -439,65 +421,64 @@ export default function ProgramsPage() {
                   </p>
                 </div>
 
-                <div className="border border-purple-400/40 bg-purple-500/10 backdrop-blur-sm p-8">
-                  <p className="text-[9px] font-black uppercase tracking-[0.4em] text-purple-300 mb-4">
+                <div className="border border-purple-300/40 bg-purple-500/15 backdrop-blur-sm p-8">
+                  <p className="text-[9px] font-black uppercase tracking-[0.4em] text-purple-200 mb-4">
                     What Elite Does
                   </p>
                   <p className="text-white font-black uppercase italic text-2xl tracking-tight mb-4 leading-tight">
                     Refuses The Errors.
                   </p>
-                  <p className="text-white/80 italic normal-case text-base leading-relaxed">
+                  <p className="text-white/85 italic normal-case text-base leading-relaxed">
                     Takes positions where most flinch. Names what is wrong in the dominant approaches and proposes a coherent alternative. Built on lived clinical and athletic practice.
                   </p>
                 </div>
               </div>
 
-              <p className="text-white italic normal-case text-xl md:text-2xl leading-relaxed font-medium max-w-3xl border-l-2 border-purple-300 pl-6">
+              <p className="text-white italic normal-case text-xl md:text-2xl leading-relaxed font-medium max-w-3xl border-l-2 border-purple-200 pl-6">
                 Premium in 2026 means human. Singular. Coherent end to end. Elite is what €199 buys when €30 buys nothing.
               </p>
             </motion.div>
           </div>
         </section>
 
-        {/* SMOOTH TRANSITION: purple → warm cream */}
-        <div
-          className="relative h-48 md:h-64 -mt-px"
-          style={{
-            background:
-              "linear-gradient(to bottom, #0a0418 0%, #1f1818 50%, #3a2a1a 100%)",
-          }}
-        />
+        {/* SECTION: LIFELONG - texture idea_4 (cream/violet horizon) */}
+        <section ref={lifelongRef} className="relative overflow-hidden">
+          <motion.div
+            className="absolute inset-0 w-full h-[130%] -top-[15%]"
+            style={{
+              y: lifelongY,
+              backgroundImage: "url('/textures/idea_4_clean.jpg')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          />
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: "linear-gradient(to right, rgba(0,0,0,0.4), rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4))",
+            }}
+          />
+          <div
+            className="absolute top-0 left-0 right-0 h-48 pointer-events-none"
+            style={{
+              background: "linear-gradient(to bottom, #100806, transparent)",
+            }}
+          />
+          <div
+            className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none"
+            style={{
+              background: "linear-gradient(to bottom, transparent, #000000)",
+            }}
+          />
 
-        {/* SECTION: LIFELONG — warm cream */}
-        <section className="relative py-32 md:py-40 overflow-hidden">
-          <div
-            className="absolute inset-0"
-            style={{
-              background: "radial-gradient(ellipse 1400px 1000px at 50% 50%, #3a2a1a 0%, #1f1410 50%, #100a08 100%)",
-            }}
-          />
-          <div
-            className="absolute inset-0 mix-blend-screen pointer-events-none"
-            style={{
-              background:
-                "radial-gradient(ellipse 1000px 500px at 50% 10%, rgba(220, 180, 130, 0.45), transparent 70%), radial-gradient(ellipse 500px 400px at 85% 85%, rgba(180, 100, 60, 0.3), transparent 60%)",
-            }}
-          />
-          <div
-            className="absolute inset-0 opacity-25 mix-blend-overlay pointer-events-none"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='hg'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23hg)'/%3E%3C/svg%3E")`,
-            }}
-          />
-
-          <div className="relative max-w-5xl mx-auto px-6 md:px-12">
+          <div className="relative max-w-5xl mx-auto px-6 md:px-12 py-40 md:py-56">
             <motion.div {...fadeUp}>
-              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-amber-200/80 mb-6">
+              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-amber-100/90 mb-6">
                 Lifelong · Exponential
               </p>
-              <h2 className="text-5xl md:text-7xl font-black uppercase italic tracking-tighter mb-12 leading-[0.9] text-white">
+              <h2 className="text-5xl md:text-7xl font-black uppercase italic tracking-tighter mb-12 leading-[0.9] text-white drop-shadow-2xl">
                 Not 12 Weeks.<br />
-                <span className="text-amber-200">A Method For Life.</span>
+                <span className="text-amber-100">A Method For Life.</span>
               </h2>
             </motion.div>
 
@@ -506,25 +487,16 @@ export default function ProgramsPage() {
                 Most programs run for a fixed block — 8 weeks, 12 weeks, then they expire. You buy another. The cycle never ends.
               </p>
               <p className="text-white/90 italic normal-case text-xl md:text-2xl leading-relaxed mb-8 max-w-3xl">
-                Elite is built differently. The programs progress with you indefinitely. <span className="text-amber-200 font-medium">The longer you apply it, the more it works.</span> That is the exponential — and that is what being elite means.
+                Elite is built differently. The programs progress with you indefinitely. <span className="text-amber-100 font-medium">The longer you apply it, the more it works.</span> That is the exponential — and that is what being elite means.
               </p>
-              <p className="text-white italic normal-case text-xl md:text-2xl leading-relaxed font-medium max-w-3xl border-l-2 border-amber-200 pl-6">
+              <p className="text-white italic normal-case text-xl md:text-2xl leading-relaxed font-medium max-w-3xl border-l-2 border-amber-100 pl-6">
                 Year one teaches you the structure. Year three reveals layers you missed. Year ten — you are still finding what was always there.
               </p>
             </motion.div>
           </div>
         </section>
 
-        {/* SMOOTH TRANSITION: cream → black */}
-        <div
-          className="relative h-48 md:h-64 -mt-px"
-          style={{
-            background:
-              "linear-gradient(to bottom, #100a08 0%, #060404 50%, #000000 100%)",
-          }}
-        />
-
-        {/* SECTION: WHAT'S IN THE GUIDE */}
+        {/* SECTION: WHAT'S IN THE GUIDE - back to clean black */}
         <section className="relative py-32 md:py-40 bg-black">
           <div className="max-w-6xl mx-auto px-6 md:px-12">
             <motion.div {...fadeUp} className="text-center mb-20">
