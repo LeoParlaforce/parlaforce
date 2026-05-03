@@ -42,22 +42,55 @@ export default function ProgramsPage() {
 
   const formatPrice = (cents: number) => `€${(cents / 100).toFixed(0)}`;
 
-  // Reusable scroll-triggered fade-up animation
   const fadeUp = {
     initial: { opacity: 0, y: 40 },
     whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true, margin: "-100px" },
-    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+    viewport: { once: true, margin: "-80px" },
+    transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
   };
 
   return (
     <main className="min-h-screen bg-black text-white pb-24 font-sans lowercase relative overflow-hidden selection:bg-blue-600/30 w-full">
-      {/* Global grain */}
+      {/* CSS for animated light leaks and film grain */}
+      <style jsx global>{`
+        @keyframes pulseLeakA {
+          0%, 100% { opacity: 0.45; transform: scale(1) translate(0, 0); }
+          50% { opacity: 0.7; transform: scale(1.15) translate(20px, -10px); }
+        }
+        @keyframes pulseLeakB {
+          0%, 100% { opacity: 0.35; transform: scale(1.1) translate(0, 0); }
+          50% { opacity: 0.55; transform: scale(1) translate(-15px, 10px); }
+        }
+        @keyframes driftBleed {
+          0%, 100% { transform: translateX(0px) translateY(0px); }
+          50% { transform: translateX(8px) translateY(-6px); }
+        }
+        @keyframes filmGrain {
+          0%, 100% { transform: translate(0, 0); }
+          10% { transform: translate(-1%, -1%); }
+          20% { transform: translate(1%, 1%); }
+          30% { transform: translate(-2%, 1%); }
+          40% { transform: translate(1%, -1%); }
+          50% { transform: translate(-1%, 2%); }
+          60% { transform: translate(-2%, -1%); }
+          70% { transform: translate(2%, 1%); }
+          80% { transform: translate(-1%, -2%); }
+          90% { transform: translate(1%, 2%); }
+        }
+        .animated-grain {
+          animation: filmGrain 1.2s steps(6) infinite;
+        }
+        .leak-pulse-a { animation: pulseLeakA 9s ease-in-out infinite; }
+        .leak-pulse-b { animation: pulseLeakB 11s ease-in-out infinite; }
+        .bleed-drift { animation: driftBleed 14s ease-in-out infinite; }
+      `}</style>
+
+      {/* Global animated grain - more textured than before */}
       <div
-        className="pointer-events-none fixed inset-0 z-[101] opacity-[0.05]"
+        className="pointer-events-none fixed inset-0 z-[101] opacity-[0.07] animated-grain"
         aria-hidden="true"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='fineGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.90' numOctaves='1' stitchTiles='stitch' seed='7'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23fineGrain)'/%3E%3C/svg%3E")`,
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='heavyGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='3' stitchTiles='stitch' seed='13'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23heavyGrain)'/%3E%3C/svg%3E")`,
         }}
       />
 
@@ -87,65 +120,65 @@ export default function ProgramsPage() {
           </div>
         )}
 
-        {/* HERO with horizontal banner image */}
-        <section className="relative">
-          {/* Cinematic banner image */}
-          <div className="relative w-full h-[55vh] md:h-[75vh] overflow-hidden">
-            <Image
-              src="/elite-cover.jpg"
-              fill
-              priority
-              sizes="100vw"
-              className="object-cover object-center"
-              alt="Elite — Become an Elite Athlete"
-            />
-            {/* Overlays for cinematic feel */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-black/60" />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30" />
-
-            {/* Light leak overlay */}
-            <div
-              className="absolute inset-0 opacity-30 mix-blend-screen pointer-events-none"
-              style={{
-                background: "radial-gradient(ellipse 800px 600px at 85% 10%, rgba(220, 80, 60, 0.4), transparent 50%), radial-gradient(ellipse 600px 400px at 5% 90%, rgba(80, 60, 220, 0.3), transparent 50%)",
-              }}
-            />
-
-            {/* Hero content overlay */}
-            <div className="absolute inset-0 flex flex-col justify-end pb-16 md:pb-24 px-6 md:px-12">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-                className="max-w-7xl mx-auto w-full"
-              >
-                <p className="text-[10px] md:text-xs font-black uppercase tracking-[0.4em] text-blue-400 mb-4 drop-shadow-lg">
-                  The Elite Protocol · 66 Pages · Lifelong
-                </p>
-                <h1 className="text-7xl sm:text-8xl md:text-[10rem] lg:text-[14rem] font-black uppercase italic tracking-tighter leading-[0.85] drop-shadow-2xl">
-                  Elite<span className="text-blue-500">.</span>
-                </h1>
-              </motion.div>
+        {/* HERO with horizontal banner image - displayed at native proportions */}
+        <section className="relative bg-black">
+          {/* Banner container - keeps image at correct aspect ratio without zoom */}
+          <div className="relative w-full bg-black flex items-center justify-center overflow-hidden">
+            <div className="relative w-full" style={{ aspectRatio: "866 / 338" }}>
+              <Image
+                src="/elite-cover.jpg"
+                fill
+                priority
+                sizes="100vw"
+                className="object-contain object-center"
+                alt="Elite — Become an Elite Athlete"
+              />
+              {/* Subtle vignette to blend edges into black */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background: "radial-gradient(ellipse 80% 60% at 50% 50%, transparent 50%, rgba(0,0,0,0.4) 100%)",
+                }}
+              />
+              {/* Light leak overlays */}
+              <div
+                className="absolute inset-0 pointer-events-none mix-blend-screen leak-pulse-a"
+                style={{
+                  background: "radial-gradient(ellipse 400px 300px at 90% 10%, rgba(220, 80, 60, 0.35), transparent 60%)",
+                }}
+              />
+              <div
+                className="absolute inset-0 pointer-events-none mix-blend-screen leak-pulse-b"
+                style={{
+                  background: "radial-gradient(ellipse 300px 200px at 5% 90%, rgba(80, 60, 220, 0.3), transparent 60%)",
+                }}
+              />
             </div>
           </div>
 
           {/* Hero text + buy block below image */}
           <div className="max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-20 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
             <motion.div {...fadeUp}>
-              <p className="text-zinc-300 italic normal-case text-2xl md:text-3xl mb-8 leading-relaxed">
-                The complete protocol to reach your maximum athletic potential.
+              <p className="text-[10px] md:text-xs font-black uppercase tracking-[0.4em] text-blue-400 mb-6">
+                The Elite Protocol · 66 Pages · Lifelong
+              </p>
+              <h1 className="text-7xl sm:text-8xl md:text-[10rem] font-black uppercase italic tracking-tighter leading-[0.85] mb-8">
+                Elite<span className="text-blue-500">.</span>
+              </h1>
+              <p className="text-zinc-200 italic normal-case text-2xl md:text-3xl mb-6 leading-relaxed">
+                The complete training, diet, recovery and psychology protocol for serious strength athletes.
               </p>
               <p className="text-zinc-500 italic normal-case text-base md:text-lg mb-10 leading-relaxed">
-                Most people think only superhumans become world-class. They are wrong. The difference is psychological — and it can be worked on.
+                Two programs — full body strength &amp; hypertrophy, and a world-class grip strength method. 66 pages. Built to apply for the rest of your training life.
               </p>
               <div className="border-l-2 border-blue-600 pl-6">
-                <p className="text-zinc-400 italic normal-case text-base md:text-lg leading-relaxed">
+                <p className="text-zinc-300 italic normal-case text-base md:text-lg leading-relaxed">
                   The author progressed more in 8 months applying this guide than in the previous 8 years without it.
                 </p>
               </div>
             </motion.div>
 
-            <motion.div {...fadeUp} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}>
+            <motion.div {...fadeUp} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}>
               <div className="flex items-baseline gap-4 mb-10">
                 {IS_LAUNCH_WEEK && (
                   <span className="text-zinc-600 line-through text-2xl md:text-3xl font-black italic">
@@ -230,88 +263,270 @@ export default function ProgramsPage() {
           </div>
         </section>
 
-        {/* SECTION: THE TRAP — organic background (warm/orange like idea_1) */}
+        {/* SECTION: BOOK MOCKUP - placed early so users see what they're buying */}
+        <section className="relative py-32 md:py-40 bg-black overflow-hidden">
+          {/* Smooth color bleed from above (black) into next section's warm tones */}
+          <div
+            className="absolute inset-0 opacity-40 bleed-drift pointer-events-none"
+            style={{
+              background: "radial-gradient(ellipse 1000px 700px at 50% 30%, rgba(40, 30, 80, 0.4), transparent 70%), radial-gradient(circle 400px at 15% 80%, rgba(180, 60, 40, 0.15), transparent 60%)",
+            }}
+          />
+          {/* Animated light leak from corner */}
+          <div
+            className="absolute top-0 right-0 w-[40%] h-[60%] opacity-50 leak-pulse-a pointer-events-none mix-blend-screen"
+            style={{
+              background: "radial-gradient(ellipse at top right, rgba(150, 80, 200, 0.4), transparent 60%)",
+            }}
+          />
+
+          <div className="relative max-w-5xl mx-auto px-6 md:px-12">
+            <motion.div {...fadeUp} className="text-center mb-16">
+              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-400 mb-6">
+                Not a PDF — a Book
+              </p>
+              <h2 className="text-5xl md:text-7xl font-black uppercase italic tracking-tighter leading-[0.9] mb-6">
+                66 Pages.<br />
+                <span className="text-blue-400">5 Parts.</span>
+              </h2>
+              <p className="text-zinc-400 italic normal-case text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+                Foundations · Practical Guidelines · Programming · L'Archange Expurgateur · Le Bras Armé des Dieux
+              </p>
+            </motion.div>
+
+            {/* Book mockup */}
+            <motion.div
+              initial={{ opacity: 0, y: 60, scale: 0.95 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+              className="flex justify-center"
+            >
+              <div className="relative" style={{ perspective: "2400px" }}>
+                <div
+                  className="relative"
+                  style={{
+                    transform: "rotateY(-18deg) rotateX(3deg)",
+                    transformStyle: "preserve-3d",
+                  }}
+                >
+                  {/* Book front cover - using the actual title page (page 1) image */}
+                  <div
+                    className="relative w-[300px] md:w-[420px] shadow-[0_30px_80px_rgba(0,0,0,0.8)]"
+                    style={{ aspectRatio: "1 / 1.414" }}
+                  >
+                    <div className="absolute inset-0 bg-black border border-zinc-800 overflow-hidden">
+                      <Image
+                        src="/elite-cover.jpg"
+                        fill
+                        sizes="420px"
+                        className="object-cover"
+                        alt="Elite book cover"
+                      />
+                      {/* Title overlay to recreate the cover page look */}
+                      <div className="absolute inset-0 flex flex-col justify-between py-12 px-6 pointer-events-none">
+                        <div className="text-center">
+                          <p
+                            style={{ fontFamily: "Georgia, 'Times New Roman', serif", color: "#c8a45c", letterSpacing: "0.15em" }}
+                            className="text-3xl md:text-5xl font-normal"
+                          >
+                            ELITE
+                          </p>
+                          <div className="w-12 h-px bg-[#c8a45c] mx-auto mt-2" />
+                        </div>
+                        <p
+                          style={{ fontFamily: "Georgia, 'Times New Roman', serif", color: "#c8a45c" }}
+                          className="text-center italic text-xs md:text-sm"
+                        >
+                          written by Léo Gayrard
+                        </p>
+                      </div>
+                    </div>
+                    {/* Glossy reflection */}
+                    <div
+                      className="absolute inset-0 pointer-events-none"
+                      style={{
+                        background: "linear-gradient(110deg, rgba(255,255,255,0.18) 0%, transparent 35%, transparent 65%, rgba(0,0,0,0.4) 100%)",
+                      }}
+                    />
+                  </div>
+                  {/* Page edges visible on right */}
+                  <div
+                    className="absolute right-0 top-1 bottom-1 w-[8px]"
+                    style={{
+                      transform: "translateX(8px) rotateY(90deg)",
+                      background: "repeating-linear-gradient(0deg, #f5f5f0 0px, #f5f5f0 1px, #d8d8d0 1px, #d8d8d0 2px)",
+                    }}
+                  />
+                  {/* Spine shadow */}
+                  <div
+                    className="absolute -left-2 top-2 bottom-2 w-3"
+                    style={{
+                      transform: "rotateY(-90deg) translateZ(6px)",
+                      background: "linear-gradient(to right, rgba(0,0,0,0.9), transparent)",
+                    }}
+                  />
+                </div>
+                {/* Floor shadow */}
+                <div
+                  className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-[280px] md:w-[400px] h-10 rounded-full opacity-70"
+                  style={{
+                    background: "radial-gradient(ellipse, rgba(0,0,0,0.8) 0%, transparent 70%)",
+                    filter: "blur(16px)",
+                  }}
+                />
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Smooth fade out into next section */}
+          <div
+            className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
+            style={{
+              background: "linear-gradient(to bottom, transparent, rgba(60, 25, 18, 0.5))",
+            }}
+          />
+        </section>
+
+        {/* SECTION: THE TRAP — clear & immediate, machine pieces argument front-loaded */}
         <section className="relative py-32 md:py-40 overflow-hidden">
+          {/* Base warm gradient */}
           <div
-            className="absolute inset-0 opacity-90"
+            className="absolute inset-0"
             style={{
-              background: "radial-gradient(ellipse 1200px 800px at 50% 50%, #4a1f15 0%, #2a0f08 40%, #0a0505 80%)",
+              background: "radial-gradient(ellipse 1400px 1000px at 50% 50%, #4a1f15 0%, #2a0f08 45%, #0a0505 85%)",
+            }}
+          />
+          {/* Color bleed coming from previous section */}
+          <div
+            className="absolute top-0 left-0 right-0 h-40 pointer-events-none"
+            style={{
+              background: "linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent)",
+            }}
+          />
+          {/* Bleeding edge on left like idea_1/idea_4 */}
+          <div
+            className="absolute top-0 left-0 bottom-0 w-[8%] pointer-events-none bleed-drift"
+            style={{
+              background: "linear-gradient(to right, rgba(255, 220, 130, 0.35), rgba(220, 100, 60, 0.2), transparent)",
+              filter: "blur(2px)",
+            }}
+          />
+          {/* Animated warm light leaks */}
+          <div
+            className="absolute inset-0 mix-blend-screen pointer-events-none leak-pulse-a"
+            style={{
+              background: "radial-gradient(ellipse 700px 500px at 25% 35%, rgba(220, 100, 60, 0.55), transparent 60%)",
             }}
           />
           <div
-            className="absolute inset-0 opacity-50 mix-blend-screen"
+            className="absolute inset-0 mix-blend-screen pointer-events-none leak-pulse-b"
             style={{
-              background: "radial-gradient(circle 600px at 20% 30%, rgba(220, 100, 60, 0.5), transparent 60%), radial-gradient(circle 400px at 80% 70%, rgba(180, 60, 40, 0.4), transparent 60%)",
+              background: "radial-gradient(ellipse 500px 350px at 80% 70%, rgba(180, 60, 40, 0.4), transparent 60%)",
             }}
           />
+          {/* Heavy textured grain */}
           <div
-            className="absolute inset-0 opacity-30"
+            className="absolute inset-0 opacity-40 mix-blend-overlay pointer-events-none animated-grain"
             style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='heavyGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23heavyGrain)'/%3E%3C/svg%3E")`,
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='hg'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23hg)'/%3E%3C/svg%3E")`,
             }}
           />
+
           <div className="relative max-w-5xl mx-auto px-6 md:px-12">
             <motion.div {...fadeUp}>
-              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-orange-300/70 mb-6">
-                The Modern Trap
+              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-orange-300/80 mb-6">
+                Why This Guide Exists
               </p>
               <h2 className="text-5xl md:text-7xl font-black uppercase italic tracking-tighter mb-12 leading-[0.9] text-white">
-                Online You Find Everything <br />
-                <span className="text-orange-200">And Its Opposite</span>.
+                A Machine Only Works <br />
+                <span className="text-orange-200">When All The Pieces<br />Are From The Same Machine.</span>
               </h2>
             </motion.div>
 
-            <motion.div {...fadeUp} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}>
-              <p className="text-white/90 italic normal-case text-xl md:text-2xl leading-relaxed mb-8 max-w-3xl">
-                Eat 6 meals a day. Eat 2. Train to failure. Never train to failure. High intensity. Low intensity. Carbs are essential. Carbs are the enemy. Whatever you believe, you will find ten experts confirming it — and ten more contradicting it.
+            <motion.div {...fadeUp} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}>
+              <p className="text-white/95 italic normal-case text-xl md:text-2xl leading-relaxed mb-8 max-w-3xl">
+                Most athletes fail not because they cannot find good methods. They fail because they assemble pieces of <em>different</em> methods. A diet from one coach. A program from another. A recovery protocol from a third.
               </p>
-              <p className="text-white/80 italic normal-case text-lg md:text-xl leading-relaxed mb-8 max-w-3xl">
-                AI has amplified this. It centralizes the consensus and recombines the contradictions. You ask a question, you get an averaged answer assembled from incompatible sources. The result reads as authoritative — and works on no one.
+              <p className="text-white/85 italic normal-case text-lg md:text-xl leading-relaxed mb-8 max-w-3xl">
+                Each piece may be valid in its original system. Bolted together, they cancel each other out. The machine does not run.
+              </p>
+              <p className="text-white/85 italic normal-case text-lg md:text-xl leading-relaxed mb-8 max-w-3xl">
+                Online you find everything and its opposite. AI has amplified this — it centralizes the consensus, recombines the contradictions, and outputs an averaged answer that fits no one.
               </p>
               <p className="text-white italic normal-case text-xl md:text-2xl leading-relaxed font-medium max-w-3xl border-l-2 border-orange-300 pl-6">
-                The trap is not failing to find the right method. The trap is taking a piece of one method, a piece of another, assembling them — and discovering they were parts of different machines.
+                Elite is one machine. Every part — training, diet, recovery, sleep, supplementation, mental work, programming — built from the same internal logic. Take any piece out and the rest still runs.
               </p>
             </motion.div>
           </div>
+
+          {/* Smooth fade into next section */}
+          <div
+            className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
+            style={{
+              background: "linear-gradient(to bottom, transparent, rgba(20, 20, 50, 0.6))",
+            }}
+          />
         </section>
 
-        {/* SECTION: UNIFIED APPROACH — organic background (cool/blue like idea_3) */}
+        {/* SECTION: UNIFIED APPROACH - all components */}
         <section className="relative py-32 md:py-40 overflow-hidden">
           <div
-            className="absolute inset-0 opacity-90"
+            className="absolute inset-0"
             style={{
-              background: "radial-gradient(ellipse 1400px 900px at 50% 50%, #1a1a2e 0%, #0f0f1c 40%, #050510 80%)",
+              background: "radial-gradient(ellipse 1500px 1000px at 50% 50%, #1a1a2e 0%, #0f0f1c 45%, #050510 85%)",
             }}
           />
           <div
-            className="absolute inset-0 opacity-60 mix-blend-screen"
+            className="absolute top-0 left-0 right-0 h-40 pointer-events-none"
             style={{
-              background: "radial-gradient(circle 500px at 70% 20%, rgba(100, 80, 200, 0.4), transparent 60%), radial-gradient(circle 700px at 20% 80%, rgba(60, 100, 180, 0.3), transparent 60%)",
+              background: "linear-gradient(to bottom, rgba(60, 25, 18, 0.5), transparent)",
+            }}
+          />
+          {/* Bleeding edge on right side */}
+          <div
+            className="absolute top-0 right-0 bottom-0 w-[6%] pointer-events-none bleed-drift"
+            style={{
+              background: "linear-gradient(to left, rgba(120, 100, 220, 0.4), transparent)",
+              filter: "blur(3px)",
             }}
           />
           <div
-            className="absolute inset-0 opacity-25"
+            className="absolute inset-0 mix-blend-screen pointer-events-none leak-pulse-a"
             style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='heavyGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23heavyGrain)'/%3E%3C/svg%3E")`,
+              background: "radial-gradient(ellipse 600px 400px at 75% 25%, rgba(120, 90, 220, 0.45), transparent 60%)",
             }}
           />
+          <div
+            className="absolute inset-0 mix-blend-screen pointer-events-none leak-pulse-b"
+            style={{
+              background: "radial-gradient(ellipse 700px 500px at 20% 80%, rgba(60, 100, 200, 0.35), transparent 60%)",
+            }}
+          />
+          <div
+            className="absolute inset-0 opacity-35 mix-blend-overlay pointer-events-none animated-grain"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='hg'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23hg)'/%3E%3C/svg%3E")`,
+            }}
+          />
+
           <div className="relative max-w-5xl mx-auto px-6 md:px-12">
             <motion.div {...fadeUp}>
               <p className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-300/80 mb-6">
-                The Solution
+                Everything In One Place
               </p>
               <h2 className="text-5xl md:text-7xl font-black uppercase italic tracking-tighter mb-12 leading-[0.9] text-white">
-                One Machine.<br />
-                <span className="text-blue-300">All The Pieces.</span>
+                Nine Components.<br />
+                <span className="text-blue-300">One Coherent System.</span>
               </h2>
             </motion.div>
 
-            <motion.div {...fadeUp} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}>
+            <motion.div {...fadeUp} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}>
               <p className="text-white/90 italic normal-case text-xl md:text-2xl leading-relaxed mb-12 max-w-3xl">
-                Elite is not the best of every method assembled into one. It is a unified approach — a single internal logic that runs through every recommendation, from the morning wake-up to the last set of the session.
+                Elite covers every domain that affects performance. Each one is treated in depth. Each one is consistent with the others. Nothing is left aside, nothing contradicts.
               </p>
 
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-12 max-w-3xl">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-12">
                 {[
                   "Training",
                   "Diet",
@@ -328,7 +543,7 @@ export default function ProgramsPage() {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: i * 0.05 }}
+                    transition={{ duration: 0.6, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
                     className="border border-blue-400/30 bg-blue-500/5 backdrop-blur-sm py-4 px-3 md:py-5 md:px-4 text-center"
                   >
                     <p className="text-white/90 font-black uppercase italic text-xs md:text-sm tracking-tight">
@@ -337,38 +552,55 @@ export default function ProgramsPage() {
                   </motion.div>
                 ))}
               </div>
-
-              <p className="text-white italic normal-case text-xl md:text-2xl leading-relaxed font-medium max-w-3xl border-l-2 border-blue-300 pl-6">
-                Nothing is left aside. Every part holds the others. Remove a piece — the machine still runs. That is what makes it work where assembled methods fail.
-              </p>
             </motion.div>
           </div>
+
+          <div
+            className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
+            style={{
+              background: "linear-gradient(to bottom, transparent, rgba(35, 15, 55, 0.6))",
+            }}
+          />
         </section>
 
-        {/* SECTION: ANTI-AI POSITIONING — organic background (deep purple/black like idea_2) */}
+        {/* SECTION: ANTI-AI POSITIONING */}
         <section className="relative py-32 md:py-40 overflow-hidden">
           <div
-            className="absolute inset-0 opacity-90"
+            className="absolute inset-0"
             style={{
-              background: "radial-gradient(ellipse 1200px 800px at 30% 50%, #2a1545 0%, #15082a 40%, #050208 80%)",
+              background: "radial-gradient(ellipse 1300px 900px at 30% 50%, #2a1545 0%, #15082a 45%, #050208 85%)",
             }}
           />
           <div
-            className="absolute inset-0 opacity-50 mix-blend-screen"
+            className="absolute top-0 left-0 right-0 h-40 pointer-events-none"
             style={{
-              background: "linear-gradient(105deg, rgba(180, 100, 200, 0.3) 0%, transparent 30%, transparent 70%, rgba(100, 80, 220, 0.2) 100%)",
+              background: "linear-gradient(to bottom, rgba(20, 20, 50, 0.6), transparent)",
             }}
           />
           <div
-            className="absolute inset-0 opacity-30"
+            className="absolute top-0 left-0 bottom-0 w-[10%] pointer-events-none bleed-drift"
             style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='heavyGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23heavyGrain)'/%3E%3C/svg%3E")`,
+              background: "linear-gradient(to right, rgba(200, 120, 220, 0.5), rgba(120, 80, 200, 0.3), transparent)",
+              filter: "blur(4px)",
             }}
           />
+          <div
+            className="absolute inset-0 mix-blend-screen pointer-events-none leak-pulse-a"
+            style={{
+              background: "radial-gradient(ellipse 500px 400px at 80% 30%, rgba(180, 100, 220, 0.4), transparent 60%)",
+            }}
+          />
+          <div
+            className="absolute inset-0 opacity-35 mix-blend-overlay pointer-events-none animated-grain"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='hg'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23hg)'/%3E%3C/svg%3E")`,
+            }}
+          />
+
           <div className="relative max-w-5xl mx-auto px-6 md:px-12">
             <motion.div {...fadeUp}>
               <p className="text-[10px] font-black uppercase tracking-[0.4em] text-purple-300/80 mb-6">
-                Why €199 in 2026
+                Why €199 In 2026
               </p>
               <h2 className="text-5xl md:text-7xl font-black uppercase italic tracking-tighter mb-12 leading-[0.9] text-white">
                 The Generic Programs<br />
@@ -376,7 +608,7 @@ export default function ProgramsPage() {
               </h2>
             </motion.div>
 
-            <motion.div {...fadeUp} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}>
+            <motion.div {...fadeUp} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}>
               <p className="text-white/90 italic normal-case text-xl md:text-2xl leading-relaxed mb-12 max-w-3xl">
                 Anyone can ask an AI for a 12-week program, a macro split, a deload protocol. That world existed at €30 a PDF. That world is over. What is left for sale is what AI cannot deliver.
               </p>
@@ -390,7 +622,7 @@ export default function ProgramsPage() {
                     Recombines Consensus.
                   </p>
                   <p className="text-zinc-400 italic normal-case text-base leading-relaxed">
-                    Averages out the internet. Repeats what most coaches repeat. Cannot refuse the dominant errors of the field — because it has no position to refuse from.
+                    Averages out the internet. Repeats what most coaches repeat. Cannot refuse the errors of the field — because it has no position to refuse from.
                   </p>
                 </div>
 
@@ -402,7 +634,7 @@ export default function ProgramsPage() {
                     Refuses The Errors.
                   </p>
                   <p className="text-white/80 italic normal-case text-base leading-relaxed">
-                    Takes positions where most flinch. Names what is wrong in the dominant approaches and proposes a coherent alternative. Built on lived clinical and athletic practice — not on data scraped from a contradictory web.
+                    Takes positions where most flinch. Names what is wrong in the dominant approaches and proposes a coherent alternative. Built on lived clinical and athletic practice.
                   </p>
                 </div>
               </div>
@@ -412,28 +644,49 @@ export default function ProgramsPage() {
               </p>
             </motion.div>
           </div>
+
+          <div
+            className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
+            style={{
+              background: "linear-gradient(to bottom, transparent, rgba(50, 35, 20, 0.5))",
+            }}
+          />
         </section>
 
-        {/* SECTION: LIFELONG / EXPONENTIAL — organic background (warm/cream like idea_4) */}
+        {/* SECTION: LIFELONG / EXPONENTIAL */}
         <section className="relative py-32 md:py-40 overflow-hidden">
           <div
-            className="absolute inset-0 opacity-90"
+            className="absolute inset-0"
             style={{
-              background: "radial-gradient(ellipse 1200px 800px at 50% 50%, #3a2a1a 0%, #1f1410 40%, #0a0606 80%)",
+              background: "radial-gradient(ellipse 1300px 900px at 50% 50%, #3a2a1a 0%, #1f1410 45%, #0a0606 85%)",
             }}
           />
           <div
-            className="absolute inset-0 opacity-40 mix-blend-screen"
+            className="absolute top-0 left-0 right-0 h-40 pointer-events-none"
             style={{
-              background: "radial-gradient(ellipse 800px 400px at 50% 0%, rgba(220, 180, 130, 0.4), transparent 70%), radial-gradient(circle 500px at 80% 90%, rgba(180, 100, 60, 0.2), transparent 60%)",
+              background: "linear-gradient(to bottom, rgba(35, 15, 55, 0.6), transparent)",
             }}
           />
           <div
-            className="absolute inset-0 opacity-25"
+            className="absolute top-0 left-0 right-0 h-[40%] pointer-events-none bleed-drift"
             style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='heavyGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23heavyGrain)'/%3E%3C/svg%3E")`,
+              background: "radial-gradient(ellipse 1000px 400px at 50% 0%, rgba(220, 180, 130, 0.5), transparent 70%)",
+              filter: "blur(2px)",
             }}
           />
+          <div
+            className="absolute inset-0 mix-blend-screen pointer-events-none leak-pulse-b"
+            style={{
+              background: "radial-gradient(circle 500px at 85% 85%, rgba(180, 100, 60, 0.3), transparent 60%)",
+            }}
+          />
+          <div
+            className="absolute inset-0 opacity-35 mix-blend-overlay pointer-events-none animated-grain"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='hg'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23hg)'/%3E%3C/svg%3E")`,
+            }}
+          />
+
           <div className="relative max-w-5xl mx-auto px-6 md:px-12">
             <motion.div {...fadeUp}>
               <p className="text-[10px] font-black uppercase tracking-[0.4em] text-amber-200/80 mb-6">
@@ -445,21 +698,28 @@ export default function ProgramsPage() {
               </h2>
             </motion.div>
 
-            <motion.div {...fadeUp} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}>
+            <motion.div {...fadeUp} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}>
               <p className="text-white/90 italic normal-case text-xl md:text-2xl leading-relaxed mb-8 max-w-3xl">
                 Most programs run for a fixed block — 8 weeks, 12 weeks, then they expire. You buy another. The cycle never ends.
               </p>
               <p className="text-white/90 italic normal-case text-xl md:text-2xl leading-relaxed mb-8 max-w-3xl">
-                Elite is built differently. The programs progress with you indefinitely. The principles do not expire. <span className="text-amber-200 font-medium">The longer you apply it, the more it works.</span> That is the exponential.
+                Elite is built differently. The programs progress with you indefinitely. <span className="text-amber-200 font-medium">The longer you apply it, the more it works.</span> That is the exponential — and that is what being elite means.
               </p>
               <p className="text-white italic normal-case text-xl md:text-2xl leading-relaxed font-medium max-w-3xl border-l-2 border-amber-200 pl-6">
-                Year one teaches you the structure. Year three reveals layers you missed. Year ten — you are still finding what was always there. That is what being elite means.
+                Year one teaches you the structure. Year three reveals layers you missed. Year ten — you are still finding what was always there.
               </p>
             </motion.div>
           </div>
+
+          <div
+            className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
+            style={{
+              background: "linear-gradient(to bottom, transparent, rgba(0, 0, 0, 1))",
+            }}
+          />
         </section>
 
-        {/* SECTION: WHAT'S IN THE GUIDE — back to dark/black */}
+        {/* SECTION: WHAT'S IN THE GUIDE */}
         <section className="relative py-32 md:py-40 bg-black">
           <div className="max-w-6xl mx-auto px-6 md:px-12">
             <motion.div {...fadeUp} className="text-center mb-20">
@@ -467,11 +727,8 @@ export default function ProgramsPage() {
                 What's In The Guide
               </p>
               <h2 className="text-5xl md:text-7xl font-black uppercase italic tracking-tighter mb-6 leading-[0.9]">
-                66 Pages, 5 Parts<span className="text-blue-600">.</span>
+                The Five Parts<span className="text-blue-600">.</span>
               </h2>
-              <p className="text-zinc-500 italic normal-case text-lg max-w-2xl mx-auto">
-                No motivational fluff. No vague "listen to your body". Concrete protocols, real numbers, theoretical depth.
-              </p>
             </motion.div>
 
             <div className="space-y-6">
@@ -480,22 +737,36 @@ export default function ProgramsPage() {
                   num: "Part 1",
                   pages: "pp. 3–14",
                   tag: "The psychological work",
-                  title: "Why Champions Decide to Become Champions",
-                  body: "The mental architecture that separates elite athletes from very good ones. The unconscious mechanisms — the superego, the inner enemy, the indomitable desire — that bridle most people from realizing their potential, and what to do about them.",
+                  title: "Foundations",
+                  body: "The mental architecture that separates elite athletes from very good ones. The unconscious mechanisms — the superego, the inner enemy, the indomitable desire — that bridle most people from realizing their potential.",
                 },
                 {
                   num: "Part 2",
                   pages: "pp. 15–42",
                   tag: "Daily protocols",
-                  title: "Diet, Sleep, Recovery — Real Numbers",
-                  body: "Exact macros, exact timing, exact protocols. Every food in the sample diet justified by mechanism (mTORC1, indole-3-carbinol, leucine threshold). Every supplement dose-specified. Every blood marker comes with the exact term to write on your prescription.",
+                  title: "Practical Guidelines",
+                  body: "Diet, sleep, recovery, supplementation, blood work. Exact macros, exact timing, exact protocols. Every food and every supplement justified by mechanism.",
                 },
                 {
                   num: "Part 3",
                   pages: "pp. 43–59",
                   tag: "How to read, use, adapt",
-                  title: "The Program Is a Frame. The Decision Is Yours.",
-                  body: "How to use the programs across years. The minimum effective. Strength vs hypertrophy at the cellular level. Volume and intensity as capacities, not numbers. When to deload, how to peak, how to handle injuries.",
+                  title: "Programming",
+                  body: "How to use the programs across years. Strength vs hypertrophy. The minimum effective. Volume and intensity as capacities. When to deload, peak, and handle injuries.",
+                },
+                {
+                  num: "Part 4",
+                  pages: "pp. 60–63",
+                  tag: "Full body",
+                  title: "L'Archange Expurgateur",
+                  body: "The full body strength and hypertrophy program. 4 sessions per week. Configurable for hypertrophy, strength, or both.",
+                },
+                {
+                  num: "Part 5",
+                  pages: "pp. 64–66",
+                  tag: "Specialized grip",
+                  title: "Le Bras Armé des Dieux",
+                  body: "The world-class grip strength program. Dynamic grip training approach found nowhere else.",
                 },
               ].map((part, i) => (
                 <motion.div
@@ -503,7 +774,7 @@ export default function ProgramsPage() {
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 0.7, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
                   className="border border-zinc-900 bg-zinc-950/30 hover:border-zinc-800 transition-all p-8 md:p-12"
                 >
                   <div className="flex items-baseline justify-between mb-6 flex-wrap gap-3">
@@ -526,77 +797,62 @@ export default function ProgramsPage() {
           </div>
         </section>
 
-        {/* SECTION: THE TWO PROGRAMS - with book mockup */}
+        {/* SECTION: GRIP - WHY IT MATTERS FOR EVERYONE */}
         <section className="relative py-32 md:py-40 bg-black overflow-hidden">
           <div
             className="absolute inset-0 opacity-50"
             style={{
-              background: "radial-gradient(ellipse 1000px 600px at 50% 30%, rgba(30, 60, 180, 0.15), transparent 60%)",
+              background: "radial-gradient(ellipse 1200px 800px at 50% 30%, rgba(30, 60, 180, 0.2), transparent 60%)",
             }}
           />
-          <div className="relative max-w-7xl mx-auto px-6 md:px-12">
-            <motion.div {...fadeUp} className="text-center mb-20">
-              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-600 mb-6">
-                The Two Programs
+          <div
+            className="absolute inset-0 mix-blend-screen pointer-events-none leak-pulse-a"
+            style={{
+              background: "radial-gradient(circle 400px at 90% 80%, rgba(80, 100, 200, 0.25), transparent 60%)",
+            }}
+          />
+
+          <div className="relative max-w-6xl mx-auto px-6 md:px-12">
+            <motion.div {...fadeUp} className="text-center mb-16">
+              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-400 mb-6">
+                Le Bras Armé des Dieux · World-Class & Unique
               </p>
-              <h2 className="text-5xl md:text-7xl font-black uppercase italic tracking-tighter mb-6 leading-[0.9]">
-                Two Programs<span className="text-blue-600">.</span><br />
-                One Body Trained Whole.
+              <h2 className="text-5xl md:text-7xl font-black uppercase italic tracking-tighter mb-8 leading-[0.9]">
+                Grip Is Not <br />
+                <span className="text-blue-400">A Specialization.</span>
               </h2>
+              <p className="text-zinc-400 italic normal-case text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
+                It is the first link of every chain you train. And it is what holds back almost every athlete without them knowing it.
+              </p>
             </motion.div>
 
-            {/* Book mockup centered */}
-            <motion.div
-              {...fadeUp}
-              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-              className="flex justify-center mb-20"
-            >
-              <div className="relative" style={{ perspective: "2000px" }}>
-                <div
-                  className="relative"
-                  style={{
-                    transform: "rotateY(-15deg) rotateX(2deg)",
-                    transformStyle: "preserve-3d",
-                  }}
-                >
-                  {/* Book spine shadow */}
-                  <div
-                    className="absolute -left-2 top-1 bottom-1 w-4 bg-gradient-to-r from-black to-zinc-800"
-                    style={{ transform: "rotateY(-90deg) translateZ(8px)" }}
-                  />
-                  {/* Book front cover */}
-                  <div className="relative w-[280px] md:w-[360px] h-[400px] md:h-[520px] shadow-2xl">
-                    <div className="absolute inset-0 bg-zinc-900 border border-zinc-800">
-                      <Image
-                        src="/elite-cover.jpg"
-                        fill
-                        sizes="360px"
-                        className="object-cover"
-                        alt="Elite book cover"
-                      />
-                    </div>
-                    {/* Book gloss highlight */}
-                    <div
-                      className="absolute inset-0 pointer-events-none"
-                      style={{
-                        background: "linear-gradient(105deg, rgba(255,255,255,0.15) 0%, transparent 30%, transparent 70%, rgba(0,0,0,0.3) 100%)",
-                      }}
-                    />
-                  </div>
-                  {/* Pages on the right edge */}
-                  <div
-                    className="absolute right-0 top-0 bottom-0 w-[6px] bg-gradient-to-b from-zinc-300 via-zinc-100 to-zinc-300"
-                    style={{ transform: "translateX(6px) rotateY(90deg)" }}
-                  />
-                </div>
-                {/* Drop shadow under book */}
-                <div
-                  className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-[280px] md:w-[360px] h-8 rounded-full"
-                  style={{
-                    background: "radial-gradient(ellipse, rgba(0,0,0,0.6) 0%, transparent 70%)",
-                    filter: "blur(12px)",
-                  }}
-                />
+            {/* The chain argument */}
+            <motion.div {...fadeUp} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.15 }} className="max-w-4xl mx-auto mb-16">
+              <div className="border border-zinc-900 bg-zinc-950/40 p-8 md:p-12">
+                <h3 className="text-2xl md:text-4xl font-black uppercase italic tracking-tighter mb-8 leading-tight text-white">
+                  The Body Is A Chain<span className="text-blue-400">.</span><br />
+                  <span className="text-zinc-400">As Strong As Its Weakest Link.</span>
+                </h3>
+                <p className="text-zinc-300 italic normal-case text-lg md:text-xl leading-relaxed mb-6">
+                  Most athletes are bridled by their grip without knowing it. The signs are everywhere — and they always blame the wrong cause.
+                </p>
+                <ul className="space-y-4 text-zinc-300 italic normal-case text-base md:text-lg mb-8">
+                  <li className="flex"><span className="text-blue-400 mr-3 shrink-0 font-black">·</span>
+                    <span>Your <strong className="text-white not-italic">bench press or overhead press</strong> stops short — and you wear wrist wraps to mask it. The truth: your wrists, your grip, your elbows are weak. The press cannot express what your chest and shoulders could deliver.</span>
+                  </li>
+                  <li className="flex"><span className="text-blue-400 mr-3 shrink-0 font-black">·</span>
+                    <span>Your <strong className="text-white not-italic">deadlift</strong> stops because the bar slips before your back is tired. You blame your back. It is your hands.</span>
+                  </li>
+                  <li className="flex"><span className="text-blue-400 mr-3 shrink-0 font-black">·</span>
+                    <span>Your <strong className="text-white not-italic">pull-ups</strong> end before your lats are spent. You think it is conditioning. It is forearms.</span>
+                  </li>
+                  <li className="flex"><span className="text-blue-400 mr-3 shrink-0 font-black">·</span>
+                    <span>Your <strong className="text-white not-italic">rows</strong> never connect properly to the back. You think it is technique. It is grip transmission.</span>
+                  </li>
+                </ul>
+                <p className="text-white italic normal-case text-xl md:text-2xl leading-relaxed font-medium border-l-2 border-blue-400 pl-6">
+                  Train the first link — the rest of the body unlocks. When grip becomes strong, the progress on every other lift explodes. That is why this program belongs to everyone, not just specialists.
+                </p>
               </div>
             </motion.div>
 
@@ -605,20 +861,20 @@ export default function ProgramsPage() {
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                 className="border border-zinc-900 bg-zinc-950/30 p-8 md:p-10"
               >
                 <p className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-600 mb-4">
-                  Program 1
+                  Program 1 — Full Body
                 </p>
                 <h3 className="text-3xl md:text-4xl font-black uppercase italic tracking-tighter mb-6 leading-tight">
                   L'Archange Expurgateur
                 </h3>
                 <p className="text-zinc-300 italic normal-case text-lg leading-relaxed mb-6">
-                  Full-body hypertrophy and strength. 4 sessions per week. Configurable for hypertrophy, strength, or both.
+                  Full-body hypertrophy and strength. 4 sessions per week. Configurable for hypertrophy, strength, or both. Lifelong progression.
                 </p>
                 <p className="text-zinc-500 italic normal-case text-base leading-relaxed">
-                  The complete program for the entire body. Nothing is left aside. Lifelong progression — you will train on it for years.
+                  The complete program for the entire body. Nothing left aside. You will train on it for years.
                 </p>
               </motion.div>
 
@@ -626,45 +882,23 @@ export default function ProgramsPage() {
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
                 className="border border-blue-600/40 bg-blue-600/5 p-8 md:p-10"
               >
                 <p className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-400 mb-4">
-                  Program 2 · World-class & Unique
+                  Program 2 — World-Class Grip
                 </p>
                 <h3 className="text-3xl md:text-4xl font-black uppercase italic tracking-tighter mb-6 leading-tight">
                   Le Bras Armé des Dieux
                 </h3>
                 <p className="text-white italic normal-case text-lg leading-relaxed mb-6">
-                  Specialized grip strength program. International-level forearm and hand work. <span className="text-blue-300 font-medium">Found nowhere else — this approach to grip is unique in the world.</span>
+                  A <strong className="text-blue-300 not-italic">dynamic grip training</strong> approach found nowhere else. Unique in the world. At the cutting edge of grip programming and methodology.
                 </p>
                 <p className="text-zinc-300 italic normal-case text-base leading-relaxed">
-                  At the cutting edge of grip programming and methodology.
+                  Forearm hypertrophy, finger strength, wrist resilience, thumb strength. International-level results.
                 </p>
               </motion.div>
             </div>
-
-            {/* The chain argument */}
-            <motion.div
-              {...fadeUp}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
-              className="mt-16 max-w-4xl mx-auto"
-            >
-              <div className="border-t border-zinc-900 pt-12">
-                <p className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-600 mb-6 text-center">
-                  Why Grip Matters For Everyone
-                </p>
-                <h3 className="text-3xl md:text-5xl font-black uppercase italic tracking-tighter mb-8 leading-tight text-center">
-                  The Body Is A Chain<span className="text-blue-600">.</span>
-                </h3>
-                <p className="text-zinc-300 italic normal-case text-lg md:text-xl leading-relaxed mb-6 text-center max-w-3xl mx-auto">
-                  Movement is a chain. A chain is only as strong as its weakest link. And the very first link is the hands — the wrists, the forearms, the elbows.
-                </p>
-                <p className="text-zinc-400 italic normal-case text-base md:text-lg leading-relaxed text-center max-w-3xl mx-auto">
-                  Most athletes are bridled by grip without knowing it. Their deadlift stops because the bar slips. Their pull-ups end before their lats are tired. Their press peaks before their triceps are spent. Train the first link — the rest of the body unlocks. That is what this program does for everyone, not just specialists.
-                </p>
-              </div>
-            </motion.div>
           </div>
         </section>
 
@@ -680,7 +914,7 @@ export default function ProgramsPage() {
               </h2>
             </motion.div>
 
-            <motion.div {...fadeUp} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}>
+            <motion.div {...fadeUp} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}>
               <p className="text-zinc-400 italic normal-case text-xl md:text-2xl leading-relaxed text-center max-w-3xl mx-auto mb-16">
                 Powerlifters. Strongmen. Climbers. Arm wrestlers. Martial artists. Fighters. Bodybuilders. Anyone who trains for real and wants to break past their current ceiling.
               </p>
@@ -727,7 +961,7 @@ export default function ProgramsPage() {
                 One Practice.
               </h2>
               <p className="text-zinc-400 italic normal-case text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
-                This guide is not a synthesis of internet content. It is the convergence of two parallel disciplines, both pursued seriously for years, both fully integrated.
+                This guide is not a synthesis of internet content. It is the convergence of two parallel disciplines, both pursued seriously, both fully integrated.
               </p>
             </motion.div>
 
@@ -736,7 +970,7 @@ export default function ProgramsPage() {
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                 className="border border-zinc-900 bg-zinc-950/30 p-8 md:p-10"
               >
                 <p className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-600 mb-4">
@@ -754,22 +988,22 @@ export default function ProgramsPage() {
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
                 className="border border-zinc-900 bg-zinc-950/30 p-8 md:p-10"
               >
                 <p className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-600 mb-4">
                   Athletic Side
                 </p>
                 <p className="text-white font-black uppercase italic text-2xl tracking-tight mb-6 leading-tight">
-                  9 years strength sport · martial arts · training, diet, recovery
+                  9 years strength sport &amp; martial arts · training, diet, recovery
                 </p>
                 <p className="text-zinc-400 italic normal-case text-base leading-relaxed">
-                  Strength training, programming, periodization, nutrition science, recovery protocols, grip specialization. Tested in practice. Refined through experimentation. The author progressed more in 8 months on this method than in the previous 8 years without it.
+                  Strength training, programming, periodization, nutrition science, recovery protocols, grip specialization. The author progressed more in 8 months on this method than in the previous 8 years without it.
                 </p>
               </motion.div>
             </div>
 
-            <motion.div {...fadeUp} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}>
+            <motion.div {...fadeUp} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}>
               <div className="border border-blue-600/30 bg-blue-600/5 p-8 md:p-12 text-center">
                 <p className="text-white italic normal-case text-xl md:text-2xl leading-relaxed">
                   Elite is what happens when these two trainings meet. The body and the psyche are not two separate domains — they meet in the speaking subject. This guide treats them as one.
@@ -785,7 +1019,7 @@ export default function ProgramsPage() {
             <motion.div {...fadeUp}>
               <div className="border border-zinc-900 bg-zinc-950/30 p-8 md:p-20 text-center relative overflow-hidden">
                 <div
-                  className="absolute inset-0 opacity-20 pointer-events-none"
+                  className="absolute inset-0 opacity-20 pointer-events-none leak-pulse-a"
                   style={{
                     background: "radial-gradient(circle 400px at 50% 50%, rgba(37, 99, 235, 0.4), transparent 70%)",
                   }}
