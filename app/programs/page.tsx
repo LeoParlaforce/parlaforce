@@ -43,51 +43,17 @@ export default function ProgramsPage() {
   const formatPrice = (cents: number) => `€${(cents / 100).toFixed(0)}`;
 
   const fadeUp = {
-    initial: { opacity: 0, y: 40 },
+    initial: { opacity: 0, y: 50 },
     whileInView: { opacity: 1, y: 0 },
     viewport: { once: true, margin: "-80px" },
-    transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+    transition: { duration: 1, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
   };
 
   return (
-    <main className="min-h-screen bg-black text-white pb-24 font-sans lowercase relative overflow-hidden selection:bg-blue-600/30 w-full">
-      {/* CSS for animated light leaks and film grain */}
-      <style jsx global>{`
-        @keyframes pulseLeakA {
-          0%, 100% { opacity: 0.45; transform: scale(1) translate(0, 0); }
-          50% { opacity: 0.7; transform: scale(1.15) translate(20px, -10px); }
-        }
-        @keyframes pulseLeakB {
-          0%, 100% { opacity: 0.35; transform: scale(1.1) translate(0, 0); }
-          50% { opacity: 0.55; transform: scale(1) translate(-15px, 10px); }
-        }
-        @keyframes driftBleed {
-          0%, 100% { transform: translateX(0px) translateY(0px); }
-          50% { transform: translateX(8px) translateY(-6px); }
-        }
-        @keyframes filmGrain {
-          0%, 100% { transform: translate(0, 0); }
-          10% { transform: translate(-1%, -1%); }
-          20% { transform: translate(1%, 1%); }
-          30% { transform: translate(-2%, 1%); }
-          40% { transform: translate(1%, -1%); }
-          50% { transform: translate(-1%, 2%); }
-          60% { transform: translate(-2%, -1%); }
-          70% { transform: translate(2%, 1%); }
-          80% { transform: translate(-1%, -2%); }
-          90% { transform: translate(1%, 2%); }
-        }
-        .animated-grain {
-          animation: filmGrain 1.2s steps(6) infinite;
-        }
-        .leak-pulse-a { animation: pulseLeakA 9s ease-in-out infinite; }
-        .leak-pulse-b { animation: pulseLeakB 11s ease-in-out infinite; }
-        .bleed-drift { animation: driftBleed 14s ease-in-out infinite; }
-      `}</style>
-
-      {/* Global animated grain - more textured than before */}
+    <main className="min-h-screen bg-black text-white pb-24 font-sans lowercase relative selection:bg-blue-600/30 w-full">
+      {/* Global static grain - subtle texture */}
       <div
-        className="pointer-events-none fixed inset-0 z-[101] opacity-[0.07] animated-grain"
+        className="pointer-events-none fixed inset-0 z-[101] opacity-[0.06]"
         aria-hidden="true"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='heavyGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='3' stitchTiles='stitch' seed='13'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23heavyGrain)'/%3E%3C/svg%3E")`,
@@ -96,7 +62,7 @@ export default function ProgramsPage() {
 
       <div className="relative z-10">
         {/* Navigation */}
-        <nav className="p-6 md:p-8 flex justify-between items-center border-b border-zinc-900 bg-black/50 backdrop-blur-sm relative z-30">
+        <nav className="p-6 md:p-8 flex justify-between items-center bg-black/50 backdrop-blur-sm relative z-30">
           <Link
             href="/"
             className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] text-zinc-500 hover:text-blue-600 transition-all italic"
@@ -120,37 +86,27 @@ export default function ProgramsPage() {
           </div>
         )}
 
-        {/* HERO with horizontal banner image - displayed at native proportions */}
-        <section className="relative bg-black">
-          {/* Banner container - keeps image at correct aspect ratio without zoom */}
-          <div className="relative w-full bg-black flex items-center justify-center overflow-hidden">
-            <div className="relative w-full" style={{ aspectRatio: "866 / 338" }}>
+        {/* HERO with banner image at native resolution, centered */}
+        <section className="relative bg-black pt-12 md:pt-16">
+          {/* Banner image - max-width 866 to keep native quality, centered, harmonious black margins */}
+          <div className="w-full flex items-center justify-center px-6">
+            <div
+              className="relative w-full"
+              style={{ maxWidth: "866px", aspectRatio: "866 / 338" }}
+            >
               <Image
                 src="/elite-cover.jpg"
                 fill
                 priority
-                sizes="100vw"
-                className="object-contain object-center"
+                sizes="866px"
+                className="object-cover"
                 alt="Elite — Become an Elite Athlete"
               />
-              {/* Subtle vignette to blend edges into black */}
+              {/* Soft vignette to blend image edges */}
               <div
                 className="absolute inset-0 pointer-events-none"
                 style={{
-                  background: "radial-gradient(ellipse 80% 60% at 50% 50%, transparent 50%, rgba(0,0,0,0.4) 100%)",
-                }}
-              />
-              {/* Light leak overlays */}
-              <div
-                className="absolute inset-0 pointer-events-none mix-blend-screen leak-pulse-a"
-                style={{
-                  background: "radial-gradient(ellipse 400px 300px at 90% 10%, rgba(220, 80, 60, 0.35), transparent 60%)",
-                }}
-              />
-              <div
-                className="absolute inset-0 pointer-events-none mix-blend-screen leak-pulse-b"
-                style={{
-                  background: "radial-gradient(ellipse 300px 200px at 5% 90%, rgba(80, 60, 220, 0.3), transparent 60%)",
+                  background: "radial-gradient(ellipse 90% 80% at 50% 50%, transparent 60%, rgba(0,0,0,0.5) 100%)",
                 }}
               />
             </div>
@@ -173,12 +129,12 @@ export default function ProgramsPage() {
               </p>
               <div className="border-l-2 border-blue-600 pl-6">
                 <p className="text-zinc-300 italic normal-case text-base md:text-lg leading-relaxed">
-                  The author progressed more in 8 months applying this guide than in the previous 8 years without it.
+                  Progress more in 8 months than in 8 years without this program.
                 </p>
               </div>
             </motion.div>
 
-            <motion.div {...fadeUp} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}>
+            <motion.div {...fadeUp} transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}>
               <div className="flex items-baseline gap-4 mb-10">
                 {IS_LAUNCH_WEEK && (
                   <span className="text-zinc-600 line-through text-2xl md:text-3xl font-black italic">
@@ -263,171 +219,55 @@ export default function ProgramsPage() {
           </div>
         </section>
 
-        {/* SECTION: BOOK MOCKUP - placed early so users see what they're buying */}
-        <section className="relative py-32 md:py-40 bg-black overflow-hidden">
-          {/* Smooth color bleed from above (black) into next section's warm tones */}
-          <div
-            className="absolute inset-0 opacity-40 bleed-drift pointer-events-none"
-            style={{
-              background: "radial-gradient(ellipse 1000px 700px at 50% 30%, rgba(40, 30, 80, 0.4), transparent 70%), radial-gradient(circle 400px at 15% 80%, rgba(180, 60, 40, 0.15), transparent 60%)",
-            }}
-          />
-          {/* Animated light leak from corner */}
-          <div
-            className="absolute top-0 right-0 w-[40%] h-[60%] opacity-50 leak-pulse-a pointer-events-none mix-blend-screen"
-            style={{
-              background: "radial-gradient(ellipse at top right, rgba(150, 80, 200, 0.4), transparent 60%)",
-            }}
-          />
-
-          <div className="relative max-w-5xl mx-auto px-6 md:px-12">
-            <motion.div {...fadeUp} className="text-center mb-16">
-              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-400 mb-6">
-                Not a PDF — a Book
-              </p>
-              <h2 className="text-5xl md:text-7xl font-black uppercase italic tracking-tighter leading-[0.9] mb-6">
-                66 Pages.<br />
-                <span className="text-blue-400">5 Parts.</span>
-              </h2>
-              <p className="text-zinc-400 italic normal-case text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-                Foundations · Practical Guidelines · Programming · L'Archange Expurgateur · Le Bras Armé des Dieux
-              </p>
-            </motion.div>
-
-            {/* Book mockup */}
+        {/* PAGE 1 PREVIEW - simple, clean, big image with shadow */}
+        <section className="relative bg-black py-24 md:py-32">
+          <div className="max-w-3xl mx-auto px-6 flex justify-center">
             <motion.div
-              initial={{ opacity: 0, y: 60, scale: 0.95 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-              className="flex justify-center"
+              className="relative w-full"
+              style={{ maxWidth: "440px", aspectRatio: "1 / 1.414" }}
             >
-              <div className="relative" style={{ perspective: "2400px" }}>
-                <div
-                  className="relative"
-                  style={{
-                    transform: "rotateY(-18deg) rotateX(3deg)",
-                    transformStyle: "preserve-3d",
-                  }}
-                >
-                  {/* Book front cover - using the actual title page (page 1) image */}
-                  <div
-                    className="relative w-[300px] md:w-[420px] shadow-[0_30px_80px_rgba(0,0,0,0.8)]"
-                    style={{ aspectRatio: "1 / 1.414" }}
-                  >
-                    <div className="absolute inset-0 bg-black border border-zinc-800 overflow-hidden">
-                      <Image
-                        src="/elite-cover.jpg"
-                        fill
-                        sizes="420px"
-                        className="object-cover"
-                        alt="Elite book cover"
-                      />
-                      {/* Title overlay to recreate the cover page look */}
-                      <div className="absolute inset-0 flex flex-col justify-between py-12 px-6 pointer-events-none">
-                        <div className="text-center">
-                          <p
-                            style={{ fontFamily: "Georgia, 'Times New Roman', serif", color: "#c8a45c", letterSpacing: "0.15em" }}
-                            className="text-3xl md:text-5xl font-normal"
-                          >
-                            ELITE
-                          </p>
-                          <div className="w-12 h-px bg-[#c8a45c] mx-auto mt-2" />
-                        </div>
-                        <p
-                          style={{ fontFamily: "Georgia, 'Times New Roman', serif", color: "#c8a45c" }}
-                          className="text-center italic text-xs md:text-sm"
-                        >
-                          written by Léo Gayrard
-                        </p>
-                      </div>
-                    </div>
-                    {/* Glossy reflection */}
-                    <div
-                      className="absolute inset-0 pointer-events-none"
-                      style={{
-                        background: "linear-gradient(110deg, rgba(255,255,255,0.18) 0%, transparent 35%, transparent 65%, rgba(0,0,0,0.4) 100%)",
-                      }}
-                    />
-                  </div>
-                  {/* Page edges visible on right */}
-                  <div
-                    className="absolute right-0 top-1 bottom-1 w-[8px]"
-                    style={{
-                      transform: "translateX(8px) rotateY(90deg)",
-                      background: "repeating-linear-gradient(0deg, #f5f5f0 0px, #f5f5f0 1px, #d8d8d0 1px, #d8d8d0 2px)",
-                    }}
-                  />
-                  {/* Spine shadow */}
-                  <div
-                    className="absolute -left-2 top-2 bottom-2 w-3"
-                    style={{
-                      transform: "rotateY(-90deg) translateZ(6px)",
-                      background: "linear-gradient(to right, rgba(0,0,0,0.9), transparent)",
-                    }}
-                  />
-                </div>
-                {/* Floor shadow */}
-                <div
-                  className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-[280px] md:w-[400px] h-10 rounded-full opacity-70"
-                  style={{
-                    background: "radial-gradient(ellipse, rgba(0,0,0,0.8) 0%, transparent 70%)",
-                    filter: "blur(16px)",
-                  }}
-                />
-              </div>
+              <Image
+                src="/elite-cover.jpg"
+                fill
+                sizes="440px"
+                className="object-cover shadow-[0_40px_120px_rgba(0,0,0,0.9)]"
+                alt="Elite — Page 1"
+              />
             </motion.div>
           </div>
-
-          {/* Smooth fade out into next section */}
-          <div
-            className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
-            style={{
-              background: "linear-gradient(to bottom, transparent, rgba(60, 25, 18, 0.5))",
-            }}
-          />
         </section>
 
-        {/* SECTION: THE TRAP — clear & immediate, machine pieces argument front-loaded */}
+        {/* SMOOTH TRANSITION zone: black → warm */}
+        <div
+          className="relative h-48 md:h-64 -mb-px"
+          style={{
+            background: "linear-gradient(to bottom, #000000 0%, #1a0808 50%, #2a0f08 100%)",
+          }}
+        />
+
+        {/* SECTION: THE TRAP — warm tones, no animated elements */}
         <section className="relative py-32 md:py-40 overflow-hidden">
-          {/* Base warm gradient */}
           <div
             className="absolute inset-0"
             style={{
-              background: "radial-gradient(ellipse 1400px 1000px at 50% 50%, #4a1f15 0%, #2a0f08 45%, #0a0505 85%)",
+              background: "radial-gradient(ellipse 1400px 1000px at 50% 50%, #4a1f15 0%, #2a0f08 50%, #1a0606 100%)",
             }}
           />
-          {/* Color bleed coming from previous section */}
+          {/* Static light leaks - no animation */}
           <div
-            className="absolute top-0 left-0 right-0 h-40 pointer-events-none"
+            className="absolute inset-0 mix-blend-screen pointer-events-none"
             style={{
-              background: "linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent)",
+              background:
+                "radial-gradient(ellipse 700px 500px at 25% 35%, rgba(220, 100, 60, 0.45), transparent 65%), radial-gradient(ellipse 500px 400px at 80% 70%, rgba(180, 60, 40, 0.35), transparent 60%)",
             }}
           />
-          {/* Bleeding edge on left like idea_1/idea_4 */}
+          {/* Heavy textured grain - static */}
           <div
-            className="absolute top-0 left-0 bottom-0 w-[8%] pointer-events-none bleed-drift"
-            style={{
-              background: "linear-gradient(to right, rgba(255, 220, 130, 0.35), rgba(220, 100, 60, 0.2), transparent)",
-              filter: "blur(2px)",
-            }}
-          />
-          {/* Animated warm light leaks */}
-          <div
-            className="absolute inset-0 mix-blend-screen pointer-events-none leak-pulse-a"
-            style={{
-              background: "radial-gradient(ellipse 700px 500px at 25% 35%, rgba(220, 100, 60, 0.55), transparent 60%)",
-            }}
-          />
-          <div
-            className="absolute inset-0 mix-blend-screen pointer-events-none leak-pulse-b"
-            style={{
-              background: "radial-gradient(ellipse 500px 350px at 80% 70%, rgba(180, 60, 40, 0.4), transparent 60%)",
-            }}
-          />
-          {/* Heavy textured grain */}
-          <div
-            className="absolute inset-0 opacity-40 mix-blend-overlay pointer-events-none animated-grain"
+            className="absolute inset-0 opacity-30 mix-blend-overlay pointer-events-none"
             style={{
               backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='hg'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23hg)'/%3E%3C/svg%3E")`,
             }}
@@ -439,72 +279,55 @@ export default function ProgramsPage() {
                 Why This Guide Exists
               </p>
               <h2 className="text-5xl md:text-7xl font-black uppercase italic tracking-tighter mb-12 leading-[0.9] text-white">
-                A Machine Only Works <br />
-                <span className="text-orange-200">When All The Pieces<br />Are From The Same Machine.</span>
+                An Engine Works To Its <br />
+                <span className="text-orange-200">Fullest Potential When All<br />
+                The Pieces Are From The Same Machine.</span>
               </h2>
             </motion.div>
 
-            <motion.div {...fadeUp} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}>
+            <motion.div {...fadeUp} transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}>
               <p className="text-white/95 italic normal-case text-xl md:text-2xl leading-relaxed mb-8 max-w-3xl">
+                Online you find everything and its opposite. AI has amplified this — it centralizes the consensus, recombines the contradictions, and outputs an averaged answer that fits no one.
+              </p>
+              <p className="text-white/85 italic normal-case text-lg md:text-xl leading-relaxed mb-8 max-w-3xl">
                 Most athletes fail not because they cannot find good methods. They fail because they assemble pieces of <em>different</em> methods. A diet from one coach. A program from another. A recovery protocol from a third.
               </p>
               <p className="text-white/85 italic normal-case text-lg md:text-xl leading-relaxed mb-8 max-w-3xl">
-                Each piece may be valid in its original system. Bolted together, they cancel each other out. The machine does not run.
-              </p>
-              <p className="text-white/85 italic normal-case text-lg md:text-xl leading-relaxed mb-8 max-w-3xl">
-                Online you find everything and its opposite. AI has amplified this — it centralizes the consensus, recombines the contradictions, and outputs an averaged answer that fits no one.
+                Each piece may be valid in its original system. Bolted together, they cancel each other out. The engine does not run.
               </p>
               <p className="text-white italic normal-case text-xl md:text-2xl leading-relaxed font-medium max-w-3xl border-l-2 border-orange-300 pl-6">
-                Elite is one machine. Every part — training, diet, recovery, sleep, supplementation, mental work, programming — built from the same internal logic. Take any piece out and the rest still runs.
+                Elite is one engine. Every part — training, diet, recovery, sleep, supplementation, mental work, programming — built from the same internal logic.
               </p>
             </motion.div>
           </div>
-
-          {/* Smooth fade into next section */}
-          <div
-            className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
-            style={{
-              background: "linear-gradient(to bottom, transparent, rgba(20, 20, 50, 0.6))",
-            }}
-          />
         </section>
 
-        {/* SECTION: UNIFIED APPROACH - all components */}
+        {/* SMOOTH TRANSITION: warm → cool blue */}
+        <div
+          className="relative h-48 md:h-64 -mt-px"
+          style={{
+            background:
+              "linear-gradient(to bottom, #1a0606 0%, #15101f 50%, #1a1a2e 100%)",
+          }}
+        />
+
+        {/* SECTION: UNIFIED APPROACH — cool blue tones */}
         <section className="relative py-32 md:py-40 overflow-hidden">
           <div
             className="absolute inset-0"
             style={{
-              background: "radial-gradient(ellipse 1500px 1000px at 50% 50%, #1a1a2e 0%, #0f0f1c 45%, #050510 85%)",
+              background: "radial-gradient(ellipse 1500px 1000px at 50% 50%, #1a1a2e 0%, #0f0f1c 50%, #0a0a18 100%)",
             }}
           />
           <div
-            className="absolute top-0 left-0 right-0 h-40 pointer-events-none"
+            className="absolute inset-0 mix-blend-screen pointer-events-none"
             style={{
-              background: "linear-gradient(to bottom, rgba(60, 25, 18, 0.5), transparent)",
-            }}
-          />
-          {/* Bleeding edge on right side */}
-          <div
-            className="absolute top-0 right-0 bottom-0 w-[6%] pointer-events-none bleed-drift"
-            style={{
-              background: "linear-gradient(to left, rgba(120, 100, 220, 0.4), transparent)",
-              filter: "blur(3px)",
+              background:
+                "radial-gradient(ellipse 600px 400px at 75% 25%, rgba(120, 90, 220, 0.4), transparent 65%), radial-gradient(ellipse 700px 500px at 20% 80%, rgba(60, 100, 200, 0.3), transparent 60%)",
             }}
           />
           <div
-            className="absolute inset-0 mix-blend-screen pointer-events-none leak-pulse-a"
-            style={{
-              background: "radial-gradient(ellipse 600px 400px at 75% 25%, rgba(120, 90, 220, 0.45), transparent 60%)",
-            }}
-          />
-          <div
-            className="absolute inset-0 mix-blend-screen pointer-events-none leak-pulse-b"
-            style={{
-              background: "radial-gradient(ellipse 700px 500px at 20% 80%, rgba(60, 100, 200, 0.35), transparent 60%)",
-            }}
-          />
-          <div
-            className="absolute inset-0 opacity-35 mix-blend-overlay pointer-events-none animated-grain"
+            className="absolute inset-0 opacity-25 mix-blend-overlay pointer-events-none"
             style={{
               backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='hg'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23hg)'/%3E%3C/svg%3E")`,
             }}
@@ -521,12 +344,12 @@ export default function ProgramsPage() {
               </h2>
             </motion.div>
 
-            <motion.div {...fadeUp} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}>
+            <motion.div {...fadeUp} transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}>
               <p className="text-white/90 italic normal-case text-xl md:text-2xl leading-relaxed mb-12 max-w-3xl">
-                Elite covers every domain that affects performance. Each one is treated in depth. Each one is consistent with the others. Nothing is left aside, nothing contradicts.
+                Elite covers every domain that affects performance. Each treated in depth. Each consistent with the others. Nothing left aside, nothing contradicting.
               </p>
 
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-12">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
                 {[
                   "Training",
                   "Diet",
@@ -543,7 +366,7 @@ export default function ProgramsPage() {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                    transition={{ duration: 0.7, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
                     className="border border-blue-400/30 bg-blue-500/5 backdrop-blur-sm py-4 px-3 md:py-5 md:px-4 text-center"
                   >
                     <p className="text-white/90 font-black uppercase italic text-xs md:text-sm tracking-tight">
@@ -554,44 +377,34 @@ export default function ProgramsPage() {
               </div>
             </motion.div>
           </div>
-
-          <div
-            className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
-            style={{
-              background: "linear-gradient(to bottom, transparent, rgba(35, 15, 55, 0.6))",
-            }}
-          />
         </section>
 
-        {/* SECTION: ANTI-AI POSITIONING */}
+        {/* SMOOTH TRANSITION: blue → purple */}
+        <div
+          className="relative h-48 md:h-64 -mt-px"
+          style={{
+            background:
+              "linear-gradient(to bottom, #0a0a18 0%, #1a0e2a 50%, #2a1545 100%)",
+          }}
+        />
+
+        {/* SECTION: ANTI-AI POSITIONING — deep purple */}
         <section className="relative py-32 md:py-40 overflow-hidden">
           <div
             className="absolute inset-0"
             style={{
-              background: "radial-gradient(ellipse 1300px 900px at 30% 50%, #2a1545 0%, #15082a 45%, #050208 85%)",
+              background: "radial-gradient(ellipse 1400px 1000px at 30% 50%, #2a1545 0%, #15082a 50%, #0a0418 100%)",
             }}
           />
           <div
-            className="absolute top-0 left-0 right-0 h-40 pointer-events-none"
+            className="absolute inset-0 mix-blend-screen pointer-events-none"
             style={{
-              background: "linear-gradient(to bottom, rgba(20, 20, 50, 0.6), transparent)",
+              background:
+                "radial-gradient(ellipse 500px 400px at 80% 30%, rgba(180, 100, 220, 0.4), transparent 65%), radial-gradient(ellipse 600px 500px at 15% 75%, rgba(140, 80, 200, 0.3), transparent 60%)",
             }}
           />
           <div
-            className="absolute top-0 left-0 bottom-0 w-[10%] pointer-events-none bleed-drift"
-            style={{
-              background: "linear-gradient(to right, rgba(200, 120, 220, 0.5), rgba(120, 80, 200, 0.3), transparent)",
-              filter: "blur(4px)",
-            }}
-          />
-          <div
-            className="absolute inset-0 mix-blend-screen pointer-events-none leak-pulse-a"
-            style={{
-              background: "radial-gradient(ellipse 500px 400px at 80% 30%, rgba(180, 100, 220, 0.4), transparent 60%)",
-            }}
-          />
-          <div
-            className="absolute inset-0 opacity-35 mix-blend-overlay pointer-events-none animated-grain"
+            className="absolute inset-0 opacity-25 mix-blend-overlay pointer-events-none"
             style={{
               backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='hg'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23hg)'/%3E%3C/svg%3E")`,
             }}
@@ -608,7 +421,7 @@ export default function ProgramsPage() {
               </h2>
             </motion.div>
 
-            <motion.div {...fadeUp} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}>
+            <motion.div {...fadeUp} transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}>
               <p className="text-white/90 italic normal-case text-xl md:text-2xl leading-relaxed mb-12 max-w-3xl">
                 Anyone can ask an AI for a 12-week program, a macro split, a deload protocol. That world existed at €30 a PDF. That world is over. What is left for sale is what AI cannot deliver.
               </p>
@@ -644,44 +457,34 @@ export default function ProgramsPage() {
               </p>
             </motion.div>
           </div>
-
-          <div
-            className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
-            style={{
-              background: "linear-gradient(to bottom, transparent, rgba(50, 35, 20, 0.5))",
-            }}
-          />
         </section>
 
-        {/* SECTION: LIFELONG / EXPONENTIAL */}
+        {/* SMOOTH TRANSITION: purple → warm cream */}
+        <div
+          className="relative h-48 md:h-64 -mt-px"
+          style={{
+            background:
+              "linear-gradient(to bottom, #0a0418 0%, #1f1818 50%, #3a2a1a 100%)",
+          }}
+        />
+
+        {/* SECTION: LIFELONG — warm cream */}
         <section className="relative py-32 md:py-40 overflow-hidden">
           <div
             className="absolute inset-0"
             style={{
-              background: "radial-gradient(ellipse 1300px 900px at 50% 50%, #3a2a1a 0%, #1f1410 45%, #0a0606 85%)",
+              background: "radial-gradient(ellipse 1400px 1000px at 50% 50%, #3a2a1a 0%, #1f1410 50%, #100a08 100%)",
             }}
           />
           <div
-            className="absolute top-0 left-0 right-0 h-40 pointer-events-none"
+            className="absolute inset-0 mix-blend-screen pointer-events-none"
             style={{
-              background: "linear-gradient(to bottom, rgba(35, 15, 55, 0.6), transparent)",
+              background:
+                "radial-gradient(ellipse 1000px 500px at 50% 10%, rgba(220, 180, 130, 0.45), transparent 70%), radial-gradient(ellipse 500px 400px at 85% 85%, rgba(180, 100, 60, 0.3), transparent 60%)",
             }}
           />
           <div
-            className="absolute top-0 left-0 right-0 h-[40%] pointer-events-none bleed-drift"
-            style={{
-              background: "radial-gradient(ellipse 1000px 400px at 50% 0%, rgba(220, 180, 130, 0.5), transparent 70%)",
-              filter: "blur(2px)",
-            }}
-          />
-          <div
-            className="absolute inset-0 mix-blend-screen pointer-events-none leak-pulse-b"
-            style={{
-              background: "radial-gradient(circle 500px at 85% 85%, rgba(180, 100, 60, 0.3), transparent 60%)",
-            }}
-          />
-          <div
-            className="absolute inset-0 opacity-35 mix-blend-overlay pointer-events-none animated-grain"
+            className="absolute inset-0 opacity-25 mix-blend-overlay pointer-events-none"
             style={{
               backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='hg'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23hg)'/%3E%3C/svg%3E")`,
             }}
@@ -698,7 +501,7 @@ export default function ProgramsPage() {
               </h2>
             </motion.div>
 
-            <motion.div {...fadeUp} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}>
+            <motion.div {...fadeUp} transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}>
               <p className="text-white/90 italic normal-case text-xl md:text-2xl leading-relaxed mb-8 max-w-3xl">
                 Most programs run for a fixed block — 8 weeks, 12 weeks, then they expire. You buy another. The cycle never ends.
               </p>
@@ -710,14 +513,16 @@ export default function ProgramsPage() {
               </p>
             </motion.div>
           </div>
-
-          <div
-            className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
-            style={{
-              background: "linear-gradient(to bottom, transparent, rgba(0, 0, 0, 1))",
-            }}
-          />
         </section>
+
+        {/* SMOOTH TRANSITION: cream → black */}
+        <div
+          className="relative h-48 md:h-64 -mt-px"
+          style={{
+            background:
+              "linear-gradient(to bottom, #100a08 0%, #060404 50%, #000000 100%)",
+          }}
+        />
 
         {/* SECTION: WHAT'S IN THE GUIDE */}
         <section className="relative py-32 md:py-40 bg-black">
@@ -774,7 +579,7 @@ export default function ProgramsPage() {
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.7, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 0.8, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
                   className="border border-zinc-900 bg-zinc-950/30 hover:border-zinc-800 transition-all p-8 md:p-12"
                 >
                   <div className="flex items-baseline justify-between mb-6 flex-wrap gap-3">
@@ -797,18 +602,13 @@ export default function ProgramsPage() {
           </div>
         </section>
 
-        {/* SECTION: GRIP - WHY IT MATTERS FOR EVERYONE */}
+        {/* SECTION: GRIP - THE INVISIBLE LIMIT */}
         <section className="relative py-32 md:py-40 bg-black overflow-hidden">
           <div
-            className="absolute inset-0 opacity-50"
+            className="absolute inset-0 opacity-50 pointer-events-none"
             style={{
-              background: "radial-gradient(ellipse 1200px 800px at 50% 30%, rgba(30, 60, 180, 0.2), transparent 60%)",
-            }}
-          />
-          <div
-            className="absolute inset-0 mix-blend-screen pointer-events-none leak-pulse-a"
-            style={{
-              background: "radial-gradient(circle 400px at 90% 80%, rgba(80, 100, 200, 0.25), transparent 60%)",
+              background:
+                "radial-gradient(ellipse 1200px 800px at 50% 30%, rgba(30, 60, 180, 0.18), transparent 65%), radial-gradient(circle 500px at 90% 80%, rgba(60, 80, 180, 0.15), transparent 60%)",
             }}
           />
 
@@ -818,40 +618,27 @@ export default function ProgramsPage() {
                 Le Bras Armé des Dieux · World-Class & Unique
               </p>
               <h2 className="text-5xl md:text-7xl font-black uppercase italic tracking-tighter mb-8 leading-[0.9]">
-                Grip Is Not <br />
-                <span className="text-blue-400">A Specialization.</span>
+                The Limit You<br />
+                <span className="text-blue-400">Don't Even Know You Have.</span>
               </h2>
-              <p className="text-zinc-400 italic normal-case text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
-                It is the first link of every chain you train. And it is what holds back almost every athlete without them knowing it.
-              </p>
             </motion.div>
 
-            {/* The chain argument */}
-            <motion.div {...fadeUp} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.15 }} className="max-w-4xl mx-auto mb-16">
+            <motion.div {...fadeUp} transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }} className="max-w-4xl mx-auto mb-16">
               <div className="border border-zinc-900 bg-zinc-950/40 p-8 md:p-12">
-                <h3 className="text-2xl md:text-4xl font-black uppercase italic tracking-tighter mb-8 leading-tight text-white">
-                  The Body Is A Chain<span className="text-blue-400">.</span><br />
-                  <span className="text-zinc-400">As Strong As Its Weakest Link.</span>
-                </h3>
                 <p className="text-zinc-300 italic normal-case text-lg md:text-xl leading-relaxed mb-6">
-                  Most athletes are bridled by their grip without knowing it. The signs are everywhere — and they always blame the wrong cause.
+                  You feel like you should be stronger. You train hard, you recover, you eat right — and yet on every pulling movement (deadlifts, rows, pull-ups, every single one) something stops you before you can fully express what you have.
                 </p>
-                <ul className="space-y-4 text-zinc-300 italic normal-case text-base md:text-lg mb-8">
-                  <li className="flex"><span className="text-blue-400 mr-3 shrink-0 font-black">·</span>
-                    <span>Your <strong className="text-white not-italic">bench press or overhead press</strong> stops short — and you wear wrist wraps to mask it. The truth: your wrists, your grip, your elbows are weak. The press cannot express what your chest and shoulders could deliver.</span>
-                  </li>
-                  <li className="flex"><span className="text-blue-400 mr-3 shrink-0 font-black">·</span>
-                    <span>Your <strong className="text-white not-italic">deadlift</strong> stops because the bar slips before your back is tired. You blame your back. It is your hands.</span>
-                  </li>
-                  <li className="flex"><span className="text-blue-400 mr-3 shrink-0 font-black">·</span>
-                    <span>Your <strong className="text-white not-italic">pull-ups</strong> end before your lats are spent. You think it is conditioning. It is forearms.</span>
-                  </li>
-                  <li className="flex"><span className="text-blue-400 mr-3 shrink-0 font-black">·</span>
-                    <span>Your <strong className="text-white not-italic">rows</strong> never connect properly to the back. You think it is technique. It is grip transmission.</span>
-                  </li>
-                </ul>
-                <p className="text-white italic normal-case text-xl md:text-2xl leading-relaxed font-medium border-l-2 border-blue-400 pl-6">
-                  Train the first link — the rest of the body unlocks. When grip becomes strong, the progress on every other lift explodes. That is why this program belongs to everyone, not just specialists.
+                <p className="text-zinc-300 italic normal-case text-lg md:text-xl leading-relaxed mb-6">
+                  You blame your back. You blame your conditioning. You blame your technique. You are wrong. <span className="text-white font-medium">It's your grip — and you don't even feel it.</span>
+                </p>
+                <p className="text-zinc-300 italic normal-case text-lg md:text-xl leading-relaxed mb-6">
+                  When the grip is weak, the nervous system silently caps the recruitment of every muscle further up the chain. Your back, your lats, your legs are never given permission to fire at full capacity — because the system protects what would otherwise drop the load.
+                </p>
+                <p className="text-white italic normal-case text-xl md:text-2xl leading-relaxed font-medium border-l-2 border-blue-400 pl-6 mb-6">
+                  This happens without your knowledge. You feel only the ceiling, never the cause.
+                </p>
+                <p className="text-zinc-300 italic normal-case text-lg md:text-xl leading-relaxed">
+                  Train this — bring your grip to a world-class level — and the cap lifts. Suddenly your back works. Your legs work. Every lift you have been grinding on for years explodes upward. <span className="text-white font-medium">Try it. You will see what your body was holding back.</span>
                 </p>
               </div>
             </motion.div>
@@ -861,7 +648,7 @@ export default function ProgramsPage() {
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
                 className="border border-zinc-900 bg-zinc-950/30 p-8 md:p-10"
               >
                 <p className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-600 mb-4">
@@ -882,7 +669,7 @@ export default function ProgramsPage() {
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+                transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
                 className="border border-blue-600/40 bg-blue-600/5 p-8 md:p-10"
               >
                 <p className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-400 mb-4">
@@ -903,7 +690,7 @@ export default function ProgramsPage() {
         </section>
 
         {/* SECTION: FOR WHOM */}
-        <section className="relative py-32 md:py-40 bg-black border-y border-zinc-900">
+        <section className="relative py-32 md:py-40 bg-black">
           <div className="max-w-5xl mx-auto px-6 md:px-12">
             <motion.div {...fadeUp} className="text-center mb-16">
               <p className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-600 mb-6">
@@ -914,7 +701,7 @@ export default function ProgramsPage() {
               </h2>
             </motion.div>
 
-            <motion.div {...fadeUp} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}>
+            <motion.div {...fadeUp} transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}>
               <p className="text-zinc-400 italic normal-case text-xl md:text-2xl leading-relaxed text-center max-w-3xl mx-auto mb-16">
                 Powerlifters. Strongmen. Climbers. Arm wrestlers. Martial artists. Fighters. Bodybuilders. Anyone who trains for real and wants to break past their current ceiling.
               </p>
@@ -970,7 +757,7 @@ export default function ProgramsPage() {
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
                 className="border border-zinc-900 bg-zinc-950/30 p-8 md:p-10"
               >
                 <p className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-600 mb-4">
@@ -988,7 +775,7 @@ export default function ProgramsPage() {
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+                transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
                 className="border border-zinc-900 bg-zinc-950/30 p-8 md:p-10"
               >
                 <p className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-600 mb-4">
@@ -998,12 +785,12 @@ export default function ProgramsPage() {
                   9 years strength sport &amp; martial arts · training, diet, recovery
                 </p>
                 <p className="text-zinc-400 italic normal-case text-base leading-relaxed">
-                  Strength training, programming, periodization, nutrition science, recovery protocols, grip specialization. The author progressed more in 8 months on this method than in the previous 8 years without it.
+                  Strength training, programming, periodization, nutrition science, recovery protocols, grip specialization. Progress more in 8 months on this method than in the previous 8 years without it.
                 </p>
               </motion.div>
             </div>
 
-            <motion.div {...fadeUp} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}>
+            <motion.div {...fadeUp} transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}>
               <div className="border border-blue-600/30 bg-blue-600/5 p-8 md:p-12 text-center">
                 <p className="text-white italic normal-case text-xl md:text-2xl leading-relaxed">
                   Elite is what happens when these two trainings meet. The body and the psyche are not two separate domains — they meet in the speaking subject. This guide treats them as one.
@@ -1019,7 +806,7 @@ export default function ProgramsPage() {
             <motion.div {...fadeUp}>
               <div className="border border-zinc-900 bg-zinc-950/30 p-8 md:p-20 text-center relative overflow-hidden">
                 <div
-                  className="absolute inset-0 opacity-20 pointer-events-none leak-pulse-a"
+                  className="absolute inset-0 opacity-20 pointer-events-none"
                   style={{
                     background: "radial-gradient(circle 400px at 50% 50%, rgba(37, 99, 235, 0.4), transparent 70%)",
                   }}
