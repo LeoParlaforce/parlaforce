@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
+import RandomTexture from '@/components/RandomTexture'
 
 export const metadata: Metadata = {
   title: 'ParlaForce | Systems for Physical & Psychological Dominance',
@@ -13,15 +14,8 @@ export default function Home() {
   return (
     <main className="h-screen md:h-screen min-h-[760px] md:min-h-0 flex flex-col items-center justify-center px-4 md:px-6 bg-black font-sans lowercase relative overflow-hidden text-white w-full">
       
-      {/* Texture background - using idea_2 (dark with red dot top-right + blue right edge) */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: "url('/textures/idea_2_clean.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      />
+      {/* Random texture background */}
+      <RandomTexture />
       
       {/* Heavy black overlay for content readability while preserving texture richness on edges */}
       <div

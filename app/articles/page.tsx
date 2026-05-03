@@ -1,6 +1,10 @@
+// ============================================================
+// articles/page.tsx
+// ============================================================
 import { getAllPosts } from "@/lib/posts"
 import Link from "next/link"
 import Image from "next/image"
+import RandomTexture from "@/components/RandomTexture"
 
 export const metadata = {
   title: 'Articles | Theory & Research',
@@ -34,6 +38,12 @@ export default function BlogListing() {
   return (
     <main className="min-h-screen bg-black text-white font-sans lowercase relative overflow-hidden selection:bg-blue-600/30 w-full">
       
+      {/* Random texture */}
+      <div className="pointer-events-none fixed inset-0 z-[0] opacity-10">
+        <RandomTexture />
+      </div>
+      <div className="pointer-events-none fixed inset-0 z-[1]" style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.5) 100%)" }} />
+
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-16 md:py-24 relative z-10">
         
         <nav aria-label="Breadcrumb" className="mb-12 md:mb-16 flex justify-between items-center border-b border-zinc-900 pb-6">

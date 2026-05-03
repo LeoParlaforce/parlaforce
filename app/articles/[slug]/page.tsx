@@ -5,6 +5,7 @@ import rehypeRaw from "rehype-raw"
 import Link from "next/link"
 import Image from "next/image"
 import SocialShare from "@/components/SocialShare"
+import RandomTexture from "@/components/RandomTexture"
 
 interface FAQItem {
   question: string;
@@ -44,20 +45,20 @@ const MidArticleCTA = ({ slug }: { slug: string }) => (
   <div className="my-16 border border-blue-600/20 bg-blue-600/5 p-8 relative overflow-hidden">
     <div className="absolute top-0 left-0 w-1 h-full bg-blue-600" />
     <p className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-600 mb-3">
-      Supervision
+      Elite Protocol
     </p>
     <p className="text-white font-black uppercase italic text-xl md:text-2xl tracking-tight mb-4 leading-tight">
-      Someone who holds you to the standard when you want to lower it.
+      66 pages. Every variable that dictates your progress — laid out, structured, executable.
     </p>
     <p className="text-zinc-500 text-sm italic mb-6 normal-case">
-      Personalized programming, mental coaching, and nutrition supervision. Built around your training, not a template.
+      Programming, periodization, nutrition, and the psychological architecture of elite performance. No AI. No templates.
     </p>
     <div className="flex flex-col sm:flex-row gap-3">
       <Link 
         href="/programs" 
         className="bg-blue-600 text-white font-black uppercase py-3 px-8 text-[10px] tracking-[0.3em] hover:bg-white hover:text-black transition-all text-center"
       >
-        View PDF Protocols
+        Acquire Elite →
       </Link>
       <a 
         href="https://chat.troisiemechemin.fr" 
@@ -79,7 +80,6 @@ export default async function PostPage({ params }: { params: any }) {
   const imageUrl = post.image.startsWith('http') ? post.image : post.image.startsWith('/') ? post.image : `/${post.image}`
   const faqs: FAQItem[] = post.faqs || []
 
-  // Get up to 3 other articles for the related section
   const allPosts = getAllPosts()
   const relatedPosts = allPosts.filter((p: any) => p.slug !== slug).slice(0, 3)
 
@@ -141,6 +141,11 @@ export default async function PostPage({ params }: { params: any }) {
       {faqJsonLd && (
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       )}
+
+      {/* Random texture — subtle, behind grain */}
+      <div className="pointer-events-none fixed inset-0 z-[0] opacity-10">
+        <RandomTexture />
+      </div>
 
       <div 
         className="pointer-events-none fixed inset-0 z-[1] opacity-[0.03] md:opacity-[0.02] bg-repeat" 
@@ -295,6 +300,7 @@ export default async function PostPage({ params }: { params: any }) {
             </section>
           )}
 
+          {/* End of article CTA — Elite + Supervision */}
           <div className="mt-32 border border-zinc-900 bg-zinc-950/30 p-8 md:p-20 text-center relative overflow-hidden">
             <p className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-600 mb-4">
               Next Step
@@ -302,18 +308,18 @@ export default async function PostPage({ params }: { params: any }) {
             <h3 className="text-3xl md:text-6xl font-black uppercase italic tracking-tighter mb-6 text-white leading-none">
               Stop Guessing. Start Moving<span className="text-blue-600">.</span>
             </h3>
-            <p className="text-zinc-500 italic max-w-xl mx-auto normal-case text-base md:text-lg mb-4">
-              The bar responds to what you actually do with it — not what you plan to do next cycle.
+            <p className="text-zinc-500 italic max-w-xl mx-auto normal-case text-base md:text-lg mb-2">
+              66 pages. Every variable that governs elite performance — programming, nutrition, psychological architecture — structured and executable.
             </p>
             <p className="text-zinc-700 text-[10px] font-black uppercase tracking-widest mb-12">
-              Personalized · Zero AI · Built around your training
+              No AI · No Templates · Built around your training
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link 
                 href="/programs" 
                 className="bg-blue-600 text-white font-black uppercase py-5 px-10 text-[10px] tracking-[0.4em] hover:bg-white hover:text-black transition-all"
               >
-                View Protocols
+                Acquire Elite →
               </Link>
               <a 
                 href="https://chat.troisiemechemin.fr" 
