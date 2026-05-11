@@ -186,13 +186,16 @@ export default function SupervisionPage() {
           <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
             <motion.div {...fadeUp}>
               <p className="text-[10px] md:text-xs font-black uppercase tracking-[0.4em] text-blue-400 mb-6">
-                Direct Supervision · Encrypted · Human
+                Direct Supervision · Encrypted · Human · No AI
               </p>
               <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase italic tracking-tighter leading-[0.85] mb-8 whitespace-nowrap">
                 Supervision<span className="text-blue-500">.</span>
               </h1>
               <p className="text-zinc-200 italic normal-case text-2xl md:text-3xl mb-6 leading-relaxed">
-                A coach in your pocket — every day, every set, every doubt. Get stronger, more massive, more technically clean than you thought you could.
+                Brutally strong, monstrously massive, your full potential unleashed with the most miraculous feats of strength humanity can provide.
+              </p>
+              <p className="text-zinc-300 italic normal-case text-xl md:text-2xl mb-6 leading-relaxed font-medium">
+                Meet your destiny. Remember who you are. Discover what you can be.
               </p>
               <p className="text-zinc-500 italic normal-case text-base md:text-lg mb-10 leading-relaxed">
                 Training, programming, technique correction on video, diet, body composition, recovery, sleep, supplementation, competition prep, peaking. Every dimension of becoming a serious strength athlete — handled by one person, in one continuous conversation.
