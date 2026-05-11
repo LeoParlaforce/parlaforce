@@ -104,7 +104,7 @@ export default function SupervisionPage() {
     },
     {
       q: "Why two prices for the same service?",
-      a: "The service is identical. The two prices let people choose what fits their situation. No verification, no questions asked.",
+      a: "Because money should not be what stops young athletes from getting serious follow-up. The reduced rate (€80) is for students and young athletes with tight budgets. The full rate (€150) is the standard. The service is strictly identical at both prices.",
     },
     {
       q: "Can I cancel anytime?",
@@ -188,7 +188,7 @@ export default function SupervisionPage() {
               <p className="text-[10px] md:text-xs font-black uppercase tracking-[0.4em] text-blue-400 mb-6">
                 Direct Supervision · Encrypted · Human
               </p>
-              <h1 className="text-7xl sm:text-8xl md:text-[9rem] font-black uppercase italic tracking-tighter leading-[0.85] mb-8">
+              <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[7rem] font-black uppercase italic tracking-tighter leading-[0.85] mb-8 break-words">
                 Supervision<span className="text-blue-500">.</span>
               </h1>
               <p className="text-zinc-200 italic normal-case text-2xl md:text-3xl mb-6 leading-relaxed">
@@ -216,22 +216,31 @@ export default function SupervisionPage() {
                 Monthly Subscription · Cancel Anytime
               </p>
 
+              <div className="border-l-2 border-zinc-800 pl-4 mb-6">
+                <p className="text-zinc-400 italic normal-case text-sm leading-relaxed">
+                  Two prices, <strong className="text-white not-italic font-medium">exactly the same service</strong>. The reduced rate exists for students and young athletes with tight budgets. The full rate is the standard.
+                </p>
+              </div>
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                 <button
                   onClick={() => handleSubscribe("reduced")}
                   disabled={loading !== null}
-                  className="border border-zinc-800 hover:border-blue-600 bg-zinc-950/30 hover:bg-blue-600/5 p-8 text-left transition-all disabled:opacity-50 disabled:cursor-not-allowed group"
+                  className="border border-zinc-800 hover:border-blue-600 bg-zinc-950/30 hover:bg-blue-600/5 p-6 text-left transition-all disabled:opacity-50 disabled:cursor-not-allowed group"
                 >
-                  <p className="text-[9px] font-black uppercase tracking-[0.4em] text-zinc-500 group-hover:text-blue-400 transition-all mb-4">
+                  <p className="text-[9px] font-black uppercase tracking-[0.4em] text-zinc-500 group-hover:text-blue-400 transition-all mb-3">
                     Reduced Rate
                   </p>
-                  <p className="text-white text-5xl font-black italic mb-2">
+                  <p className="text-white text-5xl font-black italic mb-1">
                     €80
                   </p>
-                  <p className="text-zinc-600 text-[10px] uppercase font-black tracking-widest mb-6">
+                  <p className="text-zinc-600 text-[10px] uppercase font-black tracking-widest mb-4">
                     per month
                   </p>
-                  <p className="text-zinc-400 italic normal-case text-sm">
+                  <p className="text-zinc-500 italic normal-case text-xs leading-relaxed mb-4">
+                    Students and young athletes with tight budgets.
+                  </p>
+                  <p className="text-zinc-300 italic normal-case text-sm font-medium">
                     {loading === "reduced" ? "Opening…" : "Subscribe →"}
                   </p>
                 </button>
@@ -239,26 +248,25 @@ export default function SupervisionPage() {
                 <button
                   onClick={() => handleSubscribe("full")}
                   disabled={loading !== null}
-                  className="border border-blue-600/40 hover:border-blue-600 bg-blue-600/5 hover:bg-blue-600/10 p-8 text-left transition-all disabled:opacity-50 disabled:cursor-not-allowed group"
+                  className="border border-blue-600/40 hover:border-blue-600 bg-blue-600/5 hover:bg-blue-600/10 p-6 text-left transition-all disabled:opacity-50 disabled:cursor-not-allowed group"
                 >
-                  <p className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-400 mb-4">
+                  <p className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-400 mb-3">
                     Full Rate
                   </p>
-                  <p className="text-white text-5xl font-black italic mb-2">
+                  <p className="text-white text-5xl font-black italic mb-1">
                     €150
                   </p>
-                  <p className="text-zinc-600 text-[10px] uppercase font-black tracking-widest mb-6">
+                  <p className="text-zinc-600 text-[10px] uppercase font-black tracking-widest mb-4">
                     per month
                   </p>
-                  <p className="text-zinc-300 italic normal-case text-sm">
+                  <p className="text-zinc-400 italic normal-case text-xs leading-relaxed mb-4">
+                    The standard rate.
+                  </p>
+                  <p className="text-white italic normal-case text-sm font-medium">
                     {loading === "full" ? "Opening…" : "Subscribe →"}
                   </p>
                 </button>
               </div>
-
-              <p className="text-zinc-600 italic normal-case text-xs mb-8 text-center">
-                Same service at both prices. Choose what fits your situation.
-              </p>
 
               {error && (
                 <p className="text-red-500 text-xs text-center italic mb-4">
@@ -827,7 +835,7 @@ export default function SupervisionPage() {
                     Direct · Encrypted · Cancel Anytime
                   </p>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-xl mx-auto mb-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-xl mx-auto mb-6">
                     <button
                       onClick={() => handleSubscribe("reduced")}
                       disabled={loading !== null}
@@ -850,8 +858,8 @@ export default function SupervisionPage() {
                     <p className="text-red-500 text-xs italic mb-4">{error}</p>
                   )}
 
-                  <p className="text-zinc-600 italic normal-case text-xs">
-                    Same service. Choose what fits your situation.
+                  <p className="text-zinc-500 italic normal-case text-sm leading-relaxed max-w-md mx-auto">
+                    Same service at both prices. Reduced is for students and young athletes with tight budgets. Full is the standard rate.
                   </p>
                 </div>
               </div>
