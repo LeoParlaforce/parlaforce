@@ -87,8 +87,8 @@ export default function SupervisionPage() {
       a: "I'll teach you to program your own training. You'll learn to structure your weeks, choose your exercises, manage your volume and intensity, deload, peak, handle injuries — for the rest of your training life. We work on your current cycle together, you bring your own structure, I correct and refine.",
     },
     {
-      q: "What about the psychological side?",
-      a: "That's the part nobody else gives you. Most coaches stop at the physical. I'm a clinical psychologist — we work on what stops you from realizing your potential. The inner enemy. The fear of competing. The collapse before a heavy attempt. The plateau that has nothing to do with the program.",
+      q: "What about the mental side?",
+      a: "Strength is half nervous system, half psyche. The hesitation before a heavy attempt, the bail on a lift you should have made, the plateau that has nothing to do with the program — that's where most of your locked PRs are hiding. I bring eight years of clinical work to this exact problem. Nobody else in strength sport gives you this.",
     },
     {
       q: "Why chat only? No calls, no video sessions?",
@@ -188,18 +188,18 @@ export default function SupervisionPage() {
               <p className="text-[10px] md:text-xs font-black uppercase tracking-[0.4em] text-blue-400 mb-6">
                 Direct Supervision · Encrypted · Human
               </p>
-              <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[7rem] font-black uppercase italic tracking-tighter leading-[0.85] mb-8 break-words">
+              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase italic tracking-tighter leading-[0.85] mb-8 whitespace-nowrap">
                 Supervision<span className="text-blue-500">.</span>
               </h1>
               <p className="text-zinc-200 italic normal-case text-2xl md:text-3xl mb-6 leading-relaxed">
-                A clinical psychologist and strength athlete in your pocket — every day, every question, every doubt.
+                A coach in your pocket — every day, every set, every doubt. Get stronger, more massive, more technically clean than you thought you could.
               </p>
               <p className="text-zinc-500 italic normal-case text-base md:text-lg mb-10 leading-relaxed">
-                Training, programming, diet, recovery, sleep, supplementation, competition prep, technique, the psychology of performance. Every dimension of the work, treated by the same person, in one continuous conversation.
+                Training, programming, technique correction on video, diet, body composition, recovery, sleep, supplementation, competition prep, peaking. Every dimension of becoming a serious strength athlete — handled by one person, in one continuous conversation.
               </p>
               <div className="border-l-2 border-blue-600 pl-6">
                 <p className="text-zinc-300 italic normal-case text-base md:text-lg leading-relaxed">
-                  What a personal coach won't give you. What a therapist can't give you. What an AI will never give you.
+                  Daily access. Written. Encrypted. Cancel anytime.
                 </p>
               </div>
             </motion.div>
@@ -589,13 +589,13 @@ export default function SupervisionPage() {
               }}
             >
               <p className="text-white/90 italic normal-case text-xl md:text-2xl leading-relaxed mb-8 max-w-3xl">
-                You collapse before a heavy attempt. You sabotage your prep the week of a meet. You bail on a rep you could have hit. You can't push past a number that's been the same for three years. Everyone tells you to "want it more" — they have no idea what they're saying.
+                You miss a lift you've hit ten times in training. You hesitate before a heavy attempt. You bail on a rep you could have made. You can't push past a number that's been the same for three years. Everyone tells you to "want it more" — useless.
               </p>
               <p className="text-white/90 italic normal-case text-xl md:text-2xl leading-relaxed mb-8 max-w-3xl">
-                These are not motivation problems. These are <span className="text-amber-100 font-medium">structural problems</span> — the unconscious mechanisms that bridle most athletes from realizing what they're actually capable of. The inner enemy. The superego. The fear of one's own desire.
+                Strength is half nervous system, half psyche. Most coaches stop at programming and call it a day. <span className="text-amber-100 font-medium">The brain that lifts the bar is the same one that holds it back</span> — and nobody trains the second part.
               </p>
               <p className="text-white italic normal-case text-xl md:text-2xl leading-relaxed font-medium max-w-3xl border-l-2 border-amber-100 pl-6">
-                I'm a clinical psychologist and a Lacanian psychoanalyst. This is the work I do for a living — applied here, directly, to the psychology of strength performance. Nobody else in this field gives you this.
+                I bring eight years of clinical work to this exact problem. The mental side is treated as seriously as the squat — because that's where most of your locked PRs are hiding.
               </p>
             </motion.div>
           </div>
