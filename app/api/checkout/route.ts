@@ -9,13 +9,13 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 export async function POST(req: NextRequest) {
   try {
-    const { 
-      title, 
-      priceAmount, 
-      currency, 
-      pdfFile, 
+    const {
+      title,
+      priceAmount,
+      currency,
+      pdfFile,
       paymentMode,
-      language 
+      language,
     } = await req.json();
 
     // paymentMode: "once" or "installments"
@@ -24,8 +24,14 @@ export async function POST(req: NextRequest) {
     const baseUrl = req.nextUrl.origin;
 
     if (paymentMode === "installments") {
-      // 3 monthly payments via subscription
+      // 3 monthly payments via subscription, then auto-cancel
       const installmentAmount = Math.ceil(priceAmount / 3);
+
+      // Cancel after 3 monthly payments.
+      // Payments fall at: J0 (now), J+30, J+60.
+      // We set cancel_at at J+89 days so the subscription terminates
+      // BEFORE a 4th cycle can be billed at J+90.
+      const cancelAt = Math.floor(Date.now() / 1000) + 89 * 24 * 60 * 60;
 
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
@@ -47,15 +53,14 @@ export async function POST(req: NextRequest) {
           },
         ],
         subscription_data: {
-          // Cancel automatically after 3 payments (3 months)
-          // Trick: use cancel_at to set hard end date
+          cancel_at: cancelAt,
           metadata: {
             pdfFile: pdfFile,
             language: language || "en",
             totalPayments: "3",
             client_currency: currency || "eur",
           },
-        },
+        } as any,
         metadata: {
           pdfFile: pdfFile,
           language: language || "en",
@@ -65,7 +70,6 @@ export async function POST(req: NextRequest) {
         success_url: `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${baseUrl}/programs`,
       });
-
       return NextResponse.json({ url: session.url });
     }
 
@@ -95,7 +99,6 @@ export async function POST(req: NextRequest) {
       success_url: `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${baseUrl}/programs`,
     });
-
     return NextResponse.json({ url: session.url });
   } catch (err: any) {
     console.error("Stripe Error:", err.message);
