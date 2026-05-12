@@ -7,7 +7,7 @@ const TEXTURES = [
   "/textures/idea_3_clean.jpg",
   "/textures/idea_4_clean.jpg",
   "/textures/idea_5_clean.jpg",
-  "/textures/idea_6_clean.jpg",
+  "/textures/idea_6_clean.png",
 ];
 
 export default function RandomTexture() {

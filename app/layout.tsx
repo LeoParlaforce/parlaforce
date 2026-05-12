@@ -36,13 +36,6 @@ export const metadata = {
       },
     ],
   },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Par la force | Athletic Intelligence',
-    description: 'Evidence-based training systems for elite performance.',
-    creator: '@par_la_force',
-    images: ['/og-image.png'],
-  },
   robots: {
     index: true,
     follow: true,
@@ -64,7 +57,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // FIX JSON-LD : @graph unifié, données enrichies, jobTitle corrigé
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -94,7 +86,6 @@ export default function RootLayout({
         "description": "Evidence-based training systems and psychological protocols for elite athletes.",
         "publisher": { "@id": "https://parlaforce.com/#organization" },
         "inLanguage": "en-US",
-        // Potentialaction permet à Google de proposer une barre de recherche dans les résultats
         "potentialAction": {
           "@type": "SearchAction",
           "target": {
@@ -108,7 +99,6 @@ export default function RootLayout({
         "@type": "Person",
         "@id": "https://parlaforce.com/#author",
         "name": "Leo Gayrard",
-        // FIX : jobTitle doit être une string simple, pas un tableau
         "jobTitle": "Licensed Psychologist & Strength Coach",
         "url": "https://parlaforce.com",
         "sameAs": [
@@ -137,14 +127,8 @@ export default function RootLayout({
 
   return (
     <html lang="en" className="overflow-x-hidden">
-      {/*
-        FIX CRITIQUE : <body> contient directement les enfants.
-        Avant : layout avait <main> ET chaque page avait <main> → HTML invalide (double <main>)
-        Fix : on retire le <main> wrapper ici, chaque page gère son propre <main>
-      */}
       <body className="bg-black text-zinc-300 antialiased font-sans flex flex-col min-h-screen overflow-x-hidden w-full relative">
-        
-        {/* GRAIN NUMÉRIQUE — aria-hidden pour l'accessibilité */}
+
         <div className="pointer-events-none fixed inset-0 z-[9999] opacity-[0.18] mix-blend-soft-light" aria-hidden="true">
           <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
             <filter id="noiseFilter">
@@ -159,7 +143,6 @@ export default function RootLayout({
           </svg>
         </div>
 
-        {/* FIX : plus de <main> ici — chaque page a le sien */}
         <div className="flex-grow relative z-10">
           {children}
         </div>

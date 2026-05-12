@@ -13,17 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }))
 
-  // 2. Programmes spécifiques
-  const programSlugs = ['programme-anxiete', 'restructuration-cognitive'] 
-  
-  const programEntries: MetadataRoute.Sitemap = programSlugs.map((slug) => ({
-    url: `${baseUrl}/programs/${slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly',
-    priority: 0.9,
-  }))
-
-  // 3. Pages statiques (Home, Index Articles, Index Programs, Supervision)
+  // 2. Pages statiques (Home, Index Articles, Index Programs, Supervision)
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
@@ -44,13 +34,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/supervision`, // Ajout de la nouvelle interface
+      url: `${baseUrl}/supervision`,
       lastModified: new Date(),
-      changeFrequency: 'daily', // Haute fréquence car c'est un point de conversion clé
+      changeFrequency: 'weekly',
       priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/about-us`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.6,
     },
   ]
 
-  // Fusion de toutes les entrées sans rien supprimer du passé
-  return [...staticPages, ...programEntries, ...postEntries]
+  return [...staticPages, ...postEntries]
 }
