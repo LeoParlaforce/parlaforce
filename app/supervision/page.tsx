@@ -76,11 +76,11 @@ export default function SupervisionPage() {
   const faqs = [
     {
       q: "How does it actually work day to day?",
-      a: "Think of it as a private messaging conversation — like texting, but encrypted. After subscribing, you get my Signal contact. You write whenever something is alive in you: a training question, a technique problem, a video of a lift, how a session went, something mental you can't shake. As much as you want, whenever you want. I respond within 24 hours. And so it goes, day after day — a continuous conversation about your training and your progress.",
+      a: "Think of it as a private messaging conversation — like texting, but encrypted. After subscribing, you get my Signal contact. You write whenever something is alive in you: a training question, a technique problem, how a session went, something mental you can't shake. You send videos of your lifts so I can see the technique, the setup, whether you're executing correctly. I respond within 24 hours — in writing, and sometimes in video to show you exactly what I mean. As much as you want, whenever you want. And so it goes, day after day — a continuous conversation about your training and your progress.",
     },
     {
       q: "Can I send videos of my exercises?",
-      a: "Yes. Send me video of any lift and I'll analyze the technique, the bar path, the intent, the effort, what's missing, what's compensating. Same for grip work, accessory movements, any movement you want to refine.",
+      a: "Yes. Send me video of any lift and I'll analyze the technique, the bar path, the setup, the intent, the effort, what's missing, what's compensating. I can also send you video back — to show you exactly what to correct, what good positioning looks like, what to work on. Same for grip work, accessory movements, any movement you want to refine.",
     },
     {
       q: "Will you actually write my programs?",
