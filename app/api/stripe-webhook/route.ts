@@ -163,6 +163,20 @@ export async function POST(req: NextRequest) {
       console.log(`✅ Paiement validé pour : ${email}`);
       console.log(`📦 Session ID : ${session.id}`);
 
+      // Guide installments: set cancel_at on the subscription (89 days = before 4th cycle)
+      const isInstallments = session.metadata?.paymentMode === "installments";
+      if (isInstallments && session.subscription) {
+        const cancelAt = Math.floor(Date.now() / 1000) + 89 * 24 * 60 * 60;
+        try {
+          await stripe.subscriptions.update(session.subscription as string, {
+            cancel_at: cancelAt,
+          });
+          console.log(`🔴 Abonnement ${session.subscription} sera annulé dans 89 jours`);
+        } catch (subErr: any) {
+          console.error("❌ Erreur mise à jour cancel_at:", subErr.message);
+        }
+      }
+
       // Supervision-specific handling: send Signal email
       const isSupervision = session.metadata?.service === "supervision";
 

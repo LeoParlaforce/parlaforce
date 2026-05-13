@@ -31,8 +31,6 @@ export async function POST(req: NextRequest) {
       // Payments fall at: J0 (now), J+30, J+60.
       // We set cancel_at at J+89 days so the subscription terminates
       // BEFORE a 4th cycle can be billed at J+90.
-      const cancelAt = Math.floor(Date.now() / 1000) + 89 * 24 * 60 * 60;
-
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         mode: "subscription",
@@ -53,14 +51,13 @@ export async function POST(req: NextRequest) {
           },
         ],
         subscription_data: {
-          cancel_at: cancelAt,
           metadata: {
             pdfFile: pdfFile,
             language: language || "en",
             totalPayments: "3",
             client_currency: currency || "eur",
           },
-        } as any,
+        },
         metadata: {
           pdfFile: pdfFile,
           language: language || "en",
