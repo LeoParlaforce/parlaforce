@@ -76,7 +76,7 @@ export default function SupervisionPage() {
   const faqs = [
     {
       q: "How does it actually work day to day?",
-      a: "You get my Signal contact after subscribing. Signal is an end-to-end encrypted messaging app. You write me when you need to — about training, programming, diet, recovery, competition prep, technique, mental work, anything that touches your performance. I respond as a clinical psychologist and strength athlete.",
+      a: "Think of it as a private messaging conversation — like texting, but encrypted. After subscribing, you get my Signal contact. You write whenever something is alive in you: a training question, a technique problem, a video of a lift, how a session went, something mental you can't shake. As much as you want, whenever you want. I respond within 24 hours. And so it goes, day after day — a continuous conversation about your training and your progress.",
     },
     {
       q: "Can I send videos of my exercises?",
@@ -202,7 +202,7 @@ export default function SupervisionPage() {
               </p>
               <div className="border-l-2 border-blue-600 pl-6">
                 <p className="text-zinc-300 italic normal-case text-base md:text-lg leading-relaxed">
-                  Daily access. Written. Encrypted. Cancel anytime.
+                  A private messaging conversation — on Signal. You write whenever you want, as much as you want. I respond within 24 hours. Day after day, the conversation continues.
                 </p>
               </div>
             </motion.div>
