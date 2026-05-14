@@ -8,6 +8,7 @@ export default function SupervisionPage() {
   const [loading, setLoading] = useState<"reduced" | "full" | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [showDoIt, setShowDoIt] = useState(false);
 
   const handleSubscribe = async (tier: "reduced" | "full") => {
     setLoading(tier);
@@ -280,6 +281,29 @@ export default function SupervisionPage() {
               <p className="text-zinc-700 text-[10px] font-black uppercase tracking-widest text-center">
                 Delivered via Signal · Stripe Secure Checkout
               </p>
+
+              <div className="mt-6 text-center">
+                {!showDoIt ? (
+                  <button
+                    onClick={() => setShowDoIt(true)}
+                    className="text-zinc-700 hover:text-zinc-500 text-[9px] font-black uppercase tracking-[0.2em] italic transition-colors"
+                  >
+                    I&apos;m not ready for such a commitment
+                  </button>
+                ) : (
+                  <div className="mt-2">
+                    <iframe
+                      width="100%"
+                      height="280"
+                      src="https://www.youtube.com/embed/ZXsQAXx_ao0?autoplay=1"
+                      title="Do It — Shia LaBeouf"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      className="border border-zinc-800"
+                    />
+                  </div>
+                )}
+              </div>
             </motion.div>
           </div>
         </section>

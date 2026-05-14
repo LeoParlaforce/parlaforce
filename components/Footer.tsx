@@ -13,10 +13,10 @@ export default function Footer() {
           <div className="flex-1 min-w-0">
             <p className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-600 mb-2">Newsletter</p>
             <h3 className="text-white font-black uppercase italic text-lg md:text-xl tracking-tighter leading-none mb-1">
-              Reste dans la boucle<span className="text-blue-600">.</span>
+              Stay in the loop<span className="text-blue-600">.</span>
             </h3>
             <p className="text-zinc-500 text-xs md:text-sm normal-case leading-relaxed mt-2">
-              Nouveaux articles, nouvelles boutique — sois parmi les premiers informés.
+              New articles, new store drops — be the first to know.
             </p>
           </div>
           <div className="w-full md:w-80 shrink-0">
@@ -87,7 +87,7 @@ export default function Footer() {
                     YouTube
                   </span>
                   <span className="text-zinc-600 text-xs normal-case group-hover:text-zinc-500 transition-colors leading-snug">
-                    Les protocoles en action
+                    Protocols in action
                   </span>
                 </a>
               </li>
