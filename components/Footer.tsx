@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import NewsletterSignup from '@/components/NewsletterSignup'
 
 export default function Footer() {
   const year = new Date().getFullYear()
@@ -7,22 +6,6 @@ export default function Footer() {
   return (
     <footer className="bg-black border-t border-zinc-900 pt-20 pb-10 text-white font-sans w-full overflow-hidden" role="contentinfo">
       <div className="max-w-6xl mx-auto px-4 md:px-6 w-full">
-
-        {/* NEWSLETTER BANNER */}
-        <div className="mb-16 md:mb-20 border border-zinc-800 bg-zinc-950/40 p-8 md:p-10 flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-12">
-          <div className="flex-1 min-w-0">
-            <p className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-600 mb-2">Newsletter</p>
-            <h3 className="text-white font-black uppercase italic text-lg md:text-xl tracking-tighter leading-none mb-1">
-              Stay in the loop<span className="text-blue-600">.</span>
-            </h3>
-            <p className="text-zinc-500 text-xs md:text-sm normal-case leading-relaxed mt-2">
-              New articles, new store drops — be the first to know.
-            </p>
-          </div>
-          <div className="w-full md:w-80 shrink-0">
-            <NewsletterSignup variant="minimal" />
-          </div>
-        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-16 mb-16 md:mb-20">
 
