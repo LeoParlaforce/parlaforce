@@ -9,10 +9,7 @@ export default function ProgramsPage() {
   const [paymentMode, setPaymentMode] = useState<"once" | "installments">("once");
   const [loading, setLoading] = useState(false);
 
-  const LAUNCH_PRICE_EUR = 15000;
-  const REGULAR_PRICE_EUR = 19900;
-  const IS_LAUNCH_WEEK = true;
-  const currentPrice = IS_LAUNCH_WEEK ? LAUNCH_PRICE_EUR : REGULAR_PRICE_EUR;
+  const currentPrice = 19900;
   const installmentAmount = Math.ceil(currentPrice / 3);
 
   const handleCheckout = async () => {
@@ -39,7 +36,7 @@ export default function ProgramsPage() {
     }
   };
 
-  const formatPrice = (cents: number) => `€${(cents / 100).toFixed(0)}`;
+  const formatPrice = (cents: number) => `€${Math.ceil(cents / 100)}`;
 
   const fadeUp = {
     initial: { opacity: 0, y: 50 },
@@ -105,14 +102,6 @@ export default function ProgramsPage() {
           </Link>
         </nav>
 
-        {IS_LAUNCH_WEEK && (
-          <div className="bg-blue-600 py-3 relative z-30">
-            <p className="text-center text-white font-black uppercase tracking-[0.3em] text-[10px] md:text-xs italic">
-              Launch Week · €150 instead of €199 · Limited time
-            </p>
-          </div>
-        )}
-
         {/* HERO */}
         <section className="relative bg-black pt-24 md:pt-32 pb-16 md:pb-20">
           <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
@@ -138,19 +127,9 @@ export default function ProgramsPage() {
 
             <motion.div {...fadeUp} transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}>
               <div className="flex items-baseline gap-4 mb-10">
-                {IS_LAUNCH_WEEK && (
-                  <span className="text-zinc-600 line-through text-2xl md:text-3xl font-black italic">
-                    {formatPrice(REGULAR_PRICE_EUR)}
-                  </span>
-                )}
                 <span className="text-white text-5xl md:text-6xl font-black italic">
                   {formatPrice(currentPrice)}
                 </span>
-                {IS_LAUNCH_WEEK && (
-                  <span className="text-blue-600 text-[10px] font-black uppercase tracking-[0.3em] italic">
-                    Launch Week
-                  </span>
-                )}
               </div>
 
               <div className="mb-6">
@@ -776,11 +755,6 @@ export default function ProgramsPage() {
                   </p>
 
                   <div className="flex items-baseline justify-center gap-4 mb-10">
-                    {IS_LAUNCH_WEEK && (
-                      <span className="text-zinc-600 line-through text-xl font-black italic">
-                        {formatPrice(REGULAR_PRICE_EUR)}
-                      </span>
-                    )}
                     <span className="text-white text-4xl md:text-5xl font-black italic">
                       {formatPrice(currentPrice)}
                     </span>

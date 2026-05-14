@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch(domain:resend.com)"
+      "WebFetch(domain:resend.com)",
+      "Bash(ls -la \"c:\\\\Users\\\\leoga\\\\parlaforce\\\\\" | head -30)",
+      "Read(//c/Users/leoga/**)"
     ]
   }
 }

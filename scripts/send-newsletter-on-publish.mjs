@@ -48,7 +48,7 @@ for (const filePath of files) {
     <p style="color:#27272a;font-size:10px;text-transform:uppercase;letter-spacing:0.15em;margin:0;">
       <a href="https://parlaforce.com" style="color:#27272a;text-decoration:none;">parlaforce.com</a>
       &nbsp;·&nbsp;
-      <a href="https://parlaforce.com/contact" style="color:#27272a;text-decoration:none;">Se désabonner</a>
+      <a href="{{{RESEND_UNSUBSCRIBE_URL}}}" style="color:#27272a;text-decoration:none;">Se désabonner</a>
     </p>
   </div>
 </body>

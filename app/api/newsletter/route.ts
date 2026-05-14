@@ -1,11 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
+import { createHmac } from 'crypto'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 const FROM_EMAIL = 'ParlaForce <newsletter@troisiemechemin.fr>'
 const ADMIN_EMAIL = 'leo.gayrard@gmail.com'
 
-const welcomeHtml = `<!DOCTYPE html>
+export function generateUnsubscribeToken(email: string): string {
+  const secret = process.env.RESEND_API_KEY || ''
+  return createHmac('sha256', secret).update(email.toLowerCase()).digest('hex')
+}
+
+function buildWelcomeHtml(email: string): string {
+  const token = generateUnsubscribeToken(email)
+  const unsubscribeUrl = `https://parlaforce.com/api/newsletter/unsubscribe?email=${encodeURIComponent(email)}&token=${token}`
+  return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -28,11 +37,12 @@ const welcomeHtml = `<!DOCTYPE html>
     <p style="color:#27272a;font-size:10px;text-transform:uppercase;letter-spacing:0.15em;margin:0;">
       <a href="https://parlaforce.com" style="color:#27272a;text-decoration:none;">parlaforce.com</a>
       &nbsp;·&nbsp;
-      <a href="https://parlaforce.com/contact" style="color:#27272a;text-decoration:none;">Unsubscribe</a>
+      <a href="${unsubscribeUrl}" style="color:#27272a;text-decoration:none;">Unsubscribe</a>
     </p>
   </div>
 </body>
 </html>`
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -59,7 +69,7 @@ export async function POST(req: NextRequest) {
         from: FROM_EMAIL,
         to: email,
         subject: "You're in. — ParlaForce",
-        html: welcomeHtml,
+        html: buildWelcomeHtml(email),
       }),
       resend.emails.send({
         from: FROM_EMAIL,

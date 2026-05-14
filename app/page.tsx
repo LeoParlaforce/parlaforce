@@ -9,8 +9,6 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://parlaforce.com' },
 }
 
-const IS_LAUNCH_WEEK = true;
-
 export default function Home() {
   return (
     <main className="bg-black font-sans lowercase text-white w-full">
@@ -36,24 +34,8 @@ export default function Home() {
           }}
         />
 
-      {/* Launch banner - top */}
-      {IS_LAUNCH_WEEK && (
-        <Link 
-          href="/programs"
-          className="absolute top-0 left-0 right-0 bg-blue-600 py-2 md:py-3 z-20 hover:bg-blue-500 transition-colors"
-        >
-          <p className="text-center text-white font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-[9px] md:text-xs italic px-4">
-            <span className="hidden md:inline">Elite Launch Week · </span>
-            <span className="line-through opacity-50 mr-2">€199</span>
-            <span>€150</span>
-            <span className="mx-2 opacity-60">·</span>
-            <span>Acquire Elite →</span>
-          </p>
-        </Link>
-      )}
-
       {/* Top label */}
-      <div className={`absolute ${IS_LAUNCH_WEEK ? 'top-12 md:top-16' : 'top-8'} left-1/2 -translate-x-1/2 w-full px-4 text-center z-10`}>
+      <div className="absolute top-8 left-1/2 -translate-x-1/2 w-full px-4 text-center z-10">
         <span className="text-blue-600 text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] border border-blue-600 px-3 md:px-4 py-1.5 md:py-2 inline-block">
           Clinical Strength Architecture
         </span>
