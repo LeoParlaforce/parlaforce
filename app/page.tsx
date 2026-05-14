@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import RandomTexture from '@/components/RandomTexture'
+import NewsletterSignup from '@/components/NewsletterSignup'
 
 export const metadata: Metadata = {
   title: 'ParlaForce | Systems for Physical & Psychological Dominance',
@@ -12,25 +13,28 @@ const IS_LAUNCH_WEEK = true;
 
 export default function Home() {
   return (
-    <main className="h-screen md:h-screen min-h-[760px] md:min-h-0 flex flex-col items-center justify-center px-4 md:px-6 bg-black font-sans lowercase relative overflow-hidden text-white w-full">
-      
-      {/* Random texture background */}
-      <RandomTexture />
-      
-      {/* Heavy black overlay for content readability while preserving texture richness on edges */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: "radial-gradient(ellipse 60% 70% at 50% 50%, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.5) 100%)",
-        }}
-      />
+    <main className="bg-black font-sans lowercase text-white w-full">
 
-      {/* Cinematic grain */}
-      <div 
-        className="pointer-events-none fixed inset-0 z-[101] opacity-[0.05]" 
+      {/* Cinematic grain - fixed, covers entire page */}
+      <div
+        className="pointer-events-none fixed inset-0 z-[101] opacity-[0.05]"
         aria-hidden="true"
         style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='fineGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.90' numOctaves='1' stitchTiles='stitch' seed='7'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23fineGrain)'/%3E%3C/svg%3E")` }}
       />
+
+      {/* HERO */}
+      <section className="h-screen min-h-[760px] flex flex-col items-center justify-center px-4 md:px-6 relative overflow-hidden">
+
+        {/* Random texture background */}
+        <RandomTexture />
+
+        {/* Heavy black overlay */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: "radial-gradient(ellipse 60% 70% at 50% 50%, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.5) 100%)",
+          }}
+        />
 
       {/* Launch banner - top */}
       {IS_LAUNCH_WEEK && (
@@ -187,12 +191,21 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Footer */}
-      <div className="absolute bottom-3 md:bottom-6 left-1/2 -translate-x-1/2 text-center w-full px-4 z-10">
-        <span className="text-zinc-700 text-[8px] md:text-[10px] font-black uppercase tracking-widest md:tracking-[0.4em]">
-          System v2.0.26 // Built by the Architect
-        </span>
-      </div>
+        {/* Bottom label */}
+        <div className="absolute bottom-3 md:bottom-6 left-1/2 -translate-x-1/2 text-center w-full px-4 z-10">
+          <span className="text-zinc-700 text-[8px] md:text-[10px] font-black uppercase tracking-widest md:tracking-[0.4em]">
+            System v2.0.26 // Built by the Architect
+          </span>
+        </div>
+
+      </section>
+
+      {/* NEWSLETTER */}
+      <section className="bg-black border-t border-zinc-900 py-20 md:py-28 px-4 md:px-6">
+        <div className="max-w-2xl mx-auto">
+          <NewsletterSignup />
+        </div>
+      </section>
 
     </main>
   )
