@@ -1,9 +1,5 @@
 import Link from 'next/link'
-
-// FIX : tu avais DEUX composants Footer différents dans ton projet.
-// Un propre (components/Footer.tsx) et un basique (probablement dans un autre dossier).
-// On garde uniquement le propre et on le corrige.
-// → Vérifie que tu n'importes pas l'ancien Footer quelque part et supprime-le.
+import NewsletterSignup from '@/components/NewsletterSignup'
 
 export default function Footer() {
   const year = new Date().getFullYear()
@@ -11,6 +7,22 @@ export default function Footer() {
   return (
     <footer className="bg-black border-t border-zinc-900 pt-20 pb-10 text-white font-sans w-full overflow-hidden" role="contentinfo">
       <div className="max-w-6xl mx-auto px-4 md:px-6 w-full">
+
+        {/* NEWSLETTER BANNER */}
+        <div className="mb-16 md:mb-20 border border-zinc-800 bg-zinc-950/40 p-8 md:p-10 flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-12">
+          <div className="flex-1 min-w-0">
+            <p className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-600 mb-2">Newsletter</p>
+            <h3 className="text-white font-black uppercase italic text-lg md:text-xl tracking-tighter leading-none mb-1">
+              Reste dans la boucle<span className="text-blue-600">.</span>
+            </h3>
+            <p className="text-zinc-500 text-xs md:text-sm normal-case leading-relaxed mt-2">
+              Nouveaux articles, nouvelles boutique — sois parmi les premiers informés.
+            </p>
+          </div>
+          <div className="w-full md:w-80 shrink-0">
+            <NewsletterSignup variant="minimal" />
+          </div>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-16 mb-16 md:mb-20">
 
@@ -22,7 +34,6 @@ export default function Footer() {
             <p className="mt-6 text-zinc-500 max-w-sm leading-relaxed text-sm">
               Athletic intelligence and raw performance. Evidence-based training systems for high-level results.
             </p>
-            {/* Réassurance auteur — renforce E-E-A-T pour Google */}
             <p className="mt-4 text-zinc-700 text-xs uppercase tracking-widest font-bold">
               By Leo Gayrard · Licensed Psychologist
             </p>
@@ -51,7 +62,7 @@ export default function Footer() {
           {/* SOCIAL */}
           <div>
             <h3 className="text-zinc-200 font-bold mb-6 text-xs uppercase tracking-[0.2em]">Follow</h3>
-            <ul className="space-y-4 text-sm text-zinc-500">
+            <ul className="space-y-5 text-sm text-zinc-500">
               <li>
                 <a
                   href="https://www.instagram.com/par_la_force/"
@@ -67,9 +78,17 @@ export default function Footer() {
                   href="https://www.youtube.com/@ParLaForce"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-blue-500 transition-colors"
+                  className="group flex flex-col gap-1"
                 >
-                  YouTube
+                  <span className="flex items-center gap-2 text-zinc-400 group-hover:text-red-500 transition-colors font-bold">
+                    <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    YouTube
+                  </span>
+                  <span className="text-zinc-600 text-xs normal-case group-hover:text-zinc-500 transition-colors leading-snug">
+                    Les protocoles en action
+                  </span>
                 </a>
               </li>
             </ul>

@@ -6,6 +6,7 @@ import Link from "next/link"
 import Image from "next/image"
 import SocialShare from "@/components/SocialShare"
 import RandomTexture from "@/components/RandomTexture"
+import NewsletterSignup from "@/components/NewsletterSignup"
 
 interface FAQItem {
   question: string;
@@ -300,8 +301,13 @@ export default async function PostPage({ params }: { params: any }) {
             </section>
           )}
 
+          {/* Newsletter */}
+          <div className="mt-24">
+            <NewsletterSignup variant="full" />
+          </div>
+
           {/* End of article CTA — Elite + Supervision */}
-          <div className="mt-32 border border-zinc-900 bg-zinc-950/30 p-8 md:p-20 text-center relative overflow-hidden">
+          <div className="mt-16 border border-zinc-900 bg-zinc-950/30 p-8 md:p-20 text-center relative overflow-hidden">
             <p className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-600 mb-4">
               Next Step
             </p>

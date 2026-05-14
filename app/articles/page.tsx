@@ -5,6 +5,7 @@ import { getAllPosts } from "@/lib/posts"
 import Link from "next/link"
 import Image from "next/image"
 import RandomTexture from "@/components/RandomTexture"
+import NewsletterSignup from "@/components/NewsletterSignup"
 
 export const metadata = {
   title: 'Articles | Theory & Research',
@@ -111,6 +112,10 @@ export default function BlogListing() {
             </p>
           </div>
         )}
+
+        <div className="mt-16 md:mt-24">
+          <NewsletterSignup variant="full" />
+        </div>
       </div>
 
       <script

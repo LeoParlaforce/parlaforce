@@ -118,8 +118,8 @@ export default function Home() {
 
         {/* Secondary actions */}
         <div className="flex flex-row gap-3 md:gap-4 justify-center items-stretch w-full max-w-2xl mx-auto">
-          <Link 
-            href="/supervision" 
+          <Link
+            href="/supervision"
             className="group relative border border-zinc-800 bg-black/40 backdrop-blur-sm px-4 md:px-8 py-3 md:py-4 text-center hover:border-blue-600 hover:bg-zinc-950 transition-all duration-300 no-underline flex-1"
           >
             <span className="block text-[8px] md:text-[9px] font-black uppercase tracking-widest md:tracking-[0.3em] text-zinc-600 group-hover:text-blue-600 mb-1 transition-colors">
@@ -129,9 +129,9 @@ export default function Home() {
               Supervision
             </span>
           </Link>
-          
-          <Link 
-            href="/articles" 
+
+          <Link
+            href="/articles"
             className="group relative border border-zinc-800 bg-zinc-900/20 backdrop-blur-sm px-4 md:px-8 py-3 md:py-4 text-center hover:border-zinc-500 hover:bg-zinc-900/40 transition-all duration-300 no-underline flex-1"
           >
             <span className="block text-[8px] md:text-[9px] font-black uppercase tracking-widest md:tracking-[0.3em] text-zinc-600 group-hover:text-zinc-400 mb-1 transition-colors">
@@ -141,6 +141,33 @@ export default function Home() {
               Articles
             </span>
           </Link>
+        </div>
+
+        {/* YouTube */}
+        <div className="mt-2 md:mt-3 w-full max-w-2xl mx-auto">
+          <a
+            href="https://www.youtube.com/@ParLaForce"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center justify-between border border-zinc-900 bg-zinc-950/20 backdrop-blur-sm px-4 md:px-6 py-2.5 md:py-3 hover:border-zinc-700 hover:bg-zinc-900/30 transition-all duration-300 w-full"
+          >
+            <div className="flex items-center gap-3">
+              <svg className="w-4 h-4 shrink-0 text-zinc-600 group-hover:text-red-600 transition-colors" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+              </svg>
+              <div className="text-left">
+                <span className="block text-[8px] md:text-[9px] font-black uppercase tracking-widest text-zinc-700 group-hover:text-zinc-500 transition-colors">
+                  Free Content
+                </span>
+                <span className="block text-sm md:text-base font-black uppercase tracking-tight text-zinc-500 group-hover:text-zinc-300 italic leading-none transition-colors">
+                  YouTube
+                </span>
+              </div>
+            </div>
+            <span className="text-zinc-700 group-hover:text-zinc-400 text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] italic transition-colors">
+              Watch →
+            </span>
+          </a>
         </div>
       </div>
 
