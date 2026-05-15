@@ -5,6 +5,12 @@ on:
     branches: [main]
     paths:
       - 'app/posts/*.md'
+  workflow_dispatch:
+    inputs:
+      article_file:
+        description: 'Chemin du fichier article (ex: app/posts/mon-article.md)'
+        required: true
+        type: string
 
 jobs:
   send-newsletter:
@@ -24,7 +30,11 @@ jobs:
       - name: Détecter les nouveaux articles
         id: detect
         run: |
-          NEW=$(git diff --name-only --diff-filter=A ${{ github.event.before }} ${{ github.sha }} -- 'app/posts/*.md')
+          if [ -n "${{ github.event.inputs.article_file }}" ]; then
+            NEW="${{ github.event.inputs.article_file }}"
+          else
+            NEW=$(git diff --name-only --diff-filter=A ${{ github.event.before }} ${{ github.sha }} -- 'app/posts/*.md')
+          fi
           if [ -n "$NEW" ]; then
             echo "found=true" >> $GITHUB_OUTPUT
             {
