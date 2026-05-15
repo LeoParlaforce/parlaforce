@@ -1,15 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
-import { createHmac } from 'crypto'
+import { generateUnsubscribeToken } from './token'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 const FROM_EMAIL = 'ParlaForce <newsletter@troisiemechemin.fr>'
 const ADMIN_EMAIL = 'leo.gayrard@gmail.com'
-
-export function generateUnsubscribeToken(email: string): string {
-  const secret = process.env.RESEND_API_KEY || ''
-  return createHmac('sha256', secret).update(email.toLowerCase()).digest('hex')
-}
 
 function buildWelcomeHtml(email: string): string {
   const token = generateUnsubscribeToken(email)
