@@ -104,6 +104,8 @@ This is the real question that the workarounds postponed. Most people who train 
 
 There is no third path. The framework does not provide one. Your options at this point are: stay weak, or become strong and accept the political reading that comes with it.
 
+[CTA-ELITE]
+
 ## What the Workarounds Are Actually For
 
 There is a dimension of this question that has been hovering over the entire article without being said.
@@ -121,6 +123,8 @@ The men who eventually stop using the workarounds — who decide they will train
 The point is not that men should resent the framework, or the women who hold it, or the social arrangements that produce the filtering. The point is that the workarounds are not what they claim to be. They are not intellectual positions. They are not aesthetic preferences. They are strategies for retaining access to particular social and romantic worlds. Anyone who pretends otherwise — including, often, the men using the workarounds themselves — is not describing what is happening.
 
 Naming this does not solve the problem. The trade still has to be made. But it can be made with clarity rather than with self-deception.
+
+[CTA-ELITE]
 
 ## A Final Note from Nietzsche
 

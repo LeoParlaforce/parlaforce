@@ -96,6 +96,8 @@ This is trainable. It is not a personality trait you either have or don't. It is
 
 The program, in the end, is just the vehicle. The question is whether you are actually driving it.
 
+[CTA-ELITE]
+
 ## What to Do This Week
 
 If you recognize yourself in any of this, here is where to start — not in six months, not after the next program, but this week.

@@ -92,6 +92,8 @@ This is why tracking macronutrients — not just calories — is non-negotiable 
 
 ### WHY THE EXTREMES BOTH FAIL
 
+[CTA-ELITE]
+
 Two persistent failure modes dominate lay nutrition thinking:
 
 **Biological determinism** — "My hormones prevent me from losing weight." Hormonal profiles modulate caloric expenditure and body composition, but they do not override energy balance. What they can do is significantly alter the *efficiency* of that balance. A suppressed basal metabolic rate (BMR) can make a maintenance intake functionally equivalent to a surplus. This is a real variable — not an excuse, but a parameter that requires measurement, not dismissal.
@@ -126,6 +128,8 @@ Attempts to exceed these rates produce diminishing returns at best and compositi
 For a structured approach to periodizing your surplus, deficit, and maintenance phases with precise macronutrient targets, access the **[Performance Nutrition PDFs](/programs)**.
 
 ---
+
+[CTA-ELITE]
 
 ### CLINICAL REFERENCES
 

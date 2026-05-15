@@ -86,6 +86,8 @@ The difference is not physical. It is not a matter of nervous system type or dia
 
 This is the placebo effect of psychology — not a trick, not wishful thinking, but the genuine power of meaning to determine physiological and behavioral outcomes. The same sensations, the same biological state, producing opposite results depending on what they mean to the person experiencing them. That meaning is not fixed. But it cannot be changed with a breathing protocol.
 
+[CTA-SUPERVISION]
+
 ## The Symbolic Register
 
 What determines how an athlete interprets what they experience on the platform?

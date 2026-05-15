@@ -42,6 +42,8 @@ The lifter who looks for the optimal method and the lifter who looks for the opt
 
 What makes a method work is not the method. It is the athlete who makes it work.
 
+[CTA-ELITE]
+
 ## What actually makes the difference
 
 Two things make the difference. The first is belief in what you are doing. The second is running a coherent system rather than a collage of fragments from incompatible ones.

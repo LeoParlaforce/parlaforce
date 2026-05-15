@@ -60,6 +60,8 @@ Most healthcare professionals — nurses, physiotherapists, general practitioner
 
 Their advice to elderly patients is a direct expression of their own fantasies. Not evidence. Not physiology. Fantasy. And when your fantasy prevents you from doing your job, the people you are supposed to care for pay the price.
 
+[CTA-ELITE]
+
 Here is what that price looks like in practice: an elderly person unable to stand from a chair without assistance they did not need. A person who cannot sleep without medication because they have spent the day doing nothing. A person in chronic pain because nobody gave them the tools to be strong. A person whose independence, dignity, and physical capacity are eroding — not because aging made it inevitable, but because the people charged with their care had convinced themselves that strength training was not for people like them.
 
 ## The Word Nobody Uses: Maltreatment
@@ -165,6 +167,8 @@ In five months:
 Imagine what a year of real training will produce. Imagine five years. No one in his previous care environment would have believed this was possible. It was possible because it is physiologically how the body works — at any age, when given the right stimulus.
 
 This is not exceptional. This is what happens when you apply basic training principles to a human body that has been told it is beyond adaptation. The body does not know it has been told that. It adapts anyway.
+
+[CTA-SUPERVISION]
 
 ## What to Do
 

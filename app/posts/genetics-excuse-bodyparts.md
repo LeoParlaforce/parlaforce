@@ -60,6 +60,8 @@ The hack squat is not a detour. It is an excellent exercise in its own right, an
 
 This generalizes. The "bodyparts you can't train" usually aren't bodyparts you can't train — they're bodyparts that have learned to delegate work to stronger neighbors, and the standard exercise lets them keep delegating. You build them somewhere they can't delegate. Then everything you do, including the standard exercise, starts working.
 
+[CTA-ELITE]
+
 ## What Most People Actually Do
 
 Here is the lie that runs through every "I can't build legs" story. Almost nobody who says this has actually trained legs seriously. They tried the back squat for a few weeks, found it painful and demanding, decided it "doesn't work for them," and migrated to something easier.

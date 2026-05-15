@@ -47,6 +47,8 @@ AI has amplified this further. AI centralizes the consensus, recombines the cont
 
 Elite was written as a response to this problem. One engine. Every part — training, diet, recovery, sleep, supplementation, mental work, programming — built from the same internal logic. Nothing left aside. Nothing contradicting.
 
+[CTA-ELITE]
+
 ## Why €199 in 2026
 
 A few years ago, you could sell a generic 12-week program as a PDF for €30. That world is over.
@@ -94,6 +96,8 @@ Train this — bring your grip to a world-class level — and the cap lifts. Sud
 Le Bras Armé des Dieux is the program that does this. It is not a list of forearm exercises pulled from generic bodybuilding. It is a complete grip methodology that I have built over years of practice, integrating finger flexion, finger extension, thumb work, wrist work, and dynamic loading in ways that to my knowledge are not assembled this way anywhere else.
 
 Try it. You will see what your body was holding back.
+
+[CTA-ELITE]
 
 ## Two Disciplines, One Practice
 
