@@ -132,6 +132,8 @@ If you recognize your performance in any of this — if there is a consistent ga
 
 The platform does not lie. What it reveals can move. That is the whole point.
 
+[CTA-SUPERVISION]
+
 ## References
 
 - Condor Performance. (2023). Powerlifting psychology: The mental aspects of strength sport.

@@ -49,10 +49,10 @@ const InlineCTAElite = () => (
       Elite Protocol
     </p>
     <p className="text-white font-black uppercase italic text-xl md:text-2xl tracking-tight mb-4 leading-tight">
-      66 pages. Every variable that dictates your progress — laid out, structured, executable.
+      One engine. 66 pages.
     </p>
     <p className="text-zinc-500 text-sm italic mb-6 normal-case">
-      Programming, periodization, nutrition, and the psychological architecture of elite performance. No AI. No templates.
+      Programming, periodization, nutrition, and the psychological architecture that holds it together. Written by a licensed psychologist who trains. No AI. No templates.
     </p>
     <Link
       href="/programs"
@@ -70,10 +70,10 @@ const InlineCTASupervision = () => (
       1:1 Supervision
     </p>
     <p className="text-white font-black uppercase italic text-xl md:text-2xl tracking-tight mb-4 leading-tight">
-      Stop running the wrong machine. Work with someone who can see it.
+      A second pair of eyes. One that isn't yours.
     </p>
     <p className="text-zinc-500 text-sm italic mb-6 normal-case">
-      One athlete. One coach. A psychologist who trains. Not a template — a pair of eyes on your specific situation.
+      A licensed psychologist who competes. Not to give you a program — to help you see what you cannot see from inside your own situation.
     </p>
     <a
       href="https://chat.troisiemechemin.fr"
@@ -103,37 +103,6 @@ function parseContentSegments(content: string): ContentSegment[] {
   }
   return segments
 }
-
-const MidArticleCTA = () => (
-  <div className="my-16 border border-blue-600/20 bg-blue-600/5 p-8 relative overflow-hidden">
-    <div className="absolute top-0 left-0 w-1 h-full bg-blue-600" />
-    <p className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-600 mb-3">
-      Elite Protocol
-    </p>
-    <p className="text-white font-black uppercase italic text-xl md:text-2xl tracking-tight mb-4 leading-tight">
-      66 pages. Every variable that dictates your progress — laid out, structured, executable.
-    </p>
-    <p className="text-zinc-500 text-sm italic mb-6 normal-case">
-      Programming, periodization, nutrition, and the psychological architecture of elite performance. No AI. No templates.
-    </p>
-    <div className="flex flex-col sm:flex-row gap-3">
-      <Link
-        href="/programs"
-        className="bg-blue-600 text-white font-black uppercase py-3 px-8 text-[10px] tracking-[0.3em] hover:bg-white hover:text-black transition-all text-center"
-      >
-        Acquire Elite →
-      </Link>
-      <a
-        href="https://chat.troisiemechemin.fr"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="border border-zinc-700 text-zinc-400 font-black uppercase py-3 px-8 text-[10px] tracking-[0.3em] hover:border-blue-600 hover:text-blue-600 transition-all text-center"
-      >
-        1:1 Supervision →
-      </a>
-    </div>
-  </div>
-)
 
 export default async function PostPage({ params }: { params: any }) {
   const { slug } = await params
@@ -378,38 +347,6 @@ export default async function PostPage({ params }: { params: any }) {
           {/* Newsletter */}
           <div className="mt-24">
             <NewsletterSignup variant="full" />
-          </div>
-
-          {/* End of article CTA — Elite + Supervision */}
-          <div className="mt-16 border border-zinc-900 bg-zinc-950/30 p-8 md:p-20 text-center relative overflow-hidden">
-            <p className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-600 mb-4">
-              Next Step
-            </p>
-            <h3 className="text-3xl md:text-6xl font-black uppercase italic tracking-tighter mb-6 text-white leading-none">
-              Stop Guessing. Start Moving<span className="text-blue-600">.</span>
-            </h3>
-            <p className="text-zinc-500 italic max-w-xl mx-auto normal-case text-base md:text-lg mb-2">
-              66 pages. Every variable that governs elite performance — programming, nutrition, psychological architecture — structured and executable.
-            </p>
-            <p className="text-zinc-700 text-[10px] font-black uppercase tracking-widest mb-12">
-              No AI · No Templates · Built around your training
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link 
-                href="/programs" 
-                className="bg-blue-600 text-white font-black uppercase py-5 px-10 text-[10px] tracking-[0.4em] hover:bg-white hover:text-black transition-all"
-              >
-                Acquire Elite →
-              </Link>
-              <a 
-                href="https://chat.troisiemechemin.fr" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="border border-zinc-800 text-zinc-400 font-black uppercase py-5 px-10 text-[10px] tracking-[0.4em] hover:border-blue-600 hover:text-blue-600 transition-all"
-              >
-                1:1 Supervision →
-              </a>
-            </div>
           </div>
         </article>
       </div>
