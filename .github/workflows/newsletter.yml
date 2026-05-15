@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
@@ -24,10 +24,14 @@ jobs:
       - name: Détecter les nouveaux articles
         id: detect
         run: |
-          NEW=$(git diff --name-only --diff-filter=A HEAD~1 HEAD -- 'app/posts/*.md')
-          echo "files=$NEW" >> $GITHUB_OUTPUT
+          NEW=$(git diff --name-only --diff-filter=A ${{ github.event.before }} ${{ github.sha }} -- 'app/posts/*.md')
           if [ -n "$NEW" ]; then
             echo "found=true" >> $GITHUB_OUTPUT
+            {
+              echo "files<<EOF"
+              echo "$NEW"
+              echo "EOF"
+            } >> $GITHUB_OUTPUT
           else
             echo "found=false" >> $GITHUB_OUTPUT
           fi

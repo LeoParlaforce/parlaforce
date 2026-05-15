@@ -160,6 +160,7 @@ export default async function PostPage({ params }: { params: any }) {
     },
     "datePublished": post.date,
     "dateModified": post.date,
+    "wordCount": post.content ? post.content.split(/\s+/).length : undefined,
     "inLanguage": "en-US",
     "author": { "@id": "https://parlaforce.com/#author" },
     "publisher": { "@id": "https://parlaforce.com/#organization" },
@@ -190,7 +191,7 @@ export default async function PostPage({ params }: { params: any }) {
     : (() => {
         const contentLength = post.content?.length || 0
         if (contentLength > 3000) {
-          const [first, second] = splitContentAtMiddle(post.content)
+          const [first, second] = splitContentAtTwoThirds(post.content)
           const segs: ContentSegment[] = [{ type: 'content', text: first }]
           if (second) { segs.push({ type: 'cta-elite' }); segs.push({ type: 'content', text: second }) }
           return segs
@@ -416,10 +417,10 @@ export default async function PostPage({ params }: { params: any }) {
   )
 }
 
-function splitContentAtMiddle(content: string): [string, string] {
+function splitContentAtTwoThirds(content: string): [string, string] {
   if (!content) return ['', '']
-  const half = Math.floor(content.length / 2)
-  const splitIndex = content.indexOf('\n\n', half)
+  const twoThirds = Math.floor(content.length * 2 / 3)
+  const splitIndex = content.indexOf('\n\n', twoThirds)
   if (splitIndex === -1) return [content, '']
   return [content.substring(0, splitIndex), content.substring(splitIndex)]
 }

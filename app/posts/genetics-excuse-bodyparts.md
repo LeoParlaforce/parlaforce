@@ -42,8 +42,6 @@ Start here. When you press a barbell off your chest and your front delts feel li
 - Whether you've ever, even once, been taught how to feel your pecs in a press
 - How long you've actually trained this lift seriously
 
-[CTA-ELITE]
-
 That's the situation. Now look at what you said: "My shoulders take everything, so I'll never have pecs." You took ten interacting variables and reduced them to one — the only one you can't change. You called it "genetics" and walked away.
 
 The honest answer is that **nobody knows which variable is the bottleneck.** Not you, not your coach, not anyone. You can have a hypothesis. You can test it seriously. But you cannot make the leap from "this exercise, today, feels heavy in my shoulders" to "I am genetically incapable of building pectorals." Those two statements are not on the same scale of evidence.
@@ -69,8 +67,6 @@ Here is the lie that runs through every "I can't build legs" story. Almost nobod
 That something easier is almost always one of three options. **Leg press.** A weak exercise that produces feelings of effort without producing the adaptations real squatting produces. The people who live on it tend to have soft legs that never quite respond. Or **leg extensions and leg curls.** Isolation work that has its place after the real work but cannot substitute for it. Or **nothing** — they skip leg day, become the "I don't really like training legs" person, and construct a story about their genetics to justify it.
 
 In every one of these cases, the lifter has not done the work. They've spent five years pretending to. Then they look at someone with developed legs and conclude that person has "good genetics," because the alternative — that they themselves have been hiding — is unbearable.
-
-[CTA-SUPERVISION]
 
 ## The Symbolic Variable Nobody Counts
 
