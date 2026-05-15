@@ -42,7 +42,69 @@ export async function generateMetadata({ params }: { params: any }) {
   }
 }
 
-const MidArticleCTA = ({ slug }: { slug: string }) => (
+const InlineCTAElite = () => (
+  <div className="my-16 border border-blue-600/20 bg-blue-600/5 p-8 relative overflow-hidden">
+    <div className="absolute top-0 left-0 w-1 h-full bg-blue-600" />
+    <p className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-600 mb-3">
+      Elite Protocol
+    </p>
+    <p className="text-white font-black uppercase italic text-xl md:text-2xl tracking-tight mb-4 leading-tight">
+      66 pages. Every variable that dictates your progress — laid out, structured, executable.
+    </p>
+    <p className="text-zinc-500 text-sm italic mb-6 normal-case">
+      Programming, periodization, nutrition, and the psychological architecture of elite performance. No AI. No templates.
+    </p>
+    <Link
+      href="/programs"
+      className="inline-block bg-blue-600 text-white font-black uppercase py-3 px-8 text-[10px] tracking-[0.3em] hover:bg-white hover:text-black transition-all text-center"
+    >
+      Acquire Elite →
+    </Link>
+  </div>
+)
+
+const InlineCTASupervision = () => (
+  <div className="my-16 border border-zinc-800 bg-zinc-950/50 p-8 relative overflow-hidden">
+    <div className="absolute top-0 left-0 w-1 h-full bg-zinc-600" />
+    <p className="text-[9px] font-black uppercase tracking-[0.4em] text-zinc-400 mb-3">
+      1:1 Supervision
+    </p>
+    <p className="text-white font-black uppercase italic text-xl md:text-2xl tracking-tight mb-4 leading-tight">
+      Stop running the wrong machine. Work with someone who can see it.
+    </p>
+    <p className="text-zinc-500 text-sm italic mb-6 normal-case">
+      One athlete. One coach. A psychologist who trains. Not a template — a pair of eyes on your specific situation.
+    </p>
+    <a
+      href="https://chat.troisiemechemin.fr"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-block border border-zinc-600 text-zinc-300 font-black uppercase py-3 px-8 text-[10px] tracking-[0.3em] hover:border-blue-600 hover:text-blue-600 transition-all text-center"
+    >
+      Apply for Supervision →
+    </a>
+  </div>
+)
+
+type ContentSegment =
+  | { type: 'content'; text: string }
+  | { type: 'cta-elite' }
+  | { type: 'cta-supervision' }
+
+function parseContentSegments(content: string): ContentSegment[] {
+  const segments: ContentSegment[] = []
+  const parts = content.split(/\[CTA-(ELITE|SUPERVISION|APP)\]/g)
+  for (let i = 0; i < parts.length; i++) {
+    if (i % 2 === 0) {
+      if (parts[i].trim()) segments.push({ type: 'content', text: parts[i] })
+    } else {
+      segments.push({ type: parts[i] === 'ELITE' ? 'cta-elite' : 'cta-supervision' })
+    }
+  }
+  return segments
+}
+
+const MidArticleCTA = () => (
   <div className="my-16 border border-blue-600/20 bg-blue-600/5 p-8 relative overflow-hidden">
     <div className="absolute top-0 left-0 w-1 h-full bg-blue-600" />
     <p className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-600 mb-3">
@@ -55,16 +117,16 @@ const MidArticleCTA = ({ slug }: { slug: string }) => (
       Programming, periodization, nutrition, and the psychological architecture of elite performance. No AI. No templates.
     </p>
     <div className="flex flex-col sm:flex-row gap-3">
-      <Link 
-        href="/programs" 
+      <Link
+        href="/programs"
         className="bg-blue-600 text-white font-black uppercase py-3 px-8 text-[10px] tracking-[0.3em] hover:bg-white hover:text-black transition-all text-center"
       >
         Acquire Elite →
       </Link>
-      <a 
-        href="https://chat.troisiemechemin.fr" 
-        target="_blank" 
-        rel="noopener noreferrer" 
+      <a
+        href="https://chat.troisiemechemin.fr"
+        target="_blank"
+        rel="noopener noreferrer"
         className="border border-zinc-700 text-zinc-400 font-black uppercase py-3 px-8 text-[10px] tracking-[0.3em] hover:border-blue-600 hover:text-blue-600 transition-all text-center"
       >
         1:1 Supervision →
@@ -122,9 +184,19 @@ export default async function PostPage({ params }: { params: any }) {
     }))
   } : null
 
-  const contentLength = post.content?.length || 0
-  const isLongArticle = contentLength > 3000
-  const contentParts = isLongArticle ? splitContentAtMiddle(post.content) : [post.content, '']
+  const hasCTATags = /\[CTA-(ELITE|SUPERVISION|APP)\]/.test(post.content)
+  const contentSegments = hasCTATags
+    ? parseContentSegments(post.content)
+    : (() => {
+        const contentLength = post.content?.length || 0
+        if (contentLength > 3000) {
+          const [first, second] = splitContentAtMiddle(post.content)
+          const segs: ContentSegment[] = [{ type: 'content', text: first }]
+          if (second) { segs.push({ type: 'cta-elite' }); segs.push({ type: 'content', text: second }) }
+          return segs
+        }
+        return [{ type: 'content' as const, text: post.content }]
+      })()
 
   const markdownComponents = {
     h2: ({...props}) => <h2 {...props} className="text-3xl md:text-4xl font-black mt-20 md:mt-24 mb-10 text-white border-b border-zinc-900 pb-4" />,
@@ -195,17 +267,18 @@ export default async function PostPage({ params }: { params: any }) {
           <SocialShare slug={slug} title={post.title} />
 
           <div className="prose prose-invert prose-blue max-w-none prose-p:italic prose-li:italic prose-p:normal-case prose-li:normal-case prose-headings:uppercase prose-headings:italic prose-headings:tracking-tighter prose-strong:text-white prose-strong:uppercase">
-            <ReactMarkdown rehypePlugins={[rehypeRaw]} components={markdownComponents}>
-              {contentParts[0]}
-            </ReactMarkdown>
-
-            {isLongArticle && <MidArticleCTA slug={slug} />}
-
-            {contentParts[1] && (
-              <ReactMarkdown rehypePlugins={[rehypeRaw]} components={markdownComponents}>
-                {contentParts[1]}
-              </ReactMarkdown>
-            )}
+            {contentSegments.map((seg, i) => {
+              if (seg.type === 'content') {
+                return (
+                  <ReactMarkdown key={i} rehypePlugins={[rehypeRaw]} components={markdownComponents}>
+                    {seg.text}
+                  </ReactMarkdown>
+                )
+              }
+              if (seg.type === 'cta-elite') return <InlineCTAElite key={i} />
+              if (seg.type === 'cta-supervision') return <InlineCTASupervision key={i} />
+              return null
+            })}
           </div>
 
           {/* FAQ Section */}
