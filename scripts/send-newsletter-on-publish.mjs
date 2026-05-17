@@ -57,7 +57,7 @@ for (const filePath of files) {
   const { data: broadcast, error: createError } = await resend.broadcasts.create({
     audienceId,
     from: 'ParlaForce <newsletter@troisiemechemin.fr>',
-    name: `Article — ${title}`,
+    name: `Article — ${title}`.substring(0, 70),
     subject: `${title} — ParlaForce`,
     html,
   })
