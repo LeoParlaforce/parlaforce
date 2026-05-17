@@ -52,7 +52,7 @@ const InlineCTAElite = () => (
     <p className="text-white font-black uppercase italic text-xl md:text-2xl tracking-tight mb-4 leading-tight">
       One engine. 66 pages.
     </p>
-    <p className="text-zinc-500 text-sm italic mb-6 normal-case">
+    <p className="text-zinc-500 text-sm mb-6 normal-case">
       Programming, periodization, nutrition, and the psychological architecture that holds it together. Written by a licensed psychologist who trains. No AI. No templates.
     </p>
     <Link
@@ -73,7 +73,7 @@ const InlineCTASupervision = () => (
     <p className="text-white font-black uppercase italic text-xl md:text-2xl tracking-tight mb-4 leading-tight">
       A second pair of eyes. One that isn't yours.
     </p>
-    <p className="text-zinc-500 text-sm italic mb-6 normal-case">
+    <p className="text-zinc-500 text-sm mb-6 normal-case">
       A licensed psychologist who competes. Not to give you a program — to help you see what you cannot see from inside your own situation.
     </p>
     <a
@@ -199,7 +199,7 @@ export default async function PostPage({ params }: { params: any }) {
 
       <div className="relative z-10">
         <nav aria-label="Article navigation" className="p-6 md:p-8 flex justify-between items-center border-b border-zinc-900 mb-12 bg-black/50 backdrop-blur-sm">
-          <Link href="/articles" className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] text-zinc-500 hover:text-blue-600 transition-all italic">
+          <Link href="/articles" className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] text-zinc-500 hover:text-blue-600 transition-all">
             ← Articles Access
           </Link>
         </nav>
@@ -221,15 +221,22 @@ export default async function PostPage({ params }: { params: any }) {
                 <time dateTime={post.date}>{post.date}</time>
                 <span className="text-blue-600 border border-blue-600/20 px-2 py-0.5">{post.category}</span>
               </div>
-              <h1 className="text-4xl md:text-7xl lg:text-9xl font-black uppercase italic leading-[0.85] tracking-tighter text-white text-center drop-shadow-2xl px-4">
+              <h1 className="text-xl md:text-4xl lg:text-6xl font-black uppercase italic leading-[0.9] tracking-tighter text-white text-center drop-shadow-2xl px-4 max-w-5xl">
                 {post.title}<span className="text-blue-600">.</span>
               </h1>
             </div>
+            {post.imageCredit && (
+              <p className="absolute bottom-3 right-4 z-20 text-[9px] text-zinc-500 italic normal-case">
+                <ReactMarkdown components={{ p: ({ children }) => <>{children}</>, a: ({ href, children }) => <a href={href} target="_blank" rel="noopener noreferrer" className="hover:text-zinc-300 transition-colors">{children}</a> }}>
+                  {post.imageCredit}
+                </ReactMarkdown>
+              </p>
+            )}
           </div>
         )}
 
         <header className="max-w-4xl mx-auto px-6 text-center mb-20">
-          <p className="text-zinc-400 italic max-w-2xl mx-auto normal-case text-lg md:text-2xl leading-relaxed font-light">
+          <p className="text-zinc-400 max-w-2xl mx-auto normal-case text-lg md:text-2xl leading-relaxed font-light">
             {post.summary}
           </p>
         </header>
@@ -237,7 +244,7 @@ export default async function PostPage({ params }: { params: any }) {
         <article className="max-w-3xl mx-auto px-6">
           <SocialShare slug={slug} title={post.title} />
 
-          <div className="prose prose-invert prose-blue max-w-none prose-p:italic prose-li:italic prose-p:normal-case prose-li:normal-case prose-headings:uppercase prose-headings:italic prose-headings:tracking-tighter prose-strong:text-white prose-strong:uppercase">
+          <div className="prose prose-invert prose-blue max-w-none prose-p:normal-case prose-li:normal-case prose-headings:uppercase prose-headings:italic prose-headings:tracking-tighter prose-strong:text-white prose-strong:uppercase">
             {contentSegments.map((seg, i) => {
               if (seg.type === 'content') {
                 return (
@@ -270,7 +277,7 @@ export default async function PostPage({ params }: { params: any }) {
                     className="group border border-zinc-900 bg-zinc-950/30 hover:border-zinc-800 transition-all"
                   >
                     <summary className="flex items-center justify-between p-5 md:p-6 cursor-pointer list-none">
-                      <span className="text-white font-black italic text-sm md:text-base tracking-tight pr-6 normal-case">
+                      <span className="text-white font-black text-sm md:text-base tracking-tight pr-6 normal-case">
                         {faq.question}
                       </span>
                       <span className="shrink-0 transition-transform group-open:rotate-180 text-blue-600">
@@ -279,7 +286,7 @@ export default async function PostPage({ params }: { params: any }) {
                         </svg>
                       </span>
                     </summary>
-                    <div className="px-5 md:px-6 pb-5 md:pb-6 pt-2 text-zinc-400 italic normal-case text-base leading-relaxed border-t border-zinc-900/50">
+                    <div className="px-5 md:px-6 pb-5 md:pb-6 pt-2 text-zinc-400 normal-case text-base leading-relaxed border-t border-zinc-900/50">
                       {faq.answer}
                     </div>
                   </details>
@@ -287,7 +294,26 @@ export default async function PostPage({ params }: { params: any }) {
               </div>
             </section>
           )}
-          
+
+          {/* References */}
+          {post.references && post.references.length > 0 && (
+            <section className="mt-16 border-t border-zinc-900 pt-12">
+              <p className="text-[9px] font-black uppercase tracking-[0.4em] text-zinc-600 mb-6">
+                References
+              </p>
+              <ol className="space-y-3 list-none">
+                {post.references.map((ref: string, i: number) => (
+                  <li key={i} className="flex gap-4 text-zinc-600 text-sm normal-case leading-relaxed">
+                    <span className="font-mono text-[10px] text-zinc-700 shrink-0 pt-0.5">[{i + 1}]</span>
+                    <ReactMarkdown components={{ p: ({ children }) => <>{children}</>, a: ({ href, children }) => <a href={href} target="_blank" rel="noopener noreferrer" className="text-zinc-500 hover:text-zinc-300 transition-colors underline">{children}</a> }}>
+                      {ref}
+                    </ReactMarkdown>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )}
+
           <SocialShare slug={slug} title={post.title} />
 
           {/* Related Articles */}
@@ -300,7 +326,7 @@ export default async function PostPage({ params }: { params: any }) {
                 <h2 className="text-3xl md:text-4xl font-black uppercase italic tracking-tighter text-white">
                   More Articles<span className="text-blue-600">.</span>
                 </h2>
-                <p className="text-zinc-500 italic max-w-xl mx-auto normal-case text-sm md:text-base mt-4">
+                <p className="text-zinc-500 max-w-xl mx-auto normal-case text-sm md:text-base mt-4">
                   If this resonated, the rest of the work is here.
                 </p>
               </div>
@@ -325,10 +351,10 @@ export default async function PostPage({ params }: { params: any }) {
                     <p className="text-[9px] font-black uppercase tracking-[0.3em] text-blue-600 mb-3">
                       {related.category}
                     </p>
-                    <h3 className="text-white font-black italic text-base md:text-lg tracking-tight mb-3 leading-tight group-hover:text-blue-500 transition-colors normal-case">
+                    <h3 className="text-white font-black text-base md:text-lg tracking-tight mb-3 leading-tight group-hover:text-blue-500 transition-colors normal-case">
                       {related.title}
                     </h3>
-                    <p className="text-zinc-500 italic text-sm normal-case mt-auto line-clamp-3">
+                    <p className="text-zinc-500 text-sm normal-case mt-auto line-clamp-3">
                       {related.summary}
                     </p>
                   </Link>

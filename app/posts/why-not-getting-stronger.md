@@ -5,6 +5,7 @@ category: "Psychology"
 author: "Leo Gayrard"
 summary: "You're training consistently. Your program is solid. Your recovery is fine. And yet the bar hasn't moved in months. The answer most people give you is wrong."
 slug: "why-not-getting-stronger"
+seoTitle: "Why You're Not Getting Stronger"
 image: "/strength-plateau.jpg"
 imageCredit: "Photo by [Joel Rivera-Camacho](https://unsplash.com/fr/@actuallyjoel) on Unsplash"
 faqs:
@@ -18,6 +19,11 @@ faqs:
     answer: "A training plateau is a temporary stall caused by programming, recovery, or nutrition issues — it resolves with adjustments. A psychological plateau is a pattern of behavior that prevents an athlete from ever fully testing their limits. It often looks like a training plateau from the outside, but changing the program does nothing."
   - question: "What should I do this week if I'm stuck on a plateau?"
     answer: "First, do not change your program. Audit your last 8 weeks of training data and identify exactly which sessions you backed off and why. Then pick one heavy session this week and commit to it fully — no adjustments, no backing off. Track what actually happens versus what you feared would happen. That gap is where the real work begins."
+references:
+  - "Schoenfeld, B. J., et al. (2017). Strength and hypertrophy adaptations between low versus high load resistance training. *Journal of Strength and Conditioning Research.*"
+  - "Kraemer, W. J., & Ratamess, N. A. (2004). Fundamentals of resistance training. *Medicine & Science in Sports & Exercise.*"
+  - "Healy, L., et al. (2018). Goal setting in sport and performance. *Oxford Research Encyclopedia of Psychology.*"
+  - "Zourdos, M. C., et al. (2016). Novel resistance training-specific RPE scale measuring repetitions in reserve. *Journal of Strength and Conditioning Research.*"
 ---
 
 ## The Same Weight. Again.
@@ -58,7 +64,7 @@ This pattern — abandoning something difficult at the exact moment it starts to
 
 But when the variable you keep changing is the program, you never find out what you are actually capable of on any of them.
 
-[CTA-APP]
+[CTA-SUPERVISION]
 
 ## The Athlete Who Will Never Lift That Weight
 
@@ -114,9 +120,3 @@ If you recognize yourself in any of this, here is where to start — not in six 
 
 The bar does not care about your potential. It only responds to what you actually do with it.
 
-## References
-
-- Schoenfeld, B. J., et al. (2017). Strength and hypertrophy adaptations between low versus high load resistance training. *Journal of Strength and Conditioning Research.*
-- Kraemer, W. J., & Ratamess, N. A. (2004). Fundamentals of resistance training. *Medicine & Science in Sports & Exercise.*
-- Healy, L., et al. (2018). Goal setting in sport and performance. *Oxford Research Encyclopedia of Psychology.*
-- Zourdos, M. C., et al. (2016). Novel resistance training-specific RPE scale measuring repetitions in reserve. *Journal of Strength and Conditioning Research.*

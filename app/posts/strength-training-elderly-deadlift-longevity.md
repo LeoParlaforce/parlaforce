@@ -3,8 +3,9 @@ title: "Your 90-Year-Old Father Needs to Deadlift. Here's Why Nobody Will Tell Y
 date: "2026-04-15"
 category: "Training"
 author: "Leo Gayrard"
-summary: "Medical staff, family, society — everyone agrees that elderly people need 'age-appropriate activity.' What nobody says is that this language is designed to make sure nothing ever changes. My father is 91. He no longer needs a cane. He went from 11 medications a day to 1. He tripled his performance in 5 months. Here is what actually happened — and what the system that was supposed to care for him was actually doing to him."
+summary: "My father is 91. Five months of training: no cane, 11 medications to 1. What 'age-appropriate activity' was doing to him, and what nobody says."
 slug: "strength-training-elderly-deadlift-longevity"
+seoTitle: "Your 90-Year-Old Father Needs to Deadlift"
 image: "/strength-elderly.jpg"
 imageCredit: "Photo by [Centre for Ageing Better](https://unsplash.com/fr/@ageing_better) on Unsplash"
 faqs:
@@ -20,6 +21,12 @@ faqs:
     answer: "Less than most healthcare professionals suggest, and in a different form than they typically prescribe. What actually matters is total caloric adequacy, quality carbohydrates as the primary energy source, and 1.6g of protein per kg of bodyweight — the same target that applies across all phases of training. Prescribing protein without resistance training stimulus is incoherent. The body does not build muscle from protein alone. It builds muscle from protein in response to training."
   - question: "Should strength training goals change with age?"
     answer: "The goal never changes: be better than last week. Strength is not a steady state — it fluctuates constantly, at every age. After every peak there is a trough, at 20 and at 90. Training exists to make the next peak higher than the last. This is not 'possible' at any age. It is necessary. The alternative — training to slow the decline — is not a training philosophy. It is a form of giving up dressed as pragmatism."
+references:
+  - "World Health Organization. (2022). *Global status report on physical activity: cost of physical inactivity to public health systems, 2020–2030.*"
+  - "Strain, T., et al. (2022). The cost of inaction on physical inactivity to public health-care systems. *The Lancet Global Health.*"
+  - "Peterson, M. D., et al. (2011). Resistance exercise for muscular strength in older adults: A meta-analysis. *Ageing Research Reviews.*"
+  - "Fiatarone, M. A., et al. (1994). Exercise training and nutritional supplementation for physical frailty in very elderly people. *New England Journal of Medicine.*"
+  - "ACSM Position Stand. (2026). Resistance Training Prescription for Muscle Function, Hypertrophy, and Physical Performance in Healthy Adults."
 ---
 
 ## A Personal Note Before We Start
@@ -190,10 +197,3 @@ My father is 91. He is stronger than he was 5 months ago. He will be stronger st
 
 That is not optimism. That is a training plan.
 
-## References
-
-- World Health Organization. (2022). Global status report on physical activity: cost of physical inactivity to public health systems, 2020–2030.
-- Strain, T., et al. (2022). The cost of inaction on physical inactivity to public health-care systems. *The Lancet Global Health.*
-- Peterson, M.D., et al. (2011). Resistance exercise for muscular strength in older adults: A meta-analysis. *Ageing Research Reviews.*
-- Fiatarone, M.A., et al. (1994). Exercise training and nutritional supplementation for physical frailty in very elderly people. *New England Journal of Medicine.*
-- ACSM Position Stand. (2026). Resistance Training Prescription for Muscle Function, Hypertrophy, and Physical Performance in Healthy Adults.

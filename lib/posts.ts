@@ -56,6 +56,8 @@ export function getPostBySlug(slug: string) {
       readingTime: getReadingTime(content),
       author: data.author || "Leo Gayrard",
       faqs: data.faqs || null,
+      references: data.references || null,
+      imageCredit: data.imageCredit || null,
     }
   } catch (e) {
     console.error(`Error loading post ${slug}:`, e)

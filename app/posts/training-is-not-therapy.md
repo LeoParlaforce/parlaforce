@@ -2,6 +2,11 @@
 title: "You Think Training Is Your Therapy? We Need to Explain Things to You a Little Bit Slower and With Simpler Words Than Usual"
 seoTitle: "Why Training Is Not Your Therapy"
 slug: "training-is-not-therapy"
+references:
+  - "Sartre, J-P. *Existentialism is a Humanism* (1946)."
+  - "Sartre, J-P. *Critique of Dialectical Reason* (1960)."
+  - "Freud, S. *The Psychopathology of Everyday Life* (1901)."
+  - "Lacan, J. *The Four Fundamental Concepts of Psychoanalysis* — Seminar XI (1964)."
 date: "2026-05-17"
 category: "Mind"
 summary: "Training can be the subject of therapy — that part you almost got right. But training alone, without an Other, is not therapy. It never was."

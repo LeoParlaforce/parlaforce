@@ -3,7 +3,7 @@ title: "The Genetics Excuse: Why Your Bodyparts Aren't Doomed"
 slug: "genetics-excuse-bodyparts"
 date: "2026-05-14"
 category: "Training"
-summary: "You think your shoulders are stealing your bench. You think your femurs are too long to squat. You think you're genetically incapable of building quads. You're wrong. And the real problem isn't your skeleton — it's the demand to be recognized as disabled, so you don't have to work."
+summary: "The genetics excuse is a request to be exempt from work. Your femurs, your leverages, your hardgainer story — none of it explains why the bar hasn't moved."
 image: "/genetics-excuse.jpg"
 imageCredit: "Photo by [Anirudh](https://unsplash.com/fr/@lanirudhreddy) on Unsplash"
 faqs:
@@ -18,8 +18,6 @@ faqs:
   - question: "Why does this article talk about narcissism?"
     answer: "Because the deepest reason people stay stuck on 'genetics' is that the excuse positions them as a special case who shouldn't have to do what everyone else does. It's a demand to be recognized as disabled — exempt from effort, deserving of an environment that accommodates them. Training is the opposite movement: producing adaptations in yourself, not extracting them from the world."
 ---
-
-# The Genetics Excuse
 
 You hear it everywhere in the gym. "My shoulders take everything on the bench, I'll never have pecs." "My femurs are too long, I'm not built to squat." "I just don't have the genetics for big arms." "I'm a hardgainer, I can't build legs."
 
@@ -140,7 +138,7 @@ If you cannot find the resolve to do this — if every approach you try fades wi
 
 [CTA-SUPERVISION]
 
-## The Closing
+## Your Skeleton Is Not Your Sentence
 
 Your skeleton is not your destiny. Your bench press groove is not a sentence. Your femurs are not a verdict.
 

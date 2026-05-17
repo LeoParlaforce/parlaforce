@@ -50,7 +50,7 @@ export default function Home() {
               </div>
             </div>
             <div className="mt-3 md:mt-4 pt-3 md:pt-4 border-t border-blue-600/20 flex items-center justify-between gap-3">
-              <span className="text-zinc-400 italic normal-case text-[11px] md:text-sm leading-tight">
+              <span className="text-zinc-400 normal-case text-[11px] md:text-sm leading-tight">
                 Progress more in 8 months than in 8 years.
               </span>
               <span className="text-blue-600 group-hover:text-white text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] italic transition-colors shrink-0">

@@ -176,17 +176,17 @@ export default function SupervisionPage() {
               <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase italic tracking-tighter leading-[0.85] mb-8 whitespace-nowrap">
                 Supervision<span className="text-blue-500">.</span>
               </h1>
-              <p className="text-zinc-200 italic normal-case text-2xl md:text-3xl mb-6 leading-relaxed">
+              <p className="text-zinc-200 normal-case text-2xl md:text-3xl mb-6 leading-relaxed">
                 Brutally strong, monstrously massive, your full potential unleashed with the most miraculous feats of strength humanity can provide.
               </p>
-              <p className="text-zinc-300 italic normal-case text-xl md:text-2xl mb-6 leading-relaxed font-medium">
+              <p className="text-zinc-300 normal-case text-xl md:text-2xl mb-6 leading-relaxed font-medium">
                 Meet your destiny. Remember who you are. Discover what you can be.
               </p>
-              <p className="text-zinc-500 italic normal-case text-base md:text-lg mb-10 leading-relaxed">
+              <p className="text-zinc-500 normal-case text-base md:text-lg mb-10 leading-relaxed">
                 Training, programming, technique correction on video, diet, body composition, recovery, sleep, supplementation, competition prep, peaking. Every dimension of becoming a serious strength athlete — handled by one person, in one continuous conversation.
               </p>
               <div className="border-l-2 border-blue-600 pl-6">
-                <p className="text-zinc-300 italic normal-case text-base md:text-lg leading-relaxed">
+                <p className="text-zinc-300 normal-case text-base md:text-lg leading-relaxed">
                   A private messaging conversation — on Signal. You write whenever you want, as much as you want. I respond within 24 hours. Day after day, the conversation continues.
                 </p>
               </div>
@@ -205,7 +205,7 @@ export default function SupervisionPage() {
               </p>
 
               <div className="border-l-2 border-zinc-800 pl-4 mb-6">
-                <p className="text-zinc-400 italic normal-case text-sm leading-relaxed">
+                <p className="text-zinc-400 normal-case text-sm leading-relaxed">
                   Two prices, <strong className="text-white not-italic font-medium">exactly the same service</strong>. The reduced rate exists for students and young athletes with tight budgets. The full rate is the standard.
                 </p>
               </div>
@@ -225,10 +225,10 @@ export default function SupervisionPage() {
                   <p className="text-zinc-600 text-[10px] uppercase font-black tracking-widest mb-4">
                     per month
                   </p>
-                  <p className="text-zinc-500 italic normal-case text-xs leading-relaxed mb-4">
+                  <p className="text-zinc-500 normal-case text-xs leading-relaxed mb-4">
                     Students and young athletes with tight budgets.
                   </p>
-                  <p className="text-zinc-300 italic normal-case text-sm font-medium">
+                  <p className="text-zinc-300 normal-case text-sm font-medium">
                     {loading === "reduced" ? "Opening…" : "Subscribe →"}
                   </p>
                 </button>
@@ -247,17 +247,17 @@ export default function SupervisionPage() {
                   <p className="text-zinc-600 text-[10px] uppercase font-black tracking-widest mb-4">
                     per month
                   </p>
-                  <p className="text-zinc-400 italic normal-case text-xs leading-relaxed mb-4">
+                  <p className="text-zinc-400 normal-case text-xs leading-relaxed mb-4">
                     The standard rate.
                   </p>
-                  <p className="text-white italic normal-case text-sm font-medium">
+                  <p className="text-white normal-case text-sm font-medium">
                     {loading === "full" ? "Opening…" : "Subscribe →"}
                   </p>
                 </button>
               </div>
 
               {error && (
-                <p className="text-red-500 text-xs text-center italic mb-4">
+                <p className="text-red-500 text-xs text-center mb-4">
                   {error}
                 </p>
               )}
@@ -345,16 +345,16 @@ export default function SupervisionPage() {
                 delay: 0.15,
               }}
             >
-              <p className="text-white/95 italic normal-case text-xl md:text-2xl leading-relaxed mb-8 max-w-3xl">
+              <p className="text-white/95 normal-case text-xl md:text-2xl leading-relaxed mb-8 max-w-3xl">
                 You read articles. You watch videos. You ask AI. You try things. You get conflicting advice from every direction and you assemble the pieces yourself.
               </p>
-              <p className="text-white/85 italic normal-case text-lg md:text-xl leading-relaxed mb-8 max-w-3xl">
+              <p className="text-white/85 normal-case text-lg md:text-xl leading-relaxed mb-8 max-w-3xl">
                 And in your training, nobody actually sees what you do. Your sets, your bar speed, your technique under fatigue, the way you eat the day before a heavy session, the way you sleep when you're cutting, what you tell yourself before a max attempt. Nobody.
               </p>
-              <p className="text-white/85 italic normal-case text-lg md:text-xl leading-relaxed mb-8 max-w-3xl">
+              <p className="text-white/85 normal-case text-lg md:text-xl leading-relaxed mb-8 max-w-3xl">
                 You believe you're being honest with yourself. Everyone believes that. It's almost never true. The plateau is not a programming problem — it's a witness problem.
               </p>
-              <p className="text-white italic normal-case text-xl md:text-2xl leading-relaxed font-medium max-w-3xl border-l-2 border-orange-200 pl-6">
+              <p className="text-white normal-case text-xl md:text-2xl leading-relaxed font-medium max-w-3xl border-l-2 border-orange-200 pl-6">
                 Supervision is a witness. Someone who sees what you do, sees what you don't see in yourself, and tells you.
               </p>
             </motion.div>
@@ -412,7 +412,7 @@ export default function SupervisionPage() {
                 delay: 0.15,
               }}
             >
-              <p className="text-white/90 italic normal-case text-xl md:text-2xl leading-relaxed mb-12 max-w-3xl">
+              <p className="text-white/90 normal-case text-xl md:text-2xl leading-relaxed mb-12 max-w-3xl">
                 Same scope as the Elite guide — but now applied to <em>you</em>, in real time, day after day. The whole stack treated by one person, with one internal logic.
               </p>
 
@@ -450,10 +450,10 @@ export default function SupervisionPage() {
                 ))}
               </div>
 
-              <p className="text-white/90 italic normal-case text-lg md:text-xl leading-relaxed max-w-3xl mb-8">
+              <p className="text-white/90 normal-case text-lg md:text-xl leading-relaxed max-w-3xl mb-8">
                 Send a video of your squat — I'll analyze the bar path, the depth, the intent under load, what's failing technically, what's failing psychologically. Send your week's training log — I'll tell you what to cut, what to push, what to deload. Send your meal plan — I'll correct the macros, the timing, the food choices.
               </p>
-              <p className="text-white italic normal-case text-xl md:text-2xl leading-relaxed font-medium max-w-3xl border-l-2 border-blue-300 pl-6">
+              <p className="text-white normal-case text-xl md:text-2xl leading-relaxed font-medium max-w-3xl border-l-2 border-blue-300 pl-6">
                 And the psychological work runs underneath all of it — because that's what separates serious athletes from very good ones.
               </p>
             </motion.div>
@@ -511,7 +511,7 @@ export default function SupervisionPage() {
                 delay: 0.15,
               }}
             >
-              <p className="text-white/90 italic normal-case text-xl md:text-2xl leading-relaxed mb-12 max-w-3xl">
+              <p className="text-white/90 normal-case text-xl md:text-2xl leading-relaxed mb-12 max-w-3xl">
                 A weekly 45-minute video call forces you to improvise. The calendar decides when you speak, not what's actually alive in your training. You forget what mattered. You repeat what you've already said. You leave more confused than when you started.
               </p>
 
@@ -523,7 +523,7 @@ export default function SupervisionPage() {
                   <p className="text-white font-black uppercase italic text-2xl tracking-tight mb-4 leading-tight">
                     Improvised, Forgotten.
                   </p>
-                  <p className="text-zinc-400 italic normal-case text-base leading-relaxed">
+                  <p className="text-zinc-400 normal-case text-base leading-relaxed">
                     45 minutes once a week. You improvise in real time. Half the content evaporates between sessions. No written trace, no continuity, no archive of what was decided.
                   </p>
                 </div>
@@ -535,13 +535,13 @@ export default function SupervisionPage() {
                   <p className="text-white font-black uppercase italic text-2xl tracking-tight mb-4 leading-tight">
                     Formulated, Permanent.
                   </p>
-                  <p className="text-white/85 italic normal-case text-base leading-relaxed">
+                  <p className="text-white/85 normal-case text-base leading-relaxed">
                     You write when something is alive. The act of writing forces you to formulate — and formulation is half the work. Every exchange is permanent, searchable, your own training journal.
                   </p>
                 </div>
               </div>
 
-              <p className="text-white italic normal-case text-xl md:text-2xl leading-relaxed font-medium max-w-3xl border-l-2 border-purple-200 pl-6">
+              <p className="text-white normal-case text-xl md:text-2xl leading-relaxed font-medium max-w-3xl border-l-2 border-purple-200 pl-6">
                 You will look back at our exchanges six months from now and see how far you've come — because it's all there, in writing, signed by you.
               </p>
             </motion.div>
@@ -599,13 +599,13 @@ export default function SupervisionPage() {
                 delay: 0.15,
               }}
             >
-              <p className="text-white/90 italic normal-case text-xl md:text-2xl leading-relaxed mb-8 max-w-3xl">
+              <p className="text-white/90 normal-case text-xl md:text-2xl leading-relaxed mb-8 max-w-3xl">
                 You miss a lift you've hit ten times in training. You hesitate before a heavy attempt. You bail on a rep you could have made. You can't push past a number that's been the same for three years. Everyone tells you to "want it more" — useless.
               </p>
-              <p className="text-white/90 italic normal-case text-xl md:text-2xl leading-relaxed mb-8 max-w-3xl">
+              <p className="text-white/90 normal-case text-xl md:text-2xl leading-relaxed mb-8 max-w-3xl">
                 Strength is half nervous system, half psyche. Most coaches stop at programming and call it a day. <span className="text-amber-100 font-medium">The brain that lifts the bar is the same one that holds it back</span> — and nobody trains the second part.
               </p>
-              <p className="text-white italic normal-case text-xl md:text-2xl leading-relaxed font-medium max-w-3xl border-l-2 border-amber-100 pl-6">
+              <p className="text-white normal-case text-xl md:text-2xl leading-relaxed font-medium max-w-3xl border-l-2 border-amber-100 pl-6">
                 I bring eight years of clinical work to this exact problem. The mental side is treated as seriously as the squat — because that's where most of your locked PRs are hiding.
               </p>
             </motion.div>
@@ -624,7 +624,7 @@ export default function SupervisionPage() {
                 <br />
                 One Practice.
               </h2>
-              <p className="text-zinc-400 italic normal-case text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
+              <p className="text-zinc-400 normal-case text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
                 I'm not a coach with a side interest in psychology. I'm not a psychologist with a hobby in lifting. Both disciplines, pursued seriously, for years, fully integrated.
               </p>
             </motion.div>
@@ -646,7 +646,7 @@ export default function SupervisionPage() {
                 <p className="text-white font-black uppercase italic text-2xl tracking-tight mb-6 leading-tight">
                   6 years university · 8 years private practice · ~200 patients
                 </p>
-                <p className="text-zinc-400 italic normal-case text-base leading-relaxed">
+                <p className="text-zinc-400 normal-case text-base leading-relaxed">
                   Master in clinical psychology. Lacanian psychoanalyst. Years of work on what stops people from realizing their potential — applied here directly to the psychology of performance.
                 </p>
               </motion.div>
@@ -668,7 +668,7 @@ export default function SupervisionPage() {
                 <p className="text-white font-black uppercase italic text-2xl tracking-tight mb-6 leading-tight">
                   9 years strength sport & martial arts · training, diet, recovery
                 </p>
-                <p className="text-zinc-400 italic normal-case text-base leading-relaxed">
+                <p className="text-zinc-400 normal-case text-base leading-relaxed">
                   Strength training, programming, periodization, nutrition science, recovery, grip specialization. The methods I supervise you on are the methods I apply to myself.
                 </p>
               </motion.div>
@@ -683,7 +683,7 @@ export default function SupervisionPage() {
               }}
             >
               <div className="border border-blue-600/30 bg-blue-600/5 p-8 md:p-12 text-center">
-                <p className="text-white italic normal-case text-xl md:text-2xl leading-relaxed">
+                <p className="text-white normal-case text-xl md:text-2xl leading-relaxed">
                   The body and the psyche are not two separate domains — they meet in the speaking subject. Supervision treats them as one.
                 </p>
               </div>
@@ -712,7 +712,7 @@ export default function SupervisionPage() {
                 delay: 0.1,
               }}
             >
-              <p className="text-zinc-400 italic normal-case text-xl md:text-2xl leading-relaxed text-center max-w-3xl mx-auto mb-16">
+              <p className="text-zinc-400 normal-case text-xl md:text-2xl leading-relaxed text-center max-w-3xl mx-auto mb-16">
                 Powerlifters. Strongmen. Climbers. Arm wrestlers. Martial artists. Bodybuilders. Beginners to international level. Anyone who trains for real and wants a witness.
               </p>
 
@@ -721,7 +721,7 @@ export default function SupervisionPage() {
                   <p className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-600 mb-6">
                     If You Are
                   </p>
-                  <ul className="space-y-4 text-zinc-400 italic normal-case text-lg">
+                  <ul className="space-y-4 text-zinc-400 normal-case text-lg">
                     <li className="flex">
                       <span className="text-blue-600 mr-3 shrink-0">—</span>{" "}
                       Stuck below your potential and you can't figure out why
@@ -748,7 +748,7 @@ export default function SupervisionPage() {
                   <p className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-600 mb-6">
                     If You Want
                   </p>
-                  <ul className="space-y-4 text-zinc-400 italic normal-case text-lg">
+                  <ul className="space-y-4 text-zinc-400 normal-case text-lg">
                     <li className="flex">
                       <span className="text-blue-600 mr-3 shrink-0">—</span>{" "}
                       Daily access to one person who treats every dimension
@@ -801,7 +801,7 @@ export default function SupervisionPage() {
                       }
                       className="w-full p-6 flex justify-between items-center text-left hover:bg-zinc-900/50 transition-colors"
                     >
-                      <span className="text-sm md:text-base font-bold uppercase tracking-widest text-zinc-200 italic pr-4">
+                      <span className="text-sm md:text-base font-bold uppercase tracking-widest text-zinc-200 pr-4">
                         {faq.q}
                       </span>
                       <span className="text-blue-600 font-black text-xl shrink-0">
@@ -809,7 +809,7 @@ export default function SupervisionPage() {
                       </span>
                     </button>
                     {openFaq === index && (
-                      <div className="p-6 pt-0 text-base text-zinc-400 italic normal-case leading-relaxed">
+                      <div className="p-6 pt-0 text-base text-zinc-400 normal-case leading-relaxed">
                         {faq.a}
                       </div>
                     )}
@@ -839,7 +839,7 @@ export default function SupervisionPage() {
                   <h3 className="text-4xl md:text-7xl font-black uppercase italic tracking-tighter mb-6 text-white leading-none">
                     Get A Witness<span className="text-blue-600">.</span>
                   </h3>
-                  <p className="text-zinc-500 italic max-w-xl mx-auto normal-case text-base md:text-lg mb-8">
+                  <p className="text-zinc-500 max-w-xl mx-auto normal-case text-base md:text-lg mb-8">
                     Stop training in the dark.
                   </p>
                   <p className="text-zinc-700 text-[10px] font-black uppercase tracking-widest mb-12">
@@ -866,10 +866,10 @@ export default function SupervisionPage() {
                   </div>
 
                   {error && (
-                    <p className="text-red-500 text-xs italic mb-4">{error}</p>
+                    <p className="text-red-500 text-xs mb-4">{error}</p>
                   )}
 
-                  <p className="text-zinc-500 italic normal-case text-sm leading-relaxed max-w-md mx-auto">
+                  <p className="text-zinc-500 normal-case text-sm leading-relaxed max-w-md mx-auto">
                     Same service at both prices. Reduced is for students and young athletes with tight budgets. Full is the standard rate.
                   </p>
                 </div>

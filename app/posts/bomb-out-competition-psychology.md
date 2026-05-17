@@ -7,6 +7,12 @@ summary: "The standard answers — nerves, pressure, your 'type' as an athlete �
 slug: "bomb-out-competition-psychology"
 image: "/bomb-out-competition.jpg"
 imageCredit: "Photo by [Amari Shutters](https://unsplash.com/fr/@asnanya) on Unsplash"
+references:
+  - "Condor Performance. (2023). Powerlifting psychology: The mental aspects of strength sport."
+  - "EliteFTS. (2016). Mental health and the strength athlete."
+  - "EliteFTS. (2016). Powerlifting sport psychology training."
+  - "Research Gate. (2018). Lifting the mind: A case study of applied sport psychology in powerlifting."
+  - "Lacan, J. (1966). *Écrits.* Seuil."
 faqs:
   - question: "Why do some athletes perform worse in competition than in training?"
     answer: "The standard explanation — nerves, anxiety, stress — is a description, not an answer. What is actually happening is that competition reveals something about the athlete's relationship to performance that training never puts under the same pressure. This is not a fixed trait. It is something that can be worked on."
@@ -134,12 +140,4 @@ If you recognize your performance in any of this — if there is a consistent ga
 
 The platform does not lie. What it reveals can move. That is the whole point.
 
-[CTA-SUPERVISION]
-
-## References
-
-- Condor Performance. (2023). Powerlifting psychology: The mental aspects of strength sport.
-- EliteFTS. (2016). Mental health and the strength athlete.
-- EliteFTS. (2016). Powerlifting sport psychology training.
-- Research Gate. (2018). Lifting the mind: A case study of applied sport psychology in powerlifting.
-- Lacan, J. (1966). Écrits. Seuil.
+[CTA-ELITE]

@@ -1,14 +1,12 @@
 ---
 title: "Why I Wrote the Program Elite"
 slug: "introducing-elite"
-description: "I just released Elite — a 66-page strength protocol built like one engine, not a patchwork of methods. Here is why it exists, what is in it, and who it is for."
-canonical: "https://parlaforce.com/articles/introducing-elite"
+summary: "Elite is a 66-page strength protocol — one engine, not a collage of methods. Here is why it exists, what is in it, and who it is for."
 date: "2026-05-04"
 author: "Léo Gayrard"
 category: "Programs"
 image: "/elite-cover.jpg"
-tags: ["elite", "strength training", "grip strength", "programming", "psychology of performance"]
-faq:
+faqs:
   - question: "What is Elite?"
     answer: "Elite is a 66-page strength protocol covering training, diet, recovery, sleep, supplementation, mental work, periodization and programming as a single coherent system. It includes two programs — L'Archange Expurgateur for full body, and Le Bras Armé des Dieux for grip strength."
   - question: "Who is Elite for?"
@@ -18,8 +16,6 @@ faq:
   - question: "Is Elite a 12-week program?"
     answer: "No. Elite is built as a lifelong method. The programs progress with you indefinitely. Year one teaches the structure. Year three reveals layers you missed. Year ten — you are still finding what was always there."
 ---
-
-# Why I Wrote the Program Elite
 
 I just released Elite — a 66-page strength protocol that I built over years of clinical practice as a psychoanalyst and parallel work as a strength athlete. It is now available at parlaforce.com/programs.
 
@@ -134,69 +130,3 @@ If you have been training hard and stuck below your potential — this is for yo
 *Léo Gayrard*
 
 ---
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "Why I Wrote the Program Elite",
-  "description": "I just released Elite — a 66-page strength protocol built like one engine, not a patchwork of methods. Here is why it exists, what is in it, and who it is for.",
-  "author": {
-    "@type": "Person",
-    "name": "Léo Gayrard",
-    "url": "https://parlaforce.com"
-  },
-  "datePublished": "2026-05-04",
-  "image": "https://parlaforce.com/elite-cover.jpg",
-  "publisher": {
-    "@type": "Organization",
-    "name": "Parlaforce",
-    "url": "https://parlaforce.com"
-  },
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://parlaforce.com/articles/introducing-elite"
-  }
-}
-</script>
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "What is Elite?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Elite is a 66-page strength protocol covering training, diet, recovery, sleep, supplementation, mental work, periodization and programming as a single coherent system. It includes two programs — L'Archange Expurgateur for full body, and Le Bras Armé des Dieux for grip strength."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Who is Elite for?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Elite is built for serious strength athletes — powerlifters, strongmen, climbers, arm wrestlers, martial artists, fighters, and bodybuilders who train hard and want to break past their current ceiling."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "How much does Elite cost?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Elite is €199. A 3 monthly installment option is available. Both English and French versions are included with every purchase."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Is Elite a 12-week program?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "No. Elite is built as a lifelong method. The programs progress with you indefinitely. Year one teaches the structure. Year three reveals layers you missed. Year ten — you are still finding what was always there."
-      }
-    }
-  ]
-}
-</script>

@@ -96,14 +96,14 @@ export default function ProgramsPage() {
               <h1 className="text-7xl sm:text-8xl md:text-[10rem] font-black uppercase italic tracking-tighter leading-[0.85] mb-8">
                 Elite<span className="text-blue-500">.</span>
               </h1>
-              <p className="text-zinc-200 italic normal-case text-2xl md:text-3xl mb-6 leading-relaxed">
+              <p className="text-zinc-200 normal-case text-2xl md:text-3xl mb-6 leading-relaxed">
                 The complete training, diet, recovery and psychology protocol for serious strength athletes.
               </p>
-              <p className="text-zinc-500 italic normal-case text-base md:text-lg mb-10 leading-relaxed">
+              <p className="text-zinc-500 normal-case text-base md:text-lg mb-10 leading-relaxed">
                 Two programs — full body strength &amp; hypertrophy, and a world-class grip strength method. 66 pages. Built to apply for the rest of your training life.
               </p>
               <div className="border-l-2 border-blue-600 pl-6">
-                <p className="text-zinc-300 italic normal-case text-base md:text-lg leading-relaxed">
+                <p className="text-zinc-300 normal-case text-base md:text-lg leading-relaxed">
                   Progress more in 8 months than in 8 years without this program.
                 </p>
               </div>
@@ -136,7 +136,7 @@ export default function ProgramsPage() {
                     Français
                   </button>
                 </div>
-                <p className="text-zinc-600 italic normal-case text-xs mt-3">
+                <p className="text-zinc-600 normal-case text-xs mt-3">
                   Both versions included — you can download both.
                 </p>
               </div>
@@ -151,7 +151,7 @@ export default function ProgramsPage() {
                     }`}
                   >
                     <span className="block">Once</span>
-                    <span className="block text-zinc-400 normal-case italic mt-1 text-xs tracking-normal">
+                    <span className="block text-zinc-400 normal-case mt-1 text-xs tracking-normal">
                       {formatPrice(currentPrice)}
                     </span>
                   </button>
@@ -162,7 +162,7 @@ export default function ProgramsPage() {
                     }`}
                   >
                     <span className="block">3 × Monthly</span>
-                    <span className="block text-zinc-400 normal-case italic mt-1 text-xs tracking-normal">
+                    <span className="block text-zinc-400 normal-case mt-1 text-xs tracking-normal">
                       {formatPrice(installmentAmount)} × 3
                     </span>
                   </button>
@@ -224,16 +224,16 @@ export default function ProgramsPage() {
             </motion.div>
 
             <motion.div {...fadeUp} transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}>
-              <p className="text-white/95 italic normal-case text-xl md:text-2xl leading-relaxed mb-8 max-w-3xl">
+              <p className="text-white/95 normal-case text-xl md:text-2xl leading-relaxed mb-8 max-w-3xl">
                 Online you find everything and its opposite. AI has amplified this — it centralizes the consensus, recombines the contradictions, and outputs an averaged answer that fits no one.
               </p>
-              <p className="text-white/85 italic normal-case text-lg md:text-xl leading-relaxed mb-8 max-w-3xl">
+              <p className="text-white/85 normal-case text-lg md:text-xl leading-relaxed mb-8 max-w-3xl">
                 Most athletes fail not because they cannot find good methods. They fail because they assemble pieces of <em>different</em> methods. A diet from one coach. A program from another. A recovery protocol from a third.
               </p>
-              <p className="text-white/85 italic normal-case text-lg md:text-xl leading-relaxed mb-8 max-w-3xl">
+              <p className="text-white/85 normal-case text-lg md:text-xl leading-relaxed mb-8 max-w-3xl">
                 Each piece may be valid in its original system. Bolted together, they cancel each other out. The engine does not run.
               </p>
-              <p className="text-white italic normal-case text-xl md:text-2xl leading-relaxed font-medium max-w-3xl border-l-2 border-orange-200 pl-6">
+              <p className="text-white normal-case text-xl md:text-2xl leading-relaxed font-medium max-w-3xl border-l-2 border-orange-200 pl-6">
                 Elite is one engine. Every part — training, diet, recovery, sleep, supplementation, mental work, programming — built from the same internal logic.
               </p>
             </motion.div>
@@ -279,7 +279,7 @@ export default function ProgramsPage() {
             </motion.div>
 
             <motion.div {...fadeUp} transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}>
-              <p className="text-white/90 italic normal-case text-xl md:text-2xl leading-relaxed mb-12 max-w-3xl">
+              <p className="text-white/90 normal-case text-xl md:text-2xl leading-relaxed mb-12 max-w-3xl">
                 Elite covers every domain that affects performance. Each treated in depth. Each consistent with the others. Nothing left aside, nothing contradicting.
               </p>
 
@@ -352,7 +352,7 @@ export default function ProgramsPage() {
             </motion.div>
 
             <motion.div {...fadeUp} transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}>
-              <p className="text-white/90 italic normal-case text-xl md:text-2xl leading-relaxed mb-12 max-w-3xl">
+              <p className="text-white/90 normal-case text-xl md:text-2xl leading-relaxed mb-12 max-w-3xl">
                 Anyone can ask an AI for a 12-week program, a macro split, a deload protocol. That world existed at €30 a PDF. That world is over. What is left for sale is what AI cannot deliver.
               </p>
 
@@ -364,7 +364,7 @@ export default function ProgramsPage() {
                   <p className="text-white font-black uppercase italic text-2xl tracking-tight mb-4 leading-tight">
                     Recombines Consensus.
                   </p>
-                  <p className="text-zinc-400 italic normal-case text-base leading-relaxed">
+                  <p className="text-zinc-400 normal-case text-base leading-relaxed">
                     Averages out the internet. Repeats what most coaches repeat. Cannot refuse the errors of the field — because it has no position to refuse from.
                   </p>
                 </div>
@@ -376,13 +376,13 @@ export default function ProgramsPage() {
                   <p className="text-white font-black uppercase italic text-2xl tracking-tight mb-4 leading-tight">
                     Refuses The Errors.
                   </p>
-                  <p className="text-white/85 italic normal-case text-base leading-relaxed">
+                  <p className="text-white/85 normal-case text-base leading-relaxed">
                     Takes positions where most flinch. Names what is wrong in the dominant approaches and proposes a coherent alternative. Built on lived clinical and athletic practice.
                   </p>
                 </div>
               </div>
 
-              <p className="text-white italic normal-case text-xl md:text-2xl leading-relaxed font-medium max-w-3xl border-l-2 border-purple-200 pl-6">
+              <p className="text-white normal-case text-xl md:text-2xl leading-relaxed font-medium max-w-3xl border-l-2 border-purple-200 pl-6">
                 Premium in 2026 means human. Singular. Coherent end to end. Elite is what €199 buys when €30 buys nothing.
               </p>
             </motion.div>
@@ -428,13 +428,13 @@ export default function ProgramsPage() {
             </motion.div>
 
             <motion.div {...fadeUp} transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}>
-              <p className="text-white/90 italic normal-case text-xl md:text-2xl leading-relaxed mb-8 max-w-3xl">
+              <p className="text-white/90 normal-case text-xl md:text-2xl leading-relaxed mb-8 max-w-3xl">
                 Most programs run for a fixed block — 8 weeks, 12 weeks, then they expire. You buy another. The cycle never ends.
               </p>
-              <p className="text-white/90 italic normal-case text-xl md:text-2xl leading-relaxed mb-8 max-w-3xl">
+              <p className="text-white/90 normal-case text-xl md:text-2xl leading-relaxed mb-8 max-w-3xl">
                 Elite is built differently. The programs progress with you indefinitely. <span className="text-amber-100 font-medium">The longer you apply it, the more it works.</span> That is the exponential — and that is what being elite means.
               </p>
-              <p className="text-white italic normal-case text-xl md:text-2xl leading-relaxed font-medium max-w-3xl border-l-2 border-amber-100 pl-6">
+              <p className="text-white normal-case text-xl md:text-2xl leading-relaxed font-medium max-w-3xl border-l-2 border-amber-100 pl-6">
                 Year one teaches you the structure. Year three reveals layers you missed. Year ten — you are still finding what was always there.
               </p>
             </motion.div>
@@ -510,7 +510,7 @@ export default function ProgramsPage() {
                   <h3 className="text-3xl md:text-5xl font-black uppercase italic tracking-tighter mb-6 leading-tight">
                     {part.title}
                   </h3>
-                  <p className="text-zinc-400 italic normal-case text-base md:text-lg leading-relaxed">
+                  <p className="text-zinc-400 normal-case text-base md:text-lg leading-relaxed">
                     {part.body}
                   </p>
                 </motion.div>
@@ -542,19 +542,19 @@ export default function ProgramsPage() {
 
             <motion.div {...fadeUp} transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }} className="max-w-4xl mx-auto mb-16">
               <div className="border border-zinc-900 bg-zinc-950/40 p-8 md:p-12">
-                <p className="text-zinc-300 italic normal-case text-lg md:text-xl leading-relaxed mb-6">
+                <p className="text-zinc-300 normal-case text-lg md:text-xl leading-relaxed mb-6">
                   You feel like you should be stronger. You train hard, you recover, you eat right — and yet on every pulling movement (deadlifts, rows, pull-ups, every single one) something stops you before you can fully express what you have.
                 </p>
-                <p className="text-zinc-300 italic normal-case text-lg md:text-xl leading-relaxed mb-6">
+                <p className="text-zinc-300 normal-case text-lg md:text-xl leading-relaxed mb-6">
                   You blame your back. You blame your conditioning. You blame your technique. You are wrong. <span className="text-white font-medium">It's your grip — and you don't even feel it.</span>
                 </p>
-                <p className="text-zinc-300 italic normal-case text-lg md:text-xl leading-relaxed mb-6">
+                <p className="text-zinc-300 normal-case text-lg md:text-xl leading-relaxed mb-6">
                   When the grip is weak, the nervous system silently caps the recruitment of every muscle further up the chain. Your back, your lats, your legs are never given permission to fire at full capacity — because the system protects what would otherwise drop the load.
                 </p>
-                <p className="text-white italic normal-case text-xl md:text-2xl leading-relaxed font-medium border-l-2 border-blue-400 pl-6 mb-6">
+                <p className="text-white normal-case text-xl md:text-2xl leading-relaxed font-medium border-l-2 border-blue-400 pl-6 mb-6">
                   This happens without your knowledge. You feel only the ceiling, never the cause.
                 </p>
-                <p className="text-zinc-300 italic normal-case text-lg md:text-xl leading-relaxed">
+                <p className="text-zinc-300 normal-case text-lg md:text-xl leading-relaxed">
                   Train this — bring your grip to a world-class level — and the cap lifts. Suddenly your back works. Your legs work. Every lift you have been grinding on for years explodes upward. <span className="text-white font-medium">Try it. You will see what your body was holding back.</span>
                 </p>
               </div>
@@ -574,10 +574,10 @@ export default function ProgramsPage() {
                 <h3 className="text-3xl md:text-4xl font-black uppercase italic tracking-tighter mb-6 leading-tight">
                   L'Archange Expurgateur
                 </h3>
-                <p className="text-zinc-300 italic normal-case text-lg leading-relaxed mb-6">
+                <p className="text-zinc-300 normal-case text-lg leading-relaxed mb-6">
                   Full-body hypertrophy and strength. 4 sessions per week. Configurable for hypertrophy, strength, or both. Lifelong progression.
                 </p>
-                <p className="text-zinc-500 italic normal-case text-base leading-relaxed">
+                <p className="text-zinc-500 normal-case text-base leading-relaxed">
                   The complete program for the entire body. Nothing left aside. You will train on it for years.
                 </p>
               </motion.div>
@@ -595,10 +595,10 @@ export default function ProgramsPage() {
                 <h3 className="text-3xl md:text-4xl font-black uppercase italic tracking-tighter mb-6 leading-tight">
                   Le Bras Armé des Dieux
                 </h3>
-                <p className="text-white italic normal-case text-lg leading-relaxed mb-6">
+                <p className="text-white normal-case text-lg leading-relaxed mb-6">
                   A <strong className="text-blue-300 not-italic">dynamic grip training</strong> approach found nowhere else. Unique in the world. At the cutting edge of grip programming and methodology.
                 </p>
-                <p className="text-zinc-300 italic normal-case text-base leading-relaxed">
+                <p className="text-zinc-300 normal-case text-base leading-relaxed">
                   Forearm hypertrophy, finger strength, wrist resilience, thumb strength. International-level results.
                 </p>
               </motion.div>
@@ -619,7 +619,7 @@ export default function ProgramsPage() {
             </motion.div>
 
             <motion.div {...fadeUp} transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}>
-              <p className="text-zinc-400 italic normal-case text-xl md:text-2xl leading-relaxed text-center max-w-3xl mx-auto mb-16">
+              <p className="text-zinc-400 normal-case text-xl md:text-2xl leading-relaxed text-center max-w-3xl mx-auto mb-16">
                 Powerlifters. Strongmen. Climbers. Arm wrestlers. Martial artists. Fighters. Bodybuilders. Anyone who trains for real and wants to break past their current ceiling.
               </p>
 
@@ -628,7 +628,7 @@ export default function ProgramsPage() {
                   <p className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-600 mb-6">
                     If You Are
                   </p>
-                  <ul className="space-y-4 text-zinc-400 italic normal-case text-lg">
+                  <ul className="space-y-4 text-zinc-400 normal-case text-lg">
                     <li className="flex"><span className="text-blue-600 mr-3 shrink-0">—</span> Already training hard but stuck below your potential</li>
                     <li className="flex"><span className="text-blue-600 mr-3 shrink-0">—</span> A serious athlete in any strength or grip-dependent sport</li>
                     <li className="flex"><span className="text-blue-600 mr-3 shrink-0">—</span> Tired of generic templates and motivational content</li>
@@ -640,7 +640,7 @@ export default function ProgramsPage() {
                   <p className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-600 mb-6">
                     If You Want
                   </p>
-                  <ul className="space-y-4 text-zinc-400 italic normal-case text-lg">
+                  <ul className="space-y-4 text-zinc-400 normal-case text-lg">
                     <li className="flex"><span className="text-blue-600 mr-3 shrink-0">—</span> Real progression — not motivation</li>
                     <li className="flex"><span className="text-blue-600 mr-3 shrink-0">—</span> Both psychology and physiology addressed seriously</li>
                     <li className="flex"><span className="text-blue-600 mr-3 shrink-0">—</span> A unified system, not a patchwork</li>
@@ -664,7 +664,7 @@ export default function ProgramsPage() {
                 Two Disciplines<span className="text-blue-600">.</span><br />
                 One Practice.
               </h2>
-              <p className="text-zinc-400 italic normal-case text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
+              <p className="text-zinc-400 normal-case text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
                 This guide is not a synthesis of internet content. It is the convergence of two parallel disciplines, both pursued seriously, both fully integrated.
               </p>
             </motion.div>
@@ -683,7 +683,7 @@ export default function ProgramsPage() {
                 <p className="text-white font-black uppercase italic text-2xl tracking-tight mb-6 leading-tight">
                   6 years university · 8 years private practice · ~200 patients
                 </p>
-                <p className="text-zinc-400 italic normal-case text-base leading-relaxed">
+                <p className="text-zinc-400 normal-case text-base leading-relaxed">
                   Master in clinical psychology. Lacanian psychoanalyst. Years of work on desire, the superego, what stops people from realizing their potential — applied directly to the psychology of performance.
                 </p>
               </motion.div>
@@ -701,7 +701,7 @@ export default function ProgramsPage() {
                 <p className="text-white font-black uppercase italic text-2xl tracking-tight mb-6 leading-tight">
                   9 years strength sport &amp; martial arts · training, diet, recovery
                 </p>
-                <p className="text-zinc-400 italic normal-case text-base leading-relaxed">
+                <p className="text-zinc-400 normal-case text-base leading-relaxed">
                   Strength training, programming, periodization, nutrition science, recovery protocols, grip specialization. Progress more in 8 months on this method than in the previous 8 years without it.
                 </p>
               </motion.div>
@@ -709,7 +709,7 @@ export default function ProgramsPage() {
 
             <motion.div {...fadeUp} transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}>
               <div className="border border-blue-600/30 bg-blue-600/5 p-8 md:p-12 text-center">
-                <p className="text-white italic normal-case text-xl md:text-2xl leading-relaxed">
+                <p className="text-white normal-case text-xl md:text-2xl leading-relaxed">
                   Elite is what happens when these two trainings meet. The body and the psyche are not two separate domains — they meet in the speaking subject. This guide treats them as one.
                 </p>
               </div>
@@ -731,7 +731,7 @@ export default function ProgramsPage() {
                   <h3 className="text-4xl md:text-7xl font-black uppercase italic tracking-tighter mb-6 text-white leading-none">
                     Stop Guessing<span className="text-blue-600">.</span>
                   </h3>
-                  <p className="text-zinc-500 italic max-w-xl mx-auto normal-case text-base md:text-lg mb-8">
+                  <p className="text-zinc-500 max-w-xl mx-auto normal-case text-base md:text-lg mb-8">
                     The bar responds to what you actually do with it.
                   </p>
                   <p className="text-zinc-700 text-[10px] font-black uppercase tracking-widest mb-12">

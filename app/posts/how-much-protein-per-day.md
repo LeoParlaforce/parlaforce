@@ -1,11 +1,31 @@
 ---
 title: "How Much Protein Per Day? The Answer Doesn't Change Whether You're Cutting or Bulking"
+seoTitle: "How Much Protein Per Day?"
 date: "2026-03-26"
 category: "Nutrition"
-summary: "Most protein advice is either too conservative or wildly overcomplicated. Here's the clinical reality on daily protein intake for fat loss, muscle gain, and body recomposition — and why carbohydrates determine whether your protein actually works."
+summary: "The protein target doesn't change between cut and bulk. What changes is the role of carbohydrates — and most athletes are optimizing the wrong variable."
 image: "/nutrition.jpg"
 slug: "how-much-protein-per-day"
 author: "Léo Gayrard"
+references:
+  - "Abramowitz, M. K., et al. (2018). Muscle mass, weight, and mortality. *JASN*, 29(10)."
+  - "Helms, E. R., et al. (2014). A systematic review of dietary protein during caloric restriction in resistance-trained lean athletes. *IJSNEM*, 24(2)."
+  - "Howell, S., & Kones, R. (2017). "Calories in, calories out" and metabolic adaptation. *TAEM*, 8(5)."
+  - "Kanaan, M. J., et al. (2025). The effects of high protein intakes during energy restriction on body composition, energy metabolism, and physical performance in recreational athletes."
+  - "Morton, R. W., et al. (2018). A systematic review, meta-analysis and meta-regression of the effect of protein supplementation on resistance training-induced gains in muscle mass and strength. *BJSM*, 52(6)."
+  - "Murray, B., & Rosenbloom, C. (2018). Fundamentals of glycogen metabolism for coaches and athletes. *Nutrition Reviews*, 76(4)."
+  - "Walberg, J. L., et al. (1988). Macronutrient content of a hypoenergy diet affects nitrogen retention and muscle function in weight lifters. *Int J Sports Med*, 9(4)."
+faqs:
+  - question: "How much protein do I need per day to build muscle?"
+    answer: "1.6g/kg of body weight is the established ceiling for hypertrophic benefit in energy surplus. Intakes above this threshold are oxidized rather than incorporated into muscle tissue. The remaining caloric budget is more effectively allocated to carbohydrates to fuel training intensity and sustain the protein-sparing environment."
+  - question: "Do I need more protein when cutting to avoid losing muscle?"
+    answer: "The target stays at 1.6g/kg — the same as in surplus. What changes in a deficit is the role of carbohydrates. When glycogen is available, amino acids are preserved for structural use. When carbohydrates are suppressed, dietary protein gets oxidized as fuel. The critical lever in a cut is protecting carbohydrates, not inflating protein beyond the functional ceiling."
+  - question: "Can I skip carbohydrates if I'm not training that day?"
+    answer: "You can — but cognitive performance and hormonal regulation will degrade, as carbohydrates are the primary substrate for the central nervous system. Rest day carbohydrates can be reduced relative to training days, but not eliminated."
+  - question: "Is a high-protein diet dangerous for the kidneys?"
+    answer: "In healthy individuals with no pre-existing renal pathology, current evidence does not support a causal link between high protein intake (up to 3.3g/kg) and kidney damage. This concern is legitimate for individuals with chronic kidney disease, for whom protein intake must be clinically managed."
+  - question: "Do I need to track macros every day?"
+    answer: "Until your internal calibration matches measurable reality, yes. Research consistently shows that people underestimate caloric and macronutrient intake by 20–40% when relying on estimation alone. Tracking is a temporary data-collection phase that ends when your judgment has been calibrated against objective measurement."
 ---
 
 Most people asking "how much protein per day?" are already training. They're not sedentary. They're not asking because they read a health blog. They're asking because they've heard 2g/kg from one coach, 3g/kg from another, and the studies keep contradicting each other.
@@ -130,52 +150,3 @@ For a structured approach to periodizing your surplus, deficit, and maintenance 
 ---
 
 [CTA-ELITE]
-
-### CLINICAL REFERENCES
-
-- Abramowitz, M. K., et al. (2018). Muscle mass, weight, and mortality. *JASN*, 29(10).
-- Helms, E. R., et al. (2014). A systematic review of dietary protein during caloric restriction in resistance-trained lean athletes. *IJSNEM*, 24(2).
-- Howell, S., & Kones, R. (2017). "Calories in, calories out" and metabolic adaptation. *TAEM*, 8(5).
-- Kanaan, M. J., et al. (2025). The effects of high protein intakes during energy restriction on body composition, energy metabolism, and physical performance in recreational athletes.
-- Morton, R. W., et al. (2018). A systematic review, meta-analysis and meta-regression of the effect of protein supplementation on resistance training-induced gains in muscle mass and strength. *BJSM*, 52(6).
-- Murray, B., & Rosenbloom, C. (2018). Fundamentals of glycogen metabolism for coaches and athletes. *Nutrition Reviews*, 76(4).
-- Walberg, J. L., et al. (1988). Macronutrient content of a hypoenergy diet affects nitrogen retention and muscle function in weight lifters. *Int J Sports Med*, 9(4).
-
----
-
-### FAQ
-
-<details>
-<summary>How much protein do I need per day to build muscle?</summary>
-<div style="padding: 15px 5px; color: #a1a1aa; font-style: italic;">
-1.6g/kg of body weight is the established ceiling for hypertrophic benefit in energy surplus. Intakes above this threshold are oxidized rather than incorporated into muscle tissue. The remaining caloric budget is more effectively allocated to carbohydrates to fuel training intensity and sustain the protein-sparing environment.
-</div>
-</details>
-
-<details>
-<summary>Do I need more protein when cutting to avoid losing muscle?</summary>
-<div style="padding: 15px 5px; color: #a1a1aa; font-style: italic;">
-The target stays at 1.6g/kg — the same as in surplus. What changes in a deficit is the role of carbohydrates. When glycogen is available, amino acids are preserved for structural use. When carbohydrates are suppressed (often to "make room" for more protein), dietary protein gets oxidized as fuel. The critical lever in a cut is protecting carbohydrates, not inflating protein beyond the functional ceiling (Kanaan et al., 2025; Walberg et al., 1988).
-</div>
-</details>
-
-<details>
-<summary>Can I skip carbohydrates if I'm not training that day?</summary>
-<div style="padding: 15px 5px; color: #a1a1aa; font-style: italic;">
-You can — but cognitive performance and hormonal regulation will degrade, as carbohydrates are the primary substrate for the central nervous system. Beyond that, suppressing carbohydrates on rest days undermines the protein-sparing mechanism: amino acids shift toward oxidation rather than tissue maintenance and repair. Rest day carbohydrates can be reduced relative to training days, but not eliminated.
-</div>
-</details>
-
-<details>
-<summary>Is a high-protein diet dangerous for the kidneys?</summary>
-<div style="padding: 15px 5px; color: #a1a1aa; font-style: italic;">
-In healthy individuals with no pre-existing renal pathology, current evidence does not support a causal link between high protein intake (up to 3.3g/kg) and kidney damage. This concern is legitimate for individuals with chronic kidney disease, for whom protein intake must be clinically managed. For the healthy training population, it is not a meaningful constraint.
-</div>
-</details>
-
-<details>
-<summary>Do I need to track macros every day?</summary>
-<div style="padding: 15px 5px; color: #a1a1aa; font-style: italic;">
-Until your internal calibration matches measurable reality, yes. Research consistently shows that people underestimate caloric and macronutrient intake by 20–40% when relying on estimation alone. Tracking is not an extreme behavior — it is a temporary data-collection phase that ends when the instrument (your judgment) has been calibrated against objective measurement.
-</div>
-</details>
