@@ -10,7 +10,7 @@ author: "Léo Gayrard"
 references:
   - "Abramowitz, M. K., et al. (2018). Muscle mass, weight, and mortality. *JASN*, 29(10)."
   - "Helms, E. R., et al. (2014). A systematic review of dietary protein during caloric restriction in resistance-trained lean athletes. *IJSNEM*, 24(2)."
-  - "Howell, S., & Kones, R. (2017). "Calories in, calories out" and metabolic adaptation. *TAEM*, 8(5)."
+  - 'Howell, S., & Kones, R. (2017). "Calories in, calories out" and metabolic adaptation. *TAEM*, 8(5).'
   - "Kanaan, M. J., et al. (2025). The effects of high protein intakes during energy restriction on body composition, energy metabolism, and physical performance in recreational athletes."
   - "Morton, R. W., et al. (2018). A systematic review, meta-analysis and meta-regression of the effect of protein supplementation on resistance training-induced gains in muscle mass and strength. *BJSM*, 52(6)."
   - "Murray, B., & Rosenbloom, C. (2018). Fundamentals of glycogen metabolism for coaches and athletes. *Nutrition Reviews*, 76(4)."
