@@ -18,14 +18,15 @@ export async function generateMetadata({ params }: { params: any }) {
   const post = getPostBySlug(slug)
   if (!post) return {}
   
+  const metaTitle = post.seoTitle || post.title
   return {
-    title: `${post.title} | Parla Force`,
+    title: `${metaTitle} | Parla Force`,
     description: post.summary,
     alternates: {
       canonical: `https://parlaforce.com/articles/${slug}`,
     },
     openGraph: {
-      title: post.title,
+      title: metaTitle,
       description: post.summary,
       url: `https://parlaforce.com/articles/${slug}`,
       images: [{ 

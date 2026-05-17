@@ -44,10 +44,11 @@ export function getPostBySlug(slug: string) {
     const fileContents = fs.readFileSync(fullPath, 'utf8')
     const { data, content } = matter(fileContents)
     
-    return { 
-      slug, 
-      content, 
+    return {
+      slug,
+      content,
       title: data.title || "Untitled Protocol",
+      seoTitle: data.seoTitle || null,
       date: data.date || new Date().toISOString(),
       summary: data.summary || "",
       image: data.image || "/og-image.png",
