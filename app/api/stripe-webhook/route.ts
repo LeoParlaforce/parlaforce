@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { Resend } from "resend";
+import path from "path";
+import fs from "fs";
 
 export const runtime = "nodejs";
 
@@ -136,6 +138,50 @@ parlaforce.com`;
   return { subject, html, text };
 }
 
+function buildAddendumEmail(language: "en" | "fr"): { subject: string; html: string } {
+  if (language === "fr") {
+    return {
+      subject: "And there's more. — L'addendum Behemoth est là",
+      html: `<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"></head>
+<body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;line-height:1.6;color:#1a1a1a;max-width:600px;margin:0 auto;padding:24px;">
+  <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:#2563eb;margin:0 0 32px;">ParlaForce · Elite</p>
+  <h1 style="font-size:32px;font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:-0.02em;margin:0 0 24px;">And there's more.</h1>
+  <p style="font-size:16px;color:#444;margin:0 0 16px;">L'addendum Behemoth est en pièce jointe.</p>
+  <p style="font-size:16px;color:#444;margin:0 0 16px;">Du contenu supplémentaire construit sur la même logique que le guide — plus de protocoles, plus de détails.</p>
+  <p style="font-size:16px;color:#444;margin:0 0 32px;">Bonne lecture.</p>
+  <div style="margin-top:40px;padding-top:20px;border-top:1px solid #e5e5e5;color:#999;font-size:13px;">
+    Léo Gayrard<br>
+    Psychologue clinicien · Athlète et coach de force<br>
+    <a href="https://parlaforce.com" style="color:#999;">parlaforce.com</a>
+  </div>
+</body>
+</html>`,
+    };
+  }
+
+  return {
+    subject: "And there's more. — The Behemoth addendum is here",
+    html: `<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"></head>
+<body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;line-height:1.6;color:#1a1a1a;max-width:600px;margin:0 auto;padding:24px;">
+  <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:#2563eb;margin:0 0 32px;">ParlaForce · Elite</p>
+  <h1 style="font-size:32px;font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:-0.02em;margin:0 0 24px;">And there's more.</h1>
+  <p style="font-size:16px;color:#444;margin:0 0 16px;">The Behemoth addendum is attached to this email.</p>
+  <p style="font-size:16px;color:#444;margin:0 0 16px;">Extra content built on the same logic as the guide — more protocols, more detail.</p>
+  <p style="font-size:16px;color:#444;margin:0 0 32px;">Enjoy.</p>
+  <div style="margin-top:40px;padding-top:20px;border-top:1px solid #e5e5e5;color:#999;font-size:13px;">
+    Léo Gayrard<br>
+    Clinical Psychologist · Strength athlete & coach<br>
+    <a href="https://parlaforce.com" style="color:#999;">parlaforce.com</a>
+  </div>
+</body>
+</html>`,
+  };
+}
+
 export async function POST(req: NextRequest) {
   const stripeSecretKey = process.env.STRIPE_SECRET_KEY_NEW || process.env.STRIPE_SECRET_KEY;
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -206,6 +252,32 @@ export async function POST(req: NextRequest) {
             console.error("❌ Erreur envoi email supervision:", emailErr.message);
             // On ne fait pas échouer le webhook pour autant — le paiement est OK
             // Stripe ne doit pas retenter
+          }
+        }
+      }
+
+      // Elite guide: send Behemoth addendum as attachment
+      const isElite = !isSupervision && !!session.metadata?.pdfFile;
+      if (isElite && email) {
+        const resendApiKey = process.env.RESEND_API_KEY;
+        if (resendApiKey) {
+          try {
+            const language: "en" | "fr" = session.metadata?.language === "fr" ? "fr" : "en";
+            const addendumPath = path.join(process.cwd(), "protected_pdfs", "elite-addendum-behemoth.pdf");
+            const addendumBuffer = fs.readFileSync(addendumPath);
+            const { subject, html } = buildAddendumEmail(language);
+            const resend = new Resend(resendApiKey);
+            await resend.emails.send({
+              from: "ParlaForce <newsletter@troisiemechemin.fr>",
+              to: email,
+              subject,
+              html,
+              replyTo: "leo.gayrard@gmail.com",
+              attachments: [{ filename: "Elite-Addendum-Behemoth.pdf", content: addendumBuffer }],
+            });
+            console.log(`📎 Addendum Behemoth envoyé à ${email} (${language})`);
+          } catch (addendumErr: any) {
+            console.error("❌ Erreur envoi addendum:", addendumErr.message);
           }
         }
       }
