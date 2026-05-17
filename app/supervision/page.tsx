@@ -166,24 +166,8 @@ export default function SupervisionPage() {
       />
 
       <div className="relative z-10">
-        {/* Navigation */}
-        <nav className="p-6 md:p-8 flex justify-between items-center bg-black/50 backdrop-blur-sm relative z-30">
-          <Link
-            href="/"
-            className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] text-zinc-500 hover:text-blue-600 transition-all italic"
-          >
-            ← Home
-          </Link>
-          <Link
-            href="/programs"
-            className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] text-zinc-500 hover:text-blue-600 transition-all italic"
-          >
-            Elite Guide →
-          </Link>
-        </nav>
-
         {/* HERO */}
-        <section className="relative bg-black pt-24 md:pt-32 pb-16 md:pb-20">
+        <section className="relative bg-black pt-24 pb-16 md:pb-20">
           <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
             <motion.div {...fadeUp}>
               <p className="text-[10px] md:text-xs font-black uppercase tracking-[0.4em] text-blue-400 mb-6">

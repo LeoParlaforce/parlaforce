@@ -11,57 +11,23 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <main className="bg-black font-sans lowercase text-white w-full">
+    <main className="bg-black font-sans lowercase text-white w-full relative">
 
-      {/* Cinematic grain - fixed, covers entire page */}
-      <div
-        className="pointer-events-none fixed inset-0 z-[101] opacity-[0.05]"
-        aria-hidden="true"
-        style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='fineGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.90' numOctaves='1' stitchTiles='stitch' seed='7'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23fineGrain)'/%3E%3C/svg%3E")` }}
-      />
+      {/* Fixed background */}
+      <div className="pointer-events-none fixed inset-0 z-[0] opacity-40">
+        <RandomTexture />
+      </div>
+      <div className="pointer-events-none fixed inset-0 z-[1]" style={{ background: "rgba(0,0,0,0.65)" }} />
 
       {/* HERO */}
-      <section className="h-screen min-h-[760px] flex flex-col items-center justify-center px-4 md:px-6 relative overflow-hidden">
+      <section className="h-screen min-h-[760px] flex flex-col items-center justify-start pt-20 md:pt-24 px-4 md:px-6 relative">
 
-        {/* Random texture background */}
-        <RandomTexture />
-
-        {/* Heavy black overlay */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: "radial-gradient(ellipse 60% 70% at 50% 50%, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.5) 100%)",
-          }}
-        />
-
-      {/* Top label */}
-      <div className="absolute top-8 left-1/2 -translate-x-1/2 w-full px-4 text-center z-10">
-        <span className="text-blue-600 text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] border border-blue-600 px-3 md:px-4 py-1.5 md:py-2 inline-block">
-          Clinical Strength Architecture
-        </span>
-      </div>
-
-      {/* Main content - centered vertically */}
       <div className="max-w-5xl w-full relative z-10 text-center">
-        
-        <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter uppercase leading-none mb-4 md:mb-6 italic">
-          PARLA<span className="text-blue-600">FORCE.</span>
-        </h1>
-        
-        <div className="mb-6 md:mb-8 max-w-2xl mx-auto space-y-3 md:space-y-4 px-2 md:px-0">
-          <p className="text-zinc-500 text-[10px] md:text-sm font-bold uppercase tracking-widest md:tracking-[0.3em] leading-relaxed">
-            Human-led protocols for psychological &amp; physical dominance.
-          </p>
-          
-          <p className="text-zinc-400 normal-case italic text-sm md:text-base leading-relaxed">
-            Protocols designed for the structural reorganization of performance.
-          </p>
 
-          <div className="pt-2">
-            <span className="bg-blue-600/10 text-blue-600 text-[8px] md:text-[10px] font-black uppercase tracking-widest md:tracking-[0.4em] px-3 md:px-4 py-1.5 md:py-2 border border-blue-600/20 inline-block">
-              NO AI USED — 100% HUMAN INTELLIGENCE
-            </span>
-          </div>
+        <div className="mb-6 md:mb-8">
+          <span className="bg-blue-600/10 text-blue-600 text-[8px] md:text-[10px] font-black uppercase tracking-widest md:tracking-[0.4em] px-3 md:px-4 py-1.5 md:py-2 border border-blue-600/20 inline-block">
+            NO AI USED — 100% HUMAN INTELLIGENCE
+          </span>
         </div>
 
         {/* Elite Featured Block */}
@@ -175,7 +141,7 @@ export default function Home() {
       </section>
 
       {/* NEWSLETTER */}
-      <section className="bg-black border-t border-zinc-900 py-20 md:py-28 px-4 md:px-6">
+      <section className="py-20 md:py-28 px-4 md:px-6 relative z-10">
         <div className="max-w-2xl mx-auto">
           <NewsletterSignup />
         </div>

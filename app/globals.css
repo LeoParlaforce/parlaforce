@@ -2,19 +2,532 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Fond image optionnel derrière tout */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: url('/background.jpg') center / cover no-repeat;
-  z-index: -2; /* derrière tout */
+/* ============================================================
+   Design tokens (CSS custom properties)
+   ============================================================ */
+
+:root {
+  --ease-cinema: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-strong: cubic-bezier(0.16, 1, 0.3, 1);
+  --grain-opacity: 0.18;
+  --container: min(1480px, 92vw);
+  --container-narrow: min(1100px, 88vw);
 }
 
-body::after {
-  content: "";
+/* ============================================================
+   Base resets
+   ============================================================ */
+
+html, body {
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body { cursor: none; }
+@media (hover: none) { body { cursor: auto; } }
+
+::selection { background: #2563eb; color: white; }
+
+/* ============================================================
+   Typography utilities
+   ============================================================ */
+
+@layer components {
+  .display {
+    font-family: var(--font-saira), "Inter Tight", system-ui, sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    letter-spacing: -0.025em;
+    line-height: 0.86;
+    text-transform: uppercase;
+  }
+
+  .display-xl { font-size: clamp(64px, 13vw, 220px); }
+  .display-lg { font-size: clamp(56px, 9vw, 160px); }
+  .display-md { font-size: clamp(40px, 6vw, 96px); }
+  .display-sm { font-size: clamp(28px, 3.6vw, 56px); }
+
+  .eyebrow {
+    font-family: var(--font-jetbrains), ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #2563eb;
+  }
+
+  .eyebrow-quiet {
+    font-family: var(--font-jetbrains), ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #71717a;
+  }
+
+  .body-lg {
+    font-size: clamp(17px, 1.3vw, 20px);
+    line-height: 1.55;
+    color: #d4d4d8;
+  }
+
+  .body-md {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #d4d4d8;
+  }
+
+  .body-sm {
+    font-size: 13px;
+    line-height: 1.55;
+    color: #a1a1aa;
+  }
+
+  .italic-quote {
+    font-style: italic;
+    color: #d4d4d8;
+  }
+}
+
+/* ============================================================
+   Layout primitives
+   ============================================================ */
+
+.container-cinema { width: var(--container); margin-inline: auto; }
+.container-narrow-cinema { width: var(--container-narrow); margin-inline: auto; }
+
+/* ============================================================
+   Grain overlay — fixed + animated jitter
+   ============================================================ */
+
+.grain-fixed {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,.60); /* voile sombre */
-  z-index: -1; /* derrière le contenu */
+  pointer-events: none;
+  z-index: 60;
+  opacity: var(--grain-opacity);
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 200px 200px;
+  animation: grain-jitter 0.6s steps(3) infinite;
 }
+
+@keyframes grain-jitter {
+  0%   { transform: translate(0, 0); }
+  33%  { transform: translate(-2%, 1%); }
+  66%  { transform: translate(1%, -2%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* ============================================================
+   Background stack — fixed layers that crossfade
+   ============================================================ */
+
+.bg-stack {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: #000;
+}
+
+.bg-layer {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 900ms var(--ease-cinema);
+  will-change: opacity;
+}
+
+.bg-layer.active { opacity: 1; }
+
+.bg-layer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.55) 100%);
+}
+
+/* ============================================================
+   Cursor
+   ============================================================ */
+
+.cursor-dot {
+  position: fixed;
+  top: 0; left: 0;
+  width: 6px; height: 6px;
+  background: #fff;
+  border-radius: 50%;
+  pointer-events: none;
+  mix-blend-mode: difference;
+  z-index: 10000;
+  transition: opacity 200ms;
+}
+
+.cursor-ring {
+  position: fixed;
+  top: 0; left: 0;
+  width: 36px; height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: transparent;
+  background: transparent;
+  mix-blend-mode: difference;
+  transition:
+    width 400ms var(--ease-cinema),
+    height 400ms var(--ease-cinema),
+    background-color 300ms,
+    border-color 300ms,
+    opacity 200ms;
+}
+
+.cursor-ring.hover {
+  width: 96px; height: 96px;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.9);
+  color: #fff;
+  backdrop-filter: blur(2px);
+}
+
+.cursor-ring.accent {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: white;
+  mix-blend-mode: normal;
+}
+
+.cursor-ring.invert {
+  background: white;
+  border-color: white;
+  color: black;
+  mix-blend-mode: normal;
+}
+
+@media (hover: none) { .cursor-dot, .cursor-ring { display: none; } }
+
+/* ============================================================
+   Sticky scene system
+   ============================================================ */
+
+.scene { position: relative; width: 100%; }
+
+.scene-pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+.scene-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.scene-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 96px max(28px, 4vw);
+}
+
+.scene-hud {
+  position: absolute;
+  left: max(28px, 4vw);
+  right: max(28px, 4vw);
+  bottom: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  pointer-events: none;
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #71717a;
+}
+
+.scene-progress-bar {
+  position: absolute;
+  top: 0; left: 0;
+  height: 1px;
+  background: #2563eb;
+  z-index: 5;
+  transition: width 100ms linear;
+}
+
+/* ============================================================
+   Nav
+   ============================================================ */
+
+.cinema-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px max(28px, 4vw);
+  mix-blend-mode: difference;
+  color: white;
+}
+
+.cinema-nav .brand {
+  font-family: var(--font-saira), system-ui, sans-serif;
+  font-style: italic;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+.cinema-nav .brand .dot { color: #2563eb; }
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.nav-links a {
+  position: relative;
+  padding: 6px 0;
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 240ms;
+}
+
+.nav-links a:hover, .nav-links a.active { color: white; }
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 0;
+  height: 1px;
+  width: 0;
+  background: currentColor;
+  transition: width 380ms var(--ease-cinema);
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after { width: 100%; }
+
+@media (max-width: 900px) {
+  .nav-links { gap: 16px; font-size: 10px; }
+}
+
+/* ============================================================
+   Buttons + chips
+   ============================================================ */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 1px solid #2563eb;
+  color: #2563eb;
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.chip-quiet {
+  border-color: rgba(255, 255, 255, 0.14);
+  color: #a1a1aa;
+}
+
+.btn-cinema {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 28px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 320ms, border-color 320ms;
+  cursor: none;
+}
+
+.btn-cinema::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #2563eb;
+  transform: translateY(101%);
+  transition: transform 520ms var(--ease-cinema);
+  z-index: -1;
+}
+
+.btn-cinema:hover { border-color: #2563eb; }
+.btn-cinema:hover::before { transform: translateY(0); }
+
+.btn-cinema .arrow { transition: transform 400ms var(--ease-cinema); }
+.btn-cinema:hover .arrow { transform: translateX(6px); }
+
+.btn-cinema-primary {
+  background: #2563eb;
+  border-color: #2563eb;
+}
+
+.btn-cinema-primary::before { background: white; }
+.btn-cinema-primary:hover { color: black; }
+
+/* ============================================================
+   Cards
+   ============================================================ */
+
+.card-cinema {
+  position: relative;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 32px;
+  transition: background 380ms var(--ease-cinema), border-color 380ms;
+  overflow: hidden;
+}
+
+.card-cinema:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+.card-cinema::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(120deg, transparent 40%, rgba(37, 99, 235, 0.08) 60%, transparent 80%);
+  transform: translateX(-100%);
+  transition: transform 700ms var(--ease-cinema);
+}
+
+.card-cinema:hover::before { transform: translateX(100%); }
+
+/* ============================================================
+   Scroll indicator
+   ============================================================ */
+
+.scroll-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #71717a;
+}
+
+.scroll-indicator .line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+  animation: scroll-pulse 2s ease-in-out infinite;
+}
+
+@keyframes scroll-pulse {
+  0%, 100% { transform: scaleY(1); opacity: 0.6; }
+  50%       { transform: scaleY(0.6); opacity: 1; }
+}
+
+/* ============================================================
+   Arrow link
+   ============================================================ */
+
+.arrow-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #2563eb;
+  transition: color 240ms;
+}
+
+.arrow-link .arrow { transition: transform 400ms var(--ease-cinema); }
+.arrow-link:hover .arrow { transform: translateX(6px); }
+
+/* ============================================================
+   Page wrap (content above bg-stack)
+   ============================================================ */
+
+.page-wrap {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================================
+   Footer
+   ============================================================ */
+
+.cinema-footer {
+  position: relative;
+  z-index: 2;
+  background: #000;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 80px max(28px, 4vw) 40px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.footer-bottom {
+  margin-top: 80px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #71717a;
+}
+
+/* ============================================================
+   Divider
+   ============================================================ */
+
+.divider { height: 1px; background: rgba(255, 255, 255, 0.08); width: 100%; }
+
+.dot-accent { color: #2563eb; }

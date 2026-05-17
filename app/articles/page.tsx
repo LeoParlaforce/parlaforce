@@ -39,29 +39,18 @@ export default function BlogListing() {
   return (
     <main className="min-h-screen bg-black text-white font-sans lowercase relative overflow-hidden selection:bg-blue-600/30 w-full">
       
-      {/* Random texture */}
-      <div className="pointer-events-none fixed inset-0 z-[0] opacity-10">
+      {/* Fixed background */}
+      <div className="pointer-events-none fixed inset-0 z-[0] opacity-40">
         <RandomTexture />
       </div>
-      <div className="pointer-events-none fixed inset-0 z-[1]" style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.5) 100%)" }} />
+      <div className="pointer-events-none fixed inset-0 z-[1]" style={{ background: "rgba(0,0,0,0.65)" }} />
 
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-16 md:py-24 relative z-10">
         
-        <nav aria-label="Breadcrumb" className="mb-12 md:mb-16 flex justify-between items-center border-b border-zinc-900 pb-6">
-          <Link href="/" className="text-zinc-500 hover:text-blue-600 text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] transition-all italic">
-            ← Website Access
-          </Link>
-          <span className="text-zinc-800 text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em]">Theory v2.0.26</span>
-        </nav>
-
         <header className="mb-16 md:mb-24 text-center">
-          <h1 className="text-5xl md:text-9xl font-black uppercase tracking-tighter leading-none mb-8 italic">
+          <h1 className="text-5xl md:text-9xl font-black uppercase tracking-tighter leading-none italic">
             ARTICLES<span className="text-blue-600">.</span>
           </h1>
-          <p className="text-[10px] md:text-base text-zinc-500 max-w-xl mx-auto font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] leading-relaxed px-4">
-            Written architecture for human dominance. <br className="hidden md:block"/>
-            Athletic intelligence & raw performance.
-          </p>
         </header>
 
         {posts.length > 0 ? (
