@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react'
 
 const SUBSCRIBED_KEY = 'newsletter_subscribed'
 const DISMISSED_KEY = 'newsletter_dismissed'
-const DISMISS_TTL = 30 * 24 * 60 * 60 * 1000 // 30 days
-const SHOW_DELAY = 25_000 // 25 seconds
+const DISMISS_TTL = 7 * 24 * 60 * 60 * 1000 // 7 days
+const SHOW_DELAY = 10_000 // 10 seconds
 
 export default function NewsletterPopup() {
   const [visible, setVisible] = useState(false)
