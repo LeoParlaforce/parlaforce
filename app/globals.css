@@ -337,6 +337,74 @@ body { cursor: none; }
   .nav-links { gap: 16px; font-size: 10px; }
 }
 
+.nav-burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.burger-line {
+  display: block;
+  width: 22px;
+  height: 1px;
+  background: white;
+  transition: transform 300ms var(--ease-cinema), opacity 300ms;
+  transform-origin: center;
+}
+
+.burger-line.open:nth-child(1) { transform: translateY(3.5px) rotate(45deg); }
+.burger-line.open:nth-child(2) { transform: translateY(-3.5px) rotate(-45deg); }
+
+@media (max-width: 640px) {
+  .nav-links { display: none; }
+  .nav-burger { display: flex; }
+}
+
+.nav-mobile-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+}
+
+.nav-mobile-menu {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(280px, 80vw);
+  height: 100%;
+  background: #0a0a0a;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  padding: 40px 32px;
+}
+
+.nav-mobile-menu a {
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  transition: color 240ms;
+}
+
+.nav-mobile-menu a:last-child { border-bottom: none; }
+.nav-mobile-menu a:hover,
+.nav-mobile-menu a.active { color: white; }
+
 /* ============================================================
    Buttons + chips
    ============================================================ */
