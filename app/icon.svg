@@ -1,20 +1,21 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
   <rect width="32" height="32" fill="#0d0d0d"/>
 
-  <!-- 4 knuckle guards (index, middle, ring, pinky) -->
-  <rect x="4"    y="10.5" width="5.5" height="5"   rx="2.75" fill="#d8d8d8"/>
-  <rect x="10.5" y="8"    width="5.5" height="7.5" rx="2.75" fill="#e8e8e8"/>
-  <rect x="17"   y="8"    width="5.5" height="7.5" rx="2.75" fill="#e8e8e8"/>
-  <rect x="23.5" y="10.5" width="4"   height="5"   rx="2"    fill="#d0d0d0"/>
+  <!-- Blade (tapers to a point at top) -->
+  <polygon points="16,2 13.5,17 18.5,17" fill="#e0e0e0"/>
+  <!-- Fuller (central groove / highlight) -->
+  <polygon points="16,2 15.5,17 16.5,17" fill="#f8f8f8"/>
 
-  <!-- Back of hand / palm plate -->
-  <rect x="3"  y="14.5" width="26" height="6"   rx="1"   fill="#e2e2e2"/>
-  <!-- Plate divider -->
-  <rect x="3"  y="17.5" width="26" height="0.9" rx="0"   fill="#0d0d0d70"/>
+  <!-- Crossguard / quillon -->
+  <rect x="6" y="17" width="20" height="2.5" rx="1.2" fill="#cccccc"/>
 
-  <!-- Wrist cuff / bracer -->
-  <rect x="8"  y="20.5" width="16" height="9"   rx="1.5" fill="#c2c2c2"/>
-  <!-- Bracer ribs -->
-  <rect x="8"  y="23.5" width="16" height="0.9" rx="0"   fill="#0d0d0d60"/>
-  <rect x="8"  y="26.5" width="16" height="0.9" rx="0"   fill="#0d0d0d60"/>
+  <!-- Grip -->
+  <rect x="14.5" y="19.5" width="3" height="7" rx="0.5" fill="#aaaaaa"/>
+  <!-- Grip binding wraps -->
+  <rect x="14.5" y="21.5" width="3" height="0.8" fill="#0d0d0d55"/>
+  <rect x="14.5" y="23.5" width="3" height="0.8" fill="#0d0d0d55"/>
+  <rect x="14.5" y="25.5" width="3" height="0.8" fill="#0d0d0d55"/>
+
+  <!-- Pommel -->
+  <ellipse cx="16" cy="29.5" rx="3" ry="2" fill="#c4c4c4"/>
 </svg>
