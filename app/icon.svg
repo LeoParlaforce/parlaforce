@@ -1,26 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" fill="#000"/>
+  <rect width="32" height="32" fill="#0d0d0d"/>
 
-  <!-- Index finger -->
-  <rect x="6"  y="7" width="4" height="8" rx="1" fill="#d6d6d6"/>
-  <!-- Middle finger (tallest) -->
-  <rect x="11" y="4" width="4" height="11" rx="1" fill="#e4e4e4"/>
-  <!-- Ring finger -->
-  <rect x="16" y="4" width="4" height="11" rx="1" fill="#e4e4e4"/>
-  <!-- Pinky -->
-  <rect x="21" y="7" width="4" height="8" rx="1" fill="#d6d6d6"/>
+  <!-- 4 knuckle guards (index, middle, ring, pinky) -->
+  <rect x="4"    y="10.5" width="5.5" height="5"   rx="2.75" fill="#d8d8d8"/>
+  <rect x="10.5" y="8"    width="5.5" height="7.5" rx="2.75" fill="#e8e8e8"/>
+  <rect x="17"   y="8"    width="5.5" height="7.5" rx="2.75" fill="#e8e8e8"/>
+  <rect x="23.5" y="10.5" width="4"   height="5"   rx="2"    fill="#d0d0d0"/>
 
-  <!-- Knuckle guard -->
-  <rect x="5" y="14" width="22" height="4" rx="0.5" fill="#ececec"/>
+  <!-- Back of hand / palm plate -->
+  <rect x="3"  y="14.5" width="26" height="6"   rx="1"   fill="#e2e2e2"/>
+  <!-- Plate divider -->
+  <rect x="3"  y="17.5" width="26" height="0.9" rx="0"   fill="#0d0d0d70"/>
 
-  <!-- Palm plate -->
-  <rect x="5" y="17" width="22" height="5" rx="0.5" fill="#e0e0e0"/>
-  <!-- Palm / knuckle divider line -->
-  <rect x="5" y="18" width="22" height="0.7" fill="#00000030"/>
-
-  <!-- Wrist cuff -->
-  <rect x="8" y="22" width="16" height="8" rx="1" fill="#c8c8c8"/>
-  <!-- Cuff plate lines -->
-  <rect x="8" y="24.5" width="16" height="0.7" fill="#00000035"/>
-  <rect x="8" y="27"   width="16" height="0.7" fill="#00000035"/>
+  <!-- Wrist cuff / bracer -->
+  <rect x="8"  y="20.5" width="16" height="9"   rx="1.5" fill="#c2c2c2"/>
+  <!-- Bracer ribs -->
+  <rect x="8"  y="23.5" width="16" height="0.9" rx="0"   fill="#0d0d0d60"/>
+  <rect x="8"  y="26.5" width="16" height="0.9" rx="0"   fill="#0d0d0d60"/>
 </svg>
