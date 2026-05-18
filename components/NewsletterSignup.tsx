@@ -28,6 +28,7 @@ export default function NewsletterSignup({ variant = 'full' }: Props) {
       } else {
         setStatus('success')
         setEmail('')
+        localStorage.setItem('newsletter_subscribed', 'true')
       }
     } catch {
       setErrorMsg('Connection error. Try again.')
