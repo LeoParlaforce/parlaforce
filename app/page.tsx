@@ -64,19 +64,19 @@ export default function Home() {
         <div className="flex flex-row gap-3 md:gap-4 justify-center items-stretch w-full max-w-2xl mx-auto">
           <Link
             href="/supervision"
-            className="group relative border border-zinc-800 bg-black/40 backdrop-blur-sm p-4 md:p-5 hover:border-blue-600 hover:bg-zinc-950 transition-all duration-300 no-underline flex-1 text-left"
+            className="group relative border border-zinc-800 bg-black/40 backdrop-blur-sm p-4 md:p-5 hover:border-amber-600 hover:bg-zinc-950 transition-all duration-300 no-underline flex-1 text-left"
           >
-            <p className="text-[8px] md:text-[9px] font-black uppercase tracking-widest md:tracking-[0.3em] text-zinc-600 group-hover:text-blue-600 mb-2 transition-colors">
+            <p className="text-[8px] md:text-[9px] font-black uppercase tracking-widest md:tracking-[0.3em] text-zinc-600 group-hover:text-amber-600 mb-2 transition-colors">
               1:1 · Signal · Encrypted
             </p>
             <p className="text-xl md:text-2xl font-black uppercase italic tracking-tighter text-white leading-none mb-2">
-              Supervision<span className="text-blue-600">.</span>
+              Supervision<span className="text-amber-600">.</span>
             </p>
             <p className="text-zinc-500 normal-case text-[10px] md:text-xs leading-snug mb-3">
               Private monthly coaching with Leo Gayrard
             </p>
             <div className="pt-2 border-t border-zinc-800 flex items-center justify-end">
-              <span className="text-blue-600 group-hover:text-white text-[8px] font-black uppercase tracking-[0.2em] italic transition-colors">
+              <span className="text-amber-600 group-hover:text-white text-[8px] font-black uppercase tracking-[0.2em] italic transition-colors">
                 Discover →
               </span>
             </div>
@@ -84,19 +84,19 @@ export default function Home() {
 
           <Link
             href="/articles"
-            className="group relative border border-zinc-800 bg-zinc-900/20 backdrop-blur-sm p-4 md:p-5 hover:border-zinc-500 hover:bg-zinc-900/40 transition-all duration-300 no-underline flex-1 text-left"
+            className="group relative border border-zinc-800 bg-zinc-900/20 backdrop-blur-sm p-4 md:p-5 hover:border-red-800/60 hover:bg-zinc-900/40 transition-all duration-300 no-underline flex-1 text-left"
           >
-            <p className="text-[8px] md:text-[9px] font-black uppercase tracking-widest md:tracking-[0.3em] text-zinc-600 group-hover:text-zinc-400 mb-2 transition-colors">
+            <p className="text-[8px] md:text-[9px] font-black uppercase tracking-widest md:tracking-[0.3em] text-zinc-600 group-hover:text-red-700 mb-2 transition-colors">
               Theory · Evidence-based
             </p>
             <p className="text-xl md:text-2xl font-black uppercase italic tracking-tighter text-white leading-none mb-2">
-              Articles<span className="text-zinc-600">.</span>
+              Articles<span className="text-red-800">.</span>
             </p>
             <p className="text-zinc-500 normal-case text-[10px] md:text-xs leading-snug mb-3">
               Protocols, psychology & performance science
             </p>
             <div className="pt-2 border-t border-zinc-800 flex items-center justify-end">
-              <span className="text-zinc-400 group-hover:text-white text-[8px] font-black uppercase tracking-[0.2em] italic transition-colors">
+              <span className="text-red-800 group-hover:text-white text-[8px] font-black uppercase tracking-[0.2em] italic transition-colors">
                 Read →
               </span>
             </div>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" fill="#000"/>
+
+  <!-- Index finger -->
+  <rect x="6"  y="7" width="4" height="8" rx="1" fill="#d6d6d6"/>
+  <!-- Middle finger (tallest) -->
+  <rect x="11" y="4" width="4" height="11" rx="1" fill="#e4e4e4"/>
+  <!-- Ring finger -->
+  <rect x="16" y="4" width="4" height="11" rx="1" fill="#e4e4e4"/>
+  <!-- Pinky -->
+  <rect x="21" y="7" width="4" height="8" rx="1" fill="#d6d6d6"/>
+
+  <!-- Knuckle guard -->
+  <rect x="5" y="14" width="22" height="4" rx="0.5" fill="#ececec"/>
+
+  <!-- Palm plate -->
+  <rect x="5" y="17" width="22" height="5" rx="0.5" fill="#e0e0e0"/>
+  <!-- Palm / knuckle divider line -->
+  <rect x="5" y="18" width="22" height="0.7" fill="#00000030"/>
+
+  <!-- Wrist cuff -->
+  <rect x="8" y="22" width="16" height="8" rx="1" fill="#c8c8c8"/>
+  <!-- Cuff plate lines -->
+  <rect x="8" y="24.5" width="16" height="0.7" fill="#00000035"/>
+  <rect x="8" y="27"   width="16" height="0.7" fill="#00000035"/>
+</svg>

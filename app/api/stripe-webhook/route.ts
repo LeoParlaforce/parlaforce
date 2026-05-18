@@ -209,6 +209,29 @@ export async function POST(req: NextRequest) {
       console.log(`✅ Paiement validé pour : ${email}`);
       console.log(`📦 Session ID : ${session.id}`);
 
+      // Admin notification
+      const adminResendKey = process.env.RESEND_API_KEY;
+      if (adminResendKey) {
+        try {
+          const adminResend = new Resend(adminResendKey);
+          const service = session.metadata?.service === "supervision" ? "Supervision" : "Guide Elite";
+          const amount =
+            session.amount_total != null
+              ? `${(session.amount_total / 100).toFixed(2)} ${(session.currency ?? "").toUpperCase()}`
+              : "—";
+          const paymentMode = session.metadata?.paymentMode ?? "once";
+          await adminResend.emails.send({
+            from: FROM_EMAIL,
+            to: "leo.gayrard@gmail.com",
+            subject: `Nouvel achat — ${service}`,
+            html: `<p><strong>${service}</strong></p><p>Client : ${email ?? "inconnu"}</p><p>Montant : ${amount}</p><p>Mode : ${paymentMode}</p>`,
+          });
+          console.log(`🔔 Notification admin envoyée`);
+        } catch (notifErr: any) {
+          console.error("❌ Erreur notification admin:", notifErr.message);
+        }
+      }
+
       // Guide installments: set cancel_at on the subscription (89 days = before 4th cycle)
       const isInstallments = session.metadata?.paymentMode === "installments";
       if (isInstallments && session.subscription) {
