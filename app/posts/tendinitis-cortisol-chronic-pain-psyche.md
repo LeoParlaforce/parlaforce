@@ -232,8 +232,6 @@ You've come this far in the article. You're not going to solve chronic pain by r
 
 **You find a real therapist.** Not a coach with a coaching certification. Not a positive psychology app. Not someone who promises symptom resolution in six sessions. **Someone who has done their own analysis, who has been formed in real depth work, who will let you talk about everything and trust that you are saying something coherent about yourself across all of it.**
 
-[CTA-ELITE]
-
 ## The truth nobody wanted to tell you
 
 Here's the deep version of what this article has been saying. Your body is not a machine that broke. **Your body is you, expressed in flesh.** The pain in your tendon is a sentence your psyche is writing in the only language it has left, after the other languages were refused.
