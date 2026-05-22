@@ -10,7 +10,7 @@ const SHOW_DELAY = 10_000 // 10 seconds
 export default function NewsletterPopup() {
   const [visible, setVisible] = useState(false)
   const [email, setEmail] = useState('')
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'already' | 'error'>('idle')
   const [errorMsg, setErrorMsg] = useState('')
 
   useEffect(() => {
@@ -41,6 +41,10 @@ export default function NewsletterPopup() {
       if (!res.ok) {
         setErrorMsg(data.error || 'Something went wrong.')
         setStatus('error')
+      } else if (data.alreadySubscribed) {
+        setStatus('already')
+        localStorage.setItem(SUBSCRIBED_KEY, 'true')
+        setTimeout(() => setVisible(false), 2500)
       } else {
         setStatus('success')
         localStorage.setItem(SUBSCRIBED_KEY, 'true')
@@ -86,6 +90,10 @@ export default function NewsletterPopup() {
         {status === 'success' ? (
           <p className="text-blue-500 font-black uppercase text-sm tracking-[0.2em]">
             You're in. ✓
+          </p>
+        ) : status === 'already' ? (
+          <p className="text-zinc-400 font-black uppercase text-sm tracking-[0.2em]">
+            Already subscribed. ✓
           </p>
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col gap-3">

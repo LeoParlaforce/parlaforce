@@ -53,9 +53,10 @@ export async function POST(req: NextRequest) {
       try {
         await resend.contacts.create({ email, audienceId, unsubscribed: false })
       } catch (err: any) {
-        if (!err?.message?.toLowerCase().includes('already exists')) {
-          console.error('Resend contacts error:', err)
+        if (err?.message?.toLowerCase().includes('already exists')) {
+          return NextResponse.json({ alreadySubscribed: true })
         }
+        console.error('Resend contacts error:', err)
       }
     }
 

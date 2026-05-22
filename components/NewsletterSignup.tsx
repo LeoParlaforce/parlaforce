@@ -8,7 +8,7 @@ interface Props {
 
 export default function NewsletterSignup({ variant = 'full' }: Props) {
   const [email, setEmail] = useState('')
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'already' | 'error'>('idle')
   const [errorMsg, setErrorMsg] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -25,6 +25,9 @@ export default function NewsletterSignup({ variant = 'full' }: Props) {
       if (!res.ok) {
         setErrorMsg(data.error || 'Something went wrong.')
         setStatus('error')
+      } else if (data.alreadySubscribed) {
+        setStatus('already')
+        setEmail('')
       } else {
         setStatus('success')
         setEmail('')
@@ -42,6 +45,10 @@ export default function NewsletterSignup({ variant = 'full' }: Props) {
         {status === 'success' ? (
           <p className="text-blue-500 text-xs font-black uppercase tracking-[0.2em]">
             You're in. ✓
+          </p>
+        ) : status === 'already' ? (
+          <p className="text-zinc-400 text-xs font-black uppercase tracking-[0.2em]">
+            Already subscribed. ✓
           </p>
         ) : (
           <form onSubmit={handleSubmit} className="flex gap-2">
@@ -89,6 +96,15 @@ export default function NewsletterSignup({ variant = 'full' }: Props) {
           </p>
           <p className="text-zinc-600 italic normal-case text-xs mt-2">
             Check your inbox — a message is waiting.
+          </p>
+        </div>
+      ) : status === 'already' ? (
+        <div className="max-w-md mx-auto">
+          <p className="text-zinc-400 font-black uppercase text-sm tracking-[0.2em]">
+            Already subscribed. ✓
+          </p>
+          <p className="text-zinc-600 italic normal-case text-xs mt-2">
+            You're already on the list.
           </p>
         </div>
       ) : (
