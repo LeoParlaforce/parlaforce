@@ -113,6 +113,9 @@ export default async function PostPage({ params }: { params: any }) {
   const imageUrl = post.image.startsWith('http') ? post.image : post.image.startsWith('/') ? post.image : `/${post.image}`
   const faqs: FAQItem[] = post.faqs || []
 
+  const wordCount = post.content?.split(/\s+/).length || 0
+  const readingTime = Math.ceil(wordCount / 220)
+
   const allPosts = getAllPosts()
   const relatedPosts = allPosts.filter((p: any) => p.slug !== slug).slice(0, 3)
 
@@ -220,6 +223,7 @@ export default async function PostPage({ params }: { params: any }) {
               <div className="mb-6 flex justify-center gap-6 text-[9px] md:text-[10px] font-bold tracking-[0.4em] text-zinc-400 uppercase">
                 <time dateTime={post.date}>{post.date}</time>
                 <span className="text-blue-600 border border-blue-600/20 px-2 py-0.5">{post.category}</span>
+                <span>{readingTime} min read</span>
               </div>
               <h1 className="text-xl md:text-4xl lg:text-6xl font-black uppercase italic leading-[0.9] tracking-tighter text-white text-center drop-shadow-2xl px-4 max-w-5xl">
                 {post.title}<span className="text-blue-600">.</span>
