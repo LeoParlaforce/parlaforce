@@ -81,6 +81,7 @@ export default function BlogListing() {
                   <div className="mb-4 flex justify-center gap-4 text-[8px] md:text-[10px] font-bold tracking-[0.3em] text-zinc-400 uppercase">
                     <time dateTime={post.date}>{post.date}</time>
                     <span className="text-blue-600 border border-blue-600/20 px-2 py-0.5">{post.category}</span>
+                    <span>{post.readingTime} min read</span>
                   </div>
                   
                   <h2 className="text-2xl md:text-5xl font-black uppercase italic text-white group-hover:text-blue-500 transition-colors leading-none tracking-tighter mb-6 line-clamp-3">
